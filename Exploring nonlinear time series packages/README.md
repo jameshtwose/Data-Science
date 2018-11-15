@@ -4,9 +4,9 @@ The hope of this repository is to provide didactic tools to help people understa
 
 ## List of packages  
 ### R packages
-- Casnet [Fred Hasselman](https://github.com/FredHasselman/casnet)
-- nonlinearTseries [Constantino Garcia](https://github.com/constantino-garcia/nonlinearTseries)
-- Rtisean (https://github.com/antoniofabio/RTisean)
+- Casnet ([Fred Hasselman])(https://github.com/FredHasselman/casnet)
+- nonlinearTseries ([Constantino Garcia])(https://github.com/constantino-garcia/nonlinearTseries)
+- RTisean (https://github.com/antoniofabio/RTisean)
 
 ### Python packages
 - Pytisean (https://github.com/bogeholm/pytisean or https://github.com/galaunay/pytisean)
