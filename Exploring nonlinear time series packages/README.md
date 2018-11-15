@@ -1,6 +1,6 @@
 # This is a folder full of forays into different nonlinear time series packages
 These packages are either implemented in R or Python. 
-The hope of this repository is to provide higher level didactic tools to help people understand the nonlinear time series analysis options in a practical setting and to show deep dives to provide an insight into the back end of these packages that are currently used for nonlinear time series analysis
+The hope of this repository is to provide __*higher level didactic tools*__  to help people understand the nonlinear time series analysis options in a practical setting and to __*show deep dives to provide an insight into the back end*__ of these packages that are currently used for nonlinear time series analysis
 
 ## List of packages  
 ### R packages
