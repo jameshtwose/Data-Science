@@ -10,3 +10,7 @@ The hope of this repository is to provide [__*higher level didactic tools*__](ht
 
 ### Python packages
 - Pytisean (https://github.com/bogeholm/pytisean or https://github.com/galaunay/pytisean)
+
+### Julia packages 
+#### this is written in the new up and coming language Julia see for more info - (https://julialang.org/)
+- juliadynamics (https://github.com/JuliaDynamics)
