@@ -1,1 +1,1 @@
-# These files show a more indepth deep dive into the aforementioned packages
+# These files show a more in depth deep dive into the aforementioned packages
