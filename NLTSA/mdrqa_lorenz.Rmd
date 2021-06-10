@@ -1,0 +1,82 @@
+---
+title: "Using Multidimensional RQA in the lorenz system"
+output: html_notebook
+---
+
+## Info on the project
+Looking into the output of the multidimensional RQA function from the following reference:
+
+Wallot, S., & Leonardi, G. (2018). Analyzing Multivariate Dynamics Using Cross-Recurrence Quantification Analysis (CRQA), Diagonal-Cross-Recurrence Profiles (DCRP), and Multidimensional Recurrence Quantification Analysis (MdRQA) – A Tutorial in R. Frontiers in Psychology, 9.
+
+### Read in the necessary libraries
+
+```{r message=FALSE, echo=TRUE}
+#load in necessary libraries
+library(ggplot2)
+library(casnet)
+library(nonlinearTseries)
+library(igraph)
+
+source(file = "mdrqa.R")
+```
+
+
+```{r message=FALSE, echo=TRUE}
+sessionInfo()
+```
+
+```{r}
+lor_df <- data.frame(lorenz(time=seq(0,30,by = 0.05), do.plot = FALSE))
+```
+
+```{r}
+plot.ts(lor_df$x)
+plot.ts(lor_df$y)
+plot.ts(lor_df$z)
+```
+
+```{r}
+rgl::plot3d(x=lor_df$x, y=lor_df$y, z=lor_df$z, type="l", col = rainbow(1000))
+```
+
+
+```{r}
+# lor_mdrqa <- mdrqa(data = lor_df, emb=1, del=1, rad = 0.05, norm="euc")
+```
+
+```{r}
+lor_mdrqa <- mdrqa(data = as.matrix(lor_df$x, lor_df$y, lor_df$z), emb = 1, del = 1, norm = "euc", rad = 0.2) # run MdRQA3 on the x, y and z dimensions of the Lorenz system
+
+image(lor_mdrqa$RP) # show recurrence plot
+```
+```{r}
+emDim = 1
+emLag = 1
+emRad = 0.2
+
+tmp <- lor_df[c("x", "y", "z")]
+
+RNs <- plyr::llply(1:3, function(r) rn(y1 = tmp[,r], emDim = emDim, emLag = emLag, emRad = emRad, targetValue = 0.05))
+```
+
+```{r}
+layers <- plyr::llply(RNs, function(r) igraph::graph_from_adjacency_matrix(r, mode="undirected", diag = FALSE))
+names(layers) <- colnames(tmp)
+```
+
+```{r}
+mrn_summary <- mrn(layers = layers)
+mrn_summary$meanValues
+```
+
+
+```{r, fig.width = 7, fig.height = 7}
+edge_weights_RNNs_mat <- mrn_plot(layers = layers, RNnodes = TRUE)
+edge_weights_RNNs_mat$MRN
+```
+
+```{r, fig.width = 7, fig.height = 7}
+edge_weights_mat <- mrn_plot(layers = layers, RNnodes = FALSE, doSave = FALSE, showVertexLegend = TRUE)
+edge_weights_mat$MRN
+```
+
