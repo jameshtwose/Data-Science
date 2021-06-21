@@ -1,0 +1,84 @@
+---
+title: "Testing R-Squared GLMM output"
+output: html_notebook
+author: James Twose
+---
+
+The aim of this script is to understand the r.squaredGLMM function from the MuMIn package. This is a way of quantifying the r-squared based on the fixed effects, and the conditional R2 value associated with fixed effects plus the random effects.
+
+```{r}
+library(lme4)
+library(MuMIn)
+```
+
+```{r}
+sessionInfo()
+```
+
+```{r}
+df <- mtcars
+```
+
+```{r}
+head(df)
+str(df)
+```
+
+
+```{r}
+#Fit Model
+fit <- lmer(mpg ~ gear + disp + (1|cyl), data = df)
+fmnull <- lmer(mpg ~ 1 + (1|cyl), data = df)
+```
+
+```{r}
+summary(fit)
+cat("\n-----------------\n")
+summary(fmnull)
+```
+
+
+```{r}
+plot(fit)
+```
+
+
+```{r}
+r.squaredGLMM(fit)
+r.squaredGLMM(fit, fmnull)
+
+```
+
+```{r}
+tmp <- summary(fit)
+```
+
+```{r}
+print(fit, digits=7, ranef.comp="Var")
+vcov.merMod(fit, corr=TRUE)
+showMethods(classes="lmerMod")
+```
+
+
+```{r}
+str(tmp)
+```
+
+```{r}
+tmp$vcov
+```
+
+
+```{r}
+VarCorr(fit)
+```
+
+## Main worker code of the r.squaredGLMM function
+
+```{r}
+vtot <- sum(vfe, vre)
+matrix(c(vfe, vtot) / (vtot + rep(vol, each = 2L)),
+        ncol = 2L, byrow = TRUE, dimnames = list(names(vol), c("R2m", "R2c")))
+```
+
+

@@ -131,23 +131,74 @@ data.frame(result_rfe1$fit$confusion)
 ```
 
 ```{r}
-d_binomial <- tibble("target" = rbinom(100, 1, 0.7),
-                     "prediction" = rbinom(100, 1, 0.6))
-basic_table <- table(d_binomial)
-cfm <- as_tibble(basic_table)
+prediction_tibble <- tibble("target"=y_test,
+       "prediction"=predict(result_rfe1, x_test)$pred)
+prediction_table <- table(prediction_tibble)
+cfm <- as_tibble(prediction_table)
 plot_confusion_matrix(cfm, 
                       target_col = "target", 
                       prediction_col = "prediction",
                       counts_col = "n")
-
 ```
+
+```{r}
+getModelInfo(model="rpart2")
+```
+
 
 
 ```{r}
-cfm <- as_tibble(result_rfe1$fit$confusion[,-1])
-plot_confusion_matrix(cfm, 
-                      target_col = "target", 
-                      prediction_col = "prediction",
-                      counts_col = "n")
+# Specify 10 fold cross-validation
+ctrl_cv <- trainControl(method = "repeatedcv",
+                        search="grid",
+                        number = 10,
+                        repeats=10,
+                        timingSamps = 5,
+                        seeds = c(1:101)
+                        )
+# Predict income using decision tree
+dec_mod <- train(x=x_train,
+                 y=y_train,
+                    method = "rpart2",  
+                    trControl = ctrl_cv,
+                    tuneGrid = expand.grid(
+                      maxdepth = c(1, 2, 5 
+                                   # 10, 50, 100
+                                   )
+                      # split = c(1),
+                      # prune = c(1, 2)
+                      )
+
+                 )
 ```
 
+```{r}
+dec_mod$results
+```
+
+```{r}
+# Specify 10 fold cross-validation
+ctrl_cv <- trainControl(method = "repeatedcv",
+                        search="grid",
+                        number = 10,
+                        repeats=10,
+                        timingSamps = 5,
+                        # seeds = c(1:101)
+                        )
+# Predict income using decision tree
+dec_mod <- train(x=x_train,
+                 y=y_train,
+                    method = "rpartScore",  
+                    trControl = ctrl_cv,
+                    tuneGrid = expand.grid(
+                      cp = seq(0,1,0.1),
+                      split = c("abs", "quad"),
+                      prune = c("mc", "mr")
+                      )
+
+                 )
+```
+
+```{r}
+dec_mod$results
+```
