@@ -1,0 +1,66 @@
+---
+title: "Finding determinants of ordinal data using CIBER"
+author: "James Twose"
+output: html_notebook
+---
+
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+# library(parsnip)
+library(magrittr)
+library(dplyr)
+library(faux)
+library(DataExplorer)
+# library(caret)
+# library(randomForest)
+library(tidyr)
+# library(cvms)
+library(doParallel)
+# library(rattle)
+# library(rpart)
+require("userfriendlyscience")
+```
+
+```{r}
+sessionInfo()
+```
+
+
+```{r}
+df <- read.csv("data/synthetic_likert_data.csv")
+```
+
+```{r}
+grouping_var <- "target"
+feature_list <- colnames(df[, !(names(df) %in% c(grouping_var, "X"))])
+```
+
+
+```{r}
+str(df)
+
+```
+
+```{r, fig.height=15, fig.width=15}
+# Exploratory data analysis
+plot_intro(df)
+plot_bar(df)
+plot_correlation(df)
+```
+
+
+```{r, fig.height=20, fig.width=10}
+tmp <- df %>%
+  select(-target, -X) %>%
+  as.data.frame()
+
+determinants_list <- colnames(tmp)
+
+CIBER(data=df,
+      determinants = determinants_list,
+      targets = c("target"),
+      orderBy = "target")
+# ggsave("CIBER_plot_boolean.png", dpi = 400)
+```
+
+
