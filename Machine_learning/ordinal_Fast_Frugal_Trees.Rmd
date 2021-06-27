@@ -1,0 +1,232 @@
+---
+title: "Classifying synthetic ordinal data using Fast and Frugal Trees"
+author: "James Twose"
+output: html_notebook
+---
+
+
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(parsnip)
+library(magrittr)
+library(dplyr)
+library(faux)
+library(DataExplorer)
+library(caret)
+library(randomForest)
+library(tidyr)
+library(cvms)
+library(doParallel)
+library(rattle)
+library(rpart)
+```
+
+```{r}
+sessionInfo()
+```
+
+```{r}
+df <- read.csv("data/synthetic_likert_data.csv")
+```
+
+```{r, fig.height=15, fig.width=15}
+# Exploratory data analysis
+plot_intro(df)
+plot_bar(df)
+plot_correlation(df)
+```
+
+```{r}
+grouping_var <- "target"
+feature_list <- colnames(df[, !(names(df) %in% c(grouping_var, "X"))])
+
+# dput(as.character(feature_list))
+# dput(as.character(rep("unordered", 10)))
+```
+
+```{r}
+ordering_lookup <- data.frame(
+  varname = c("likert_5_options_0", "likert_5_options_1", "likert_5_options_2", 
+"likert_5_options_3", "likert_5_options_4", "likert_5_options_5", 
+"likert_5_options_6", "likert_5_options_7", "likert_5_options_8", 
+"likert_5_options_9", "likert_5_options_10", "likert_5_options_11", 
+"likert_5_options_12", "likert_5_options_13", "likert_5_options_14", 
+"likert_5_options_15", "likert_5_options_16", "likert_5_options_17", 
+"likert_5_options_18", "likert_5_options_19", "likert_5_options_20", 
+"likert_5_options_21", "likert_5_options_22", "likert_5_options_23", 
+"likert_5_options_24", "likert_5_options_25", "likert_5_options_26", 
+"likert_5_options_27", "likert_5_options_28", "likert_5_options_29", 
+"likert_5_options_30", "likert_5_options_31", "likert_5_options_32", 
+"likert_5_options_33", "likert_5_options_34", "likert_5_options_35", 
+"likert_5_options_36", "likert_5_options_37", "likert_5_options_38", 
+"likert_5_options_39", "likert_7_options_0", "likert_7_options_1", 
+"likert_7_options_2", "likert_7_options_3", "likert_7_options_4", 
+"likert_7_options_5", "likert_7_options_6", "likert_7_options_7", 
+"likert_7_options_8", "likert_7_options_9", "likert_2_options_0", 
+"likert_2_options_1", "likert_2_options_2", "likert_2_options_3", 
+"likert_2_options_4", "likert_2_options_5", "likert_2_options_6", 
+"likert_2_options_7", "likert_2_options_8", "likert_2_options_9"
+),
+  ordering = c("ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "ordered", "ordered", "ordered", "ordered", 
+"ordered", "ordered", "unordered", "unordered", "unordered", "unordered", "unordered", 
+"unordered", "unordered", "unordered", "unordered", "unordered")
+)
+```
+
+
+```{r}
+df[, grouping_var] <- as.factor(df[, grouping_var])
+```
+
+```{r}
+ordinal_vars_mydata <- ordering_lookup %>%
+  dplyr::filter(varname %in% names(df)) %>%
+  dplyr::filter(ordering == "ordered")
+
+df <- df %>%
+  # Ordered variables as ordinal factors
+  dplyr::mutate(across(.cols = ordinal_vars_mydata$varname,
+                        ~factor(., ordered = TRUE))) %>%
+  # Everything else as unordered factors
+  dplyr::mutate(across(.cols = -ordinal_vars_mydata$varname,
+                        ~factor(.)))
+str(df)
+
+```
+
+
+```{r}
+x <- df %>%
+  select(-target, -X) %>%
+  as.data.frame()
+
+y <- df$target
+```
+
+
+```{r}
+set.seed(2021)
+inTrain <- createDataPartition(y, p = .80, list = FALSE)[,1]
+
+x_train <- x[ inTrain, ]
+x_test  <- x[-inTrain, ]
+
+y_train <- y[ inTrain]
+y_test  <- y[-inTrain]
+
+colnames(x_train)
+```
+
+
+# Running Fast and Frugal Trees on the synthetic data
+
+```{r}
+fft_train <- data.frame(x_train, target = y_train) %>% 
+  dplyr::mutate(target = dplyr::case_when(target == 0 ~ FALSE,
+                                          target == 1 ~ TRUE)) # %>% 
+
+fft_test <- data.frame(x_test, target = y_test) %>% 
+  dplyr::mutate(target = dplyr::case_when(target == 0 ~ FALSE,
+                                          target == 1 ~ TRUE)) # %>% 
+
+```
+
+
+```{r}
+cl <- makePSOCKcluster(8)
+registerDoParallel(cl)
+
+set.seed(2021)
+
+results_fft <- FFTrees::FFTrees(formula = target ~ ., 
+                     data = fft_train,  
+                     data.test = fft_test,
+                     algorithm = "ifan", #"dfan",
+                     do.comp = TRUE,
+                     goal.threshold = "bacc"
+                     # decision.labels = c("Lower masking", "Higher masking")
+                     )
+
+stopCluster(cl)
+```
+
+```{r}
+registerDoSEQ()
+```
+
+
+
+```{r, fig.height=7, fig.width=15}
+plot(results_fft)
+  
+```
+
+
+```{r, fig.height=7, fig.width=15}
+print(results_fft)
+  
+```
+
+```{r}
+ggplot(data=results_fft$trees$stats$train, aes(x=tree, y=bacc)) + 
+  geom_point() + 
+  geom_line() +
+  ggtitle("Balanced Accuracy per tree within the train set")
+
+ggplot(data=results_fft$trees$stats$test, aes(x=tree, y=bacc)) + 
+  geom_point() + 
+  geom_line() +
+  ggtitle("Balanced Accuracy per tree within the test set")
+
+```
+```{r}
+results_fft$trees$inwords
+```
+
+```{r}
+prediction_tibble <- tibble("target"=fft_test$target,
+       "prediction"=predict(results_fft, newdata = fft_test))
+prediction_table <- table(prediction_tibble)
+cfm <- as_tibble(prediction_table)
+plot_confusion_matrix(cfm, 
+                      target_col = "target", 
+                      prediction_col = "prediction",
+                      counts_col = "n")
+```
+```{r}
+# Post prediction
+postResample(as.factor(predict(results_fft, newdata = fft_test)), as.factor(fft_test$target))
+```
+
+
+```{r}
+results_fft$competition$models$cart
+```
+
+```{r, fig.height=10}
+varImpPlot(results_fft$competition$models$rf)
+```
+
+
+```{r}
+fancyRpartPlot(results_fft$competition$models$cart)
+```
+
+
+
+```{r}
+ggplot(data=df, aes(x=X, y=likert_7_options_2, color=target)) + geom_point()
+```
+
+```{r}
+ggplot(data=df, aes(x=X, y=likert_5_options_30, color=target)) + geom_point()
+```
+
+
