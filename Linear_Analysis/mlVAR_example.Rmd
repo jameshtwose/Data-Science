@@ -1,0 +1,116 @@
+---
+title: "Multilevel VAR Estimation for Multiple Time Series"
+output: html_notebook
+---
+
+Understanding how to do Multilevel VAR Estimation for Multiple Time Series using the `mlVAR` R package.
+
+```{r}
+library(mlVAR)
+```
+
+
+```{r}
+## Small example ###
+# Simulate data:
+Model <- mlVARsim(nPerson = 50, nNode = 3, nTime = 50, lag=1)
+```
+
+
+```{r}
+# Estimate using correlated random effects:
+fit1 <- mlVAR(Model$Data, vars = Model$vars, idvar = Model$idvar, lags = 1, temporal = "correlated")
+```
+
+
+```{r}
+# Print some pointers:
+print(fit1)
+```
+
+
+```{r}
+# Summary of all parameter estimates:
+summary(fit1)
+
+```
+
+```{r}
+# Compare temporal relationships:
+layout(t(1:2))
+plot(Model, "temporal", title = "True temporal relationships", layout = "circle")
+plot(fit1, "temporal", title = "Estimated temporal relationships", layout = "circle")
+```
+
+```{r}
+# Compare contemporaneous partial correlations:
+layout(t(1:2))
+plot(Model, "contemporaneous", title = "True contemporaneous relationships", 
+    layout = "circle")
+plot(fit1, "contemporaneous", title = "Estimated contemporaneous relationships", 
+    layout = "circle")
+```
+
+```{r}
+# Compare between-subjects partial correlations:
+layout(t(1:2))
+plot(Model, "between", title = "True between-subjects relationships", layout = "circle")
+plot(fit1, "between", title = "Estimated between-subjects relationships", 
+    layout = "circle")
+```
+
+```{r}
+# Run same model with non-correlated temporal relationships and fixed-effect model:
+fit2 <- mlVAR(Model$Data, vars = Model$vars, idvar = Model$idvar, lags = 1, 
+    temporal = "orthogonal")
+fit3 <- mlVAR(Model$Data, vars = Model$vars, idvar = Model$idvar, lags = 1, 
+    temporal = "fixed")
+```
+
+```{r}
+# Compare models:
+mlVARcompare(fit1,fit2,fit3)
+```
+
+```{r}
+# Inspect true parameter correlation matrix:
+Model$model$Omega$cor$mean
+# Even though correlations are high, orthogonal model works well often!
+```
+
+```{r}
+### Large example ###
+Model <- mlVARsim(nPerson = 100, nNode = 10, nTime = 100,lag=1)
+
+# Correlated random effects no longer practical. Use orthogonal or fixed:
+fit4 <- mlVAR(Model$Data, vars = Model$vars, idvar = Model$idvar, lags = 1, 
+    temporal = "orthogonal")
+fit5 <- mlVAR(Model$Data, vars = Model$vars, idvar = Model$idvar, lags = 1, 
+    temporal = "fixed")
+
+# Compare models:
+mlVARcompare(fit4, fit5)
+
+# Compare temporal relationships:
+layout(t(1:2))
+plot(Model, "temporal", title = "True temporal relationships", layout = "circle")
+plot(fit4, "temporal", title = "Estimated temporal relationships", layout = "circle")
+
+# Compare contemporaneous partial correlations:
+layout(t(1:2))
+plot(Model, "contemporaneous", title = "True contemporaneous relationships", 
+    layout = "circle")
+plot(fit4, "contemporaneous", title = "Estimated contemporaneous relationships", 
+    layout = "circle")
+
+# Compare between-subjects partial correlations:
+layout(t(1:2))
+plot(Model, "between", title = "True between-subjects relationships", layout = "circle")
+plot(fit4, "between", title = "Estimated between-subjects relationships", 
+    layout = "circle")
+```
+
+```{r}
+Model$Data
+```
+
