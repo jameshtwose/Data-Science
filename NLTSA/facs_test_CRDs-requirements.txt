@@ -8,5 +8,5 @@ sklearn==0.23.2
 IPython==7.21.0
 jupyter_client==6.1.7
 jupyter_core==4.7.1
-jupyterlab==3.0.10
+jupyterlab==3.0.17
 notebook==6.2.0
