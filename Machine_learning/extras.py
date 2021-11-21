@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
+import warnings
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import seaborn as sns
+from typing import Union
 
 
 def variance_threshold(df:pd.DataFrame, 
@@ -183,5 +186,148 @@ def plot_confusion_matrix(
 
     if title:
         _ = plt.title(title)
+
+    return fig, ax
+
+
+def tSNE(
+    data: pd.DataFrame,
+    n_components: int = 2,
+    normalize: bool = True,
+    hue: Union[str, None] = None,
+    tag: Union[str, None] = None,
+    label_fontsize: int = 14,
+    figsize: tuple = (11.7, 8.27),
+    **kwargs,
+):
+    r"""Perform t-Distributed Stochastic Neighbor Embedding (t-SNE) Analysis
+    More info : https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html
+    Parameters
+    ----------
+    data: pandas.DataFrame
+        Dataframe which contains some numerical feature
+    n_components : int, optional (default: 2)
+        Dimension of the embedded space (2D or 3D).
+    normalize : bool, optional (default: True)
+        Normalize data prior tSNE.
+    hue: string, optional
+        Grouping variable that will produce points with different colors.
+        Can be either categorical or numeric, although color mapping will behave
+        differently in latter case.
+    tag: string, optional
+        Tag each point with the value relative to the corresponding column (only 2D currently)
+    label_fontsize: int, optional (default: 14)
+        Font size for the `tag`
+    figsize: tuple (default: (11.7, 8.27))
+        Width and height of the figure in inches
+    kwargs: key, value pairings
+        Additional keyword arguments relative to tSNE() function. Additional info:
+        https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html
+    Returns
+    ----------
+    fig: matplotlib.pyplot.Figure
+        Graph with clusters in embedded space
+    Examples
+    ----------
+    >>> data = sns.load_dataset("mpg")
+    >>> from neuropy.cluster_analysis import tSNE
+    >>> fig = tSNE(data, n_components=2, hue='origin', tag='name', generate_plot = False)
+    """
+
+    # check hue input
+    if hue is None:
+        warnings.warn(
+            "A hue has not been set, hence it shall not be shown in the plot."
+        )
+    if not isinstance(hue, str):
+        raise ValueError("hue input needs to be a string")
+
+    if hue not in data.columns:
+        raise ValueError(f"hue='{hue}' is not contained in dataframe")
+
+    # check tag input
+    if tag is not None:
+        if not isinstance(tag, str):
+            raise ValueError("tag needs to be str type")
+        if tag not in data.columns:
+            raise ValueError(f"tag='{tag}' is not contained in dataframe")
+    else:
+        pass
+
+    # t-SNE takes into account only numerical feature
+    data_num = data.select_dtypes(include="number")
+    if hue in data_num.columns:
+        data_num = data_num.drop(hue, axis=1)
+    data_obj = data.select_dtypes(exclude="number")
+    if hue and hue not in data_obj.columns:
+        # Add hue column if it is numerical
+        data_obj = pd.concat([data_obj, data[[hue]]], axis=1)
+
+    # remove any row with NaNs and normalize data with z-score
+    data_num = data_num.dropna(axis="index", how="any")
+
+    if normalize:
+        # get z-score to treat different dimensions with equal importance
+        data_num = StandardScaler().fit_transform(data_num)
+
+    # Apply t-SNE to normalized_movements: normalized_data
+    tsne_features = TSNE(n_components=n_components, **kwargs).fit_transform(data_num)
+
+    # show t-SNE cluster
+    if n_components == 2:
+        # combine tsne feature with categorical and/or object variables
+        df_tsne = pd.DataFrame(data=tsne_features, columns=["t-SNE (x)", "t-SNE (y)"])
+        df_tsne = pd.concat([df_tsne, data_obj], axis=1)
+        # plot 2D
+        fig, ax = plt.subplots(figsize=figsize)
+        _ = plt.title("t-Distributed Stochastic Neighbor Embedding (t-SNE)")
+        _ = sns.scatterplot(
+            x="t-SNE (x)",
+            y="t-SNE (y)",
+            hue=hue,
+            legend="full",
+            data=df_tsne,
+            alpha=0.8,
+        )
+
+    elif n_components == 3:
+        # combine tsne feature with categorical and/or object variables
+        df_tsne = pd.DataFrame(
+            data=tsne_features, columns=["t-SNE (x)", "t-SNE (y)", "t-SNE (z)"]
+        )
+        df_tsne = pd.concat([df_tsne, data_obj], axis=1)
+        # plot 3D
+        fig = plt.figure(figsize=figsize)
+        _ = plt.title("t-Distributed Stochastic Neighbor Embedding (t-SNE)")
+        ax = fig.add_subplot(111, projection="3d")
+        if hue:
+            i = ax.scatter(
+                df_tsne["t-SNE (x)"],
+                df_tsne["t-SNE (y)"],
+                df_tsne["t-SNE (z)"],
+                c=df_tsne[hue],
+                cmap="tab10",
+                s=60,
+                alpha=0.8,
+            )
+            fig.colorbar(i)
+        else:
+            ax.scatter(
+                df_tsne["t-SNE (x)"],
+                df_tsne["t-SNE (y)"],
+                df_tsne["t-SNE (z)"],
+                c="#75bbfd",
+                s=60,
+                alpha=0.8,
+            )
+        _ = ax.view_init(30, 185)
+
+    else:
+        raise ValueError("n_components can be either 2 or 3")
+
+    # tag each point
+    if tag is not None and n_components == 2:
+        for x, y, tag in zip(df_tsne["t-SNE (x)"], df_tsne["t-SNE (y)"], df_tsne[tag]):
+            plt.annotate(tag, (x, y), fontsize=label_fontsize, alpha=0.75)
 
     return fig, ax
