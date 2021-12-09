@@ -24,14 +24,20 @@ def get_iris_sql_as_df():
 #         return pd.read_sql(new_query.statement, new_query.session.bind)
 
 
-def upload_row_user_event_counts_sql_as_df(new_user):
+def upload_row_sql_from_df(new_user):
     with session_scope() as session:
         session.add(new_user)
         session.commit()
 
 
-def upload_multiple_rows_user_event_counts_sql_as_df(new_users_list):
+def upload_multiple_rows_sql_from_df(new_users_list):
     with session_scope() as session:
         session.add_all(new_users_list)
+        session.commit()
+
+
+def update_row(new_user):
+    with session_scope() as session:
+        session.add(new_user)
         session.commit()
 

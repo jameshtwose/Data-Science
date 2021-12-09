@@ -1,0 +1,124 @@
+header {
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4em;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    .logo-text {
+      margin: 0 1em;
+    }
+  }
+  
+  nav {
+    position: absolute;
+    right: 0;
+    overflow-x: hidden;
+    transition: all ease-in-out 250ms;
+    align-items: center;
+    z-index: 1000;
+    
+   @media (max-width: 950px) {
+      position: fixed;
+      background: blue;
+      height: 100vh;
+      width: 100vw;
+      max-width: 15em;
+      top: 0;
+      right: -15em;
+  
+      &.is-open {
+        right: 0;
+      }
+    }
+  }
+    
+  .styled-list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+    z-index: 1000;
+  
+    @media (max-width: 950px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 90vh;
+    }
+  
+    a {
+      text-transform: uppercase;
+      font-size: .9rem;
+      letter-spacing: .1rem;
+  
+      &:hover, &:focus {
+        outline: none;
+        opacity: .7;
+      }
+  
+      @media (max-width: 950px) {
+        text-decoration: none;
+        flex-basis: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+  
+  .nav-toggle {
+    display: none;
+  
+    @media (max-width: 950px) {
+      position: fixed;
+      display: block;
+      cursor: pointer;
+      right: 0;
+      top: 1em;
+      padding: 1em;
+      z-index: 1001;
+    }
+  }
+  
+  .nav-link {
+    color: white;
+    margin: 0 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @media (max-width: 950px) {
+    .hamburger, .hamburger::before, .hamburger::after {
+      content: '';
+      display: block;
+      background: white;
+      width: 1.5em;
+      height: 3px;
+      transition: all ease-in-out 250ms;
+      z-index: 1000;
+    }
+  
+    .hamburger::before {
+      transform: translateY(-6px);
+    }
+  
+    .hamburger::after {
+      transform: translateY(3px);
+    }
+  
+    .hamburger.is-open {
+      transform: rotate(45deg);
+  
+      &::after {
+        transform: rotate(-90deg) translateX(-1px)
+      }
+  
+      &::before {
+        display: none
+      }
+    }
+  }
