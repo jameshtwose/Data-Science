@@ -1,0 +1,49 @@
+---
+title: "Exporting data from the Apple Mobility REST API"
+output: html_notebook
+---
+
+
+## Python script to translate:
+
+import urllib, json
+from urllib.request import urlopen
+import pandas as pd
+
+
+def main():
+    url = "https://covid19-static.cdn-apple.com/covid19-mobility-data/current/v3/index.json"
+    response = urlopen(url)
+    data = json.loads(response.read())
+    url = ("https://covid19-static.cdn-apple.com" + data['basePath'] + data['regions']['en-us']['csvPath'])
+    return url
+
+print(main())
+
+print(pd.read_csv(main()).head())
+
+
+```{r}
+library(httr)
+```
+
+
+```{r}
+initial_url <- "https://covid19-static.cdn-apple.com/covid19-mobility-data/current/v3/index.json"
+begin_path <- "https://covid19-static.cdn-apple.com"
+response <- GET(url = initial_url)
+data <- content(response)
+base_path <- data$basePath
+extension_path <- data$regions$`en-us`$csvPath
+url <- paste0(begin_path, base_path, extension_path)
+url
+```
+
+```{r}
+df <- read.csv(url)
+```
+
+```{r}
+head(df)
+```
+
