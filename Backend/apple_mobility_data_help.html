@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="R.css" />
+</head>
+
+<body>
+
+    <table width="100%" summary="page for apple_mobility_data">
+        <tr>
+            <td>apple_mobility_data</td>
+            <td style="text-align: right;">R Documentation</td>
+        </tr>
+    </table>
+
+    <h2>apple_mobility_data</h2>
+
+    <h3>Description</h3>
+
+
+    <p>A function to get the most up to date version of the apple mobility data (documentation can be found here: https://covid19.apple.com/mobility).
+    </p>
+
+
+    <h3>Usage</h3>
+
+    <pre>
+    apple_mobility_data()
+    </pre>
+
+
+    <h3>Arguments</h3>
+
+    <table summary="R argblock">
+        <tr valign="top">
+            <td><code>None</code></td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+
+
+    <h3>Value</h3>
+
+    <p>A data frame object.
+    </p>
+
+
+    <h3>Note</h3>
+
+    <p>This function is a translation of the following python script written by Ilari Patrikka:
+    </p>
+    <p><code>import json</code>
+    </p>
+    <p><code>from urllib.request import urlopen</code>
+    </p>
+    <p><code>def main():</code>
+    </p>
+    <p><code>url = "https://covid19-static.cdn-apple.com/covid19-mobility-data/current/v3/index.json"</code>
+    </p>
+    <p><code>response = urlopen(url)</code>
+    </p>
+    <p><code>data = json.loads(response.read())</code>
+    </p>
+    <p><code>url = ("https://covid19-static.cdn-apple.com" + data['basePath'] + data['regions']['en-us']['csvPath'])</code>
+    </p>
+    <p><code>return url</code>
+    </p>
+
+
+    <h3>Author(s)</h3>
+
+
+    <p>James Twose (https://services.jms.rocks)
+    </p>
+
+
+    <h3>References</h3>
+
+
+    <p>Apple maps: Mobility Trends Reports
+    </p>
+    <p>https://covid19.apple.com/mobility
+    </p>
+
+
+    <h3>Examples</h3>
+
+    <pre>
+    df &lt;- apple_mobility_data()
+    
+    </pre>
+
+
+</body>
+
+</html>
