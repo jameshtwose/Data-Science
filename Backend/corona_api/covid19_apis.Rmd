@@ -1,0 +1,60 @@
+---
+title: "COVID-19 API"
+output: html_notebook
+---
+
+Pulling data from a COVID 19 API as an example to get data using RAPID API. 
+
+
+```{r}
+library(httr)
+library(jsonlite)
+library(dotenv)
+library(psych)
+library(ggplot2)
+library(tidyverse)
+
+```
+
+
+```{r}
+load_dot_env("../../.env")
+
+country <- "FIN"
+url <- paste0("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/covid-ovid-data/sixmonth/", country)
+API_KEY <- Sys.getenv("RAPID_API_KEY")
+HOST_URL <- 'vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com'
+response <- VERB("GET", url,
+                 httr::add_headers("x-rapidapi-host" = HOST_URL,
+                                   "x-rapidapi-key" = API_KEY), 
+                 content_type("application/octet-stream"))
+
+df <- fromJSON(rawToChar(response$content))
+```
+
+
+```{r}
+head(df)
+describe(df)
+```
+
+```{r}
+df$date <- as.POSIXct(strptime(df$date, format='%Y-%m-%d'))
+```
+
+
+```{r}
+plot_df <- df %>%
+  select(date, new_cases, new_tests, new_deaths) %>%
+  gather(key = "variable", value = "value", -date)
+```
+
+
+```{r}
+# Visualization
+ggplot(plot_df, aes(x = date, y = value)) + 
+  geom_line(aes(color = variable, linetype = variable)) + 
+  scale_color_manual(values = c("darkred", "steelblue", "orange")) +
+  ggtitle(paste("COVID-19 numbers country code:", country))
+```
+
