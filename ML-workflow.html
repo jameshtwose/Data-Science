@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Machine Learning Workflow &#8212; Data-Science NA documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Stress prediction based on biometrics data" href="stress_prediction.html" />
+    <link rel="prev" title="Gower clustering" href="gower_clustering.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Data-Science</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Linear Analysis Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Bootstrapped_t_test_example.html">Create a bootstrapped t_test function and show it off using the iris data set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="groupby_apply_ML.html">An example of a use of groupby apply to apply a model to a set of individual groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random_walk_on_pink_background.html">Random Walk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uninformative_feature_effect_on_R2.html">Looking at how adding an extra feature with varying levels of relevance effects the r2_score</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Machine Learning Notebooks</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html">Gower clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Multiclass-example-1.">Multiclass example 1.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Multiclass-example-2.">Multiclass example 2.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Binary-example">Binary example</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Machine Learning Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html">Stress prediction based on biometrics data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html#Read-in-data">Read in data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html#Exploratory-Data-Analysis-(EDA)">Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthetic_ordinal_data.html">Creating synthetic ordinal data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthetic_ordinal_data.html#Shuffle-the-target-so-there-are-no-variables-which-have-a-perfect-classification">Shuffle the target so there are no variables which have a perfect classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="understanding_SHAP.html">Using a toy dataset to better understand SHapley Additive exPlanations (SHAP)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NLTSA Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html">Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html#Plot-all-of-the-time-series-levels-of-the-FACS">Plot all of the time series levels of the FACS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fatigue_change_over_time.html">Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html">Looking for patterns in grand mal seizures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html#Context">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html#About-Tubular-Sclerosis">About Tubular Sclerosis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smoothing_options.html">Testing out rolling smoothing functions</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Machine Learning Workflow</a><ul>
+<li><a class="reference internal" href="#Frame-the-Problem-and-Look-at-the-Big-Picture">Frame the Problem and Look at the Big Picture</a></li>
+<li><a class="reference internal" href="#Get-the-Data">Get the Data</a></li>
+<li><a class="reference internal" href="#Perform-Exploratory-Data-Analysis-(EDA)">Perform Exploratory Data Analysis (EDA)</a></li>
+<li><a class="reference internal" href="#Prepare-the-Data">Prepare the Data</a></li>
+<li><a class="reference internal" href="#Short-List-Promising-Models">Short-List Promising Models</a></li>
+<li><a class="reference internal" href="#Fine-Tune-the-System">Fine-Tune the System</a></li>
+<li><a class="reference internal" href="#Present-Your-Solution">Present Your Solution</a></li>
+<li><a class="reference internal" href="#Model-deployment">Model deployment</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<section id="Machine-Learning-Workflow">
+<h1>Machine Learning Workflow<a class="headerlink" href="#Machine-Learning-Workflow" title="Permalink to this headline">¶</a></h1>
+<p><strong>Author:</strong> James Twose <strong>Date:</strong> 20-03-2021</p>
+<hr class="docutils" />
+<section id="Frame-the-Problem-and-Look-at-the-Big-Picture">
+<h2>Frame the Problem and Look at the Big Picture<a class="headerlink" href="#Frame-the-Problem-and-Look-at-the-Big-Picture" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Define the objective in business terms.</p></li>
+<li><p>How will your solution be used?</p></li>
+<li><p>What are the current solutions/workarounds (if any)?</p></li>
+<li><p>How should you frame this problem (supervised/ unsupervised, online/ offline, regression/ classification etc.)?</p></li>
+<li><p>How should performance be measured? Is the performance measure aligned with the business objective? What would be the minimum performance needed to reach the business objective? - cutoffs</p></li>
+<li><p>What are comparable problems? Can you reuse experience or tools?</p></li>
+<li><p>How would you solve the problem manually?</p></li>
+<li><p>List the assumptions you (or others) have made so far.</p></li>
+<li><p>Verify assumptions if possible.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="Get-the-Data">
+<h2>Get the Data<a class="headerlink" href="#Get-the-Data" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>List the data you need and how much you need - sample (power) analyses.</p></li>
+<li><p>Document the data you use.</p></li>
+<li><p>Check how much space it will take.</p></li>
+<li><p>Create a workspace (with enough storage space).</p></li>
+<li><p>Get the data.</p></li>
+<li><p>Convert the data to a format you can easily manipulate (without changing the data itself; e.g. .csv, .json).</p></li>
+<li><p>Check the size and type of data (time series, sample, geographical, etc.) and make sure they are what they should be .</p></li>
+<li><p>Sample a test set, put it aside, and never look at it.</p></li>
+</ol>
+<p><strong>Note:</strong> automate as much as possible so you can easily get fresh data.</p>
+</section>
+<hr class="docutils" />
+<section id="Perform-Exploratory-Data-Analysis-(EDA)">
+<h2>Perform Exploratory Data Analysis (EDA)<a class="headerlink" href="#Perform-Exploratory-Data-Analysis-(EDA)" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Create a copy of the data for exploration (sampling it down to a manageable size if necessary).</p></li>
+<li><p>Create a Jupyter notebook/ python script to keep a record of your data exploration.</p></li>
+<li><p>Study each attribute and its characteristics:</p>
+<ul class="simple">
+<li><p>Name</p></li>
+<li><p>Type (categorical, int/float, bounded/unbounded, text, structured, etc.)</p></li>
+<li><p>% of missing values</p></li>
+<li><p>Noisiness and type of noise (stochastic, outliers, rounding errors, etc.) Possibly useful for the task?</p></li>
+<li><p>Type of distribution (Gaussian, Poisson, etc.)</p></li>
+<li><p>Examine outliers and check whether they make sense or not (might require business knowledge)</p></li>
+</ul>
+</li>
+<li><p>For supervised learning tasks, identify the target attribute(s).</p></li>
+<li><p>Visualize the data.</p></li>
+<li><p>Study the correlations between attributes.</p></li>
+<li><p>Study how you would solve the problem manually.</p></li>
+<li><p>Identify the promising transformations you may want to apply (e.g. log-transformation).</p></li>
+<li><p>Identify extra data that would be useful.</p></li>
+<li><p>Document analysis.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="Prepare-the-Data">
+<h2>Prepare the Data<a class="headerlink" href="#Prepare-the-Data" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Work on copies of the data (keep the original dataset intact).</p></li>
+<li><p>Write functions for all data transformations you apply, for five reasons:</p>
+<ul>
+<li><p>So you can easily prepare the data the next time you get a fresh dataset</p></li>
+<li><p>So you can apply these transformations in future projects</p></li>
+<li><p>To clean and prepare the test set</p></li>
+<li><p>To clean and prepare new data instances once your solution is live</p></li>
+<li><p>To make it easy to treat your preparation choices as hyperparameters</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple">
+<li><p><strong>Data cleaning:</strong></p>
+<ul class="simple">
+<li><p>Fix or remove outliers, if one assess from EDA that outliers are actual abnormal values.</p></li>
+<li><p>Fill in missing values using Imputation techniques (e.g., with zero, mean, median…) or drop their rows (or columns). Note that, packages such as scikit-learn won’t allow any model training if the data-frame contain Nan.</p></li>
+</ul>
+</li>
+<li><p><strong>Feature selection:</strong></p>
+<ul class="simple">
+<li><p>perform feature selection with respect to feature properties via variance analysis as well as percentage of missing values per features</p></li>
+<li><p>perform feature selection with respect to model performance, e.g., lasso regression, random forest</p></li>
+</ul>
+</li>
+<li><p><strong>Feature engineering:</strong> (where appropriate)</p>
+<ul class="simple">
+<li><p>Discretize continuous features (if applicable to analysis).</p></li>
+<li><p>Decompose features (e.g., categorical, date/time, etc.).</p></li>
+<li><p>Add promising transformations of features (e.g., log(x), sqrt(x), x^2, etc.).</p></li>
+<li><p>Aggregate features into promising new features.</p></li>
+</ul>
+</li>
+<li><p><strong>Feature scaling:</strong></p>
+<ul class="simple">
+<li><p>standardize or normalize features. Note that, feature scaling is not required for Classification and Regression Tree (CART) model based, e.g., Radom Forest and Boosting algorithms.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="Short-List-Promising-Models">
+<h2>Short-List Promising Models<a class="headerlink" href="#Short-List-Promising-Models" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Train many quick and dirty models from different categories (e.g., linear, naive Bayes, SVM, Random Forests, neural net, etc.) using standard parameters.</p></li>
+<li><p>Measure and compare their performance. For each model, use N-fold cross-validation and compute the mean and standard deviation of the performance measure on the N folds.</p></li>
+<li><p>Analyze the most significant variables for each algorithm.</p></li>
+<li><p>Analyze the types of errors the models make. What data could we use to avoid these errors?</p></li>
+<li><p>Have a quick round of feature selection and engineering.</p></li>
+<li><p>Have one or two more quick iterations of the five previous steps.</p></li>
+<li><p>Short-list the top three to five most promising models, preferring models that make different types of errors.</p></li>
+</ol>
+<p><strong>Notes:</strong></p>
+<ul class="simple">
+<li><p>If the data is huge, you may want to sample smaller training sets so you can train many different models in a reasonable time (be aware that this penalizes complex models such as large neural nets or Random Forests).</p></li>
+<li><p>Automate these steps as much as possible.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="Fine-Tune-the-System">
+<h2>Fine-Tune the System<a class="headerlink" href="#Fine-Tune-the-System" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Fine-tune the hyperparameters using cross-validation. Treat your data transformation choices as hyperparameters, especially when you are not sure about them (e.g., should I replace missing values with zero or with the median value? Or just drop the rows?). Unless there are very few hyperparameter values to explore, prefer random search over grid search (otherwise you GridSearchCV).</p></li>
+<li><p>Try Ensemble methods. Combining your best models will often perform better than running them individually.</p></li>
+<li><p>Once you are confident about your final model, measure its performance on the test set to estimate the generalization error. Important Note: Don’t tweak your model after measuring the generalization error: you will just start overfitting the test set .</p></li>
+</ol>
+<p><strong>Notes:</strong></p>
+<ul class="simple">
+<li><p>You will want to use as much data as possible for this step, especially as you move toward the end of fine-tuning.</p></li>
+<li><p>As always automate as much as you can.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="Present-Your-Solution">
+<h2>Present Your Solution<a class="headerlink" href="#Present-Your-Solution" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Write out a Method of delivery for the project</p></li>
+<li><p>Create a quick and easy to understand presentation. Make sure you highlight the big picture first.</p></li>
+<li><p>Explain why your solution achieves the business objective.</p></li>
+<li><p>Don’t forget to present interesting points you noticed along the way. Describe what worked and what did not. List your assumptions and your system’s limitations.</p></li>
+<li><p>Ensure your key findings are communicated through beautiful visualizations or easy-to-remember statements (e.g., “the median income is the number-one predictor of housing prices”).</p></li>
+<li><p>If required write a scientific paper.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="Model-deployment">
+<h2>Model deployment<a class="headerlink" href="#Model-deployment" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Get your solution ready for production (plug into production data inputs, write unit tests, etc.).</p></li>
+<li><p>Write monitoring code to check your system’s live performance at regular intervals and trigger alerts when it drops (need to be assessed that such system is required, e.g., if we observe data-shifting phenomenon). Beware of slow degradation too: models tend to “rot” as data evolves. Monitor your inputs’ quality (e.g., a malfunctioning sensor sending random values, or another team’s output becoming stale). This is particularly important for online learning systems.</p></li>
+<li><p>Retrain your models (if necessary) on a regular basis on fresh data.</p></li>
+</ol>
+<p><strong>Note:</strong> Remember to automate as much as possible.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/ML-workflow.nblink.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2022, James Twose.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

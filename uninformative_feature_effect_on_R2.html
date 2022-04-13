@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Looking at how adding an extra feature with varying levels of relevance effects the r2_score &#8212; Data-Science NA documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Gower clustering" href="gower_clustering.html" />
+    <link rel="prev" title="Random Walk" href="Random_walk_on_pink_background.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Data-Science</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Linear Analysis Notebooks</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Bootstrapped_t_test_example.html">Create a bootstrapped t_test function and show it off using the iris data set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="groupby_apply_ML.html">An example of a use of groupby apply to apply a model to a set of individual groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random_walk_on_pink_background.html">Random Walk</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Looking at how adding an extra feature with varying levels of relevance effects the r2_score</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Machine Learning Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html">Gower clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Multiclass-example-1.">Multiclass example 1.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Multiclass-example-2.">Multiclass example 2.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Binary-example">Binary example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML-workflow.html">Machine Learning Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html">Stress prediction based on biometrics data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html#Read-in-data">Read in data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html#Exploratory-Data-Analysis-(EDA)">Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthetic_ordinal_data.html">Creating synthetic ordinal data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthetic_ordinal_data.html#Shuffle-the-target-so-there-are-no-variables-which-have-a-perfect-classification">Shuffle the target so there are no variables which have a perfect classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="understanding_SHAP.html">Using a toy dataset to better understand SHapley Additive exPlanations (SHAP)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NLTSA Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html">Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html#Plot-all-of-the-time-series-levels-of-the-FACS">Plot all of the time series levels of the FACS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fatigue_change_over_time.html">Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html">Looking for patterns in grand mal seizures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html#Context">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html#About-Tubular-Sclerosis">About Tubular Sclerosis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smoothing_options.html">Testing out rolling smoothing functions</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Looking at how adding an extra feature with varying levels of relevance effects the r2_score</a><ul>
+<li><a class="reference internal" href="#It-is-interesting-to-see-how-choosing-a-feature-with-a-high-coefficient-vs-one-with-a-coefficient-of-0-effects-the-outcome">It is interesting to see how choosing a feature with a high coefficient vs one with a coefficient of 0 effects the outcome</a></li>
+<li><a class="reference internal" href="#Show-the-fit-and-r2-score-of-the-original-data-frame-without-the-extra-noise-based-feature">Show the fit and r2-score of the original data frame without the extra noise based feature</a></li>
+<li><a class="reference internal" href="#Run-the-same-regression-as-above-but-with-a-different-noise-feature-added-each-time">Run the same regression as above but with a different noise feature added each time</a></li>
+<li><a class="reference internal" href="#Show-an-example-of-one-of-the-X’s-to-compare-to-the-initial-data-frame-used-to-get-the-initial-r2-score-shown-above-in-the-scatter-plot">Show an example of one of the X’s to compare to the initial data frame used to get the initial r2 score shown above in the scatter plot</a></li>
+<li><a class="reference internal" href="#Plot-all-the-r2-scores">Plot all the r2 scores</a></li>
+<li><a class="reference internal" href="#Initial-multiple-choice-question:">Initial multiple choice question:</a></li>
+<li><a class="reference internal" href="#Based-on-the-r2-vs-noise_std-plot-it-seems-like-the-answer-hinges-on-how-one-defines-“non-important-to-the-model”.">Based on the r2 vs noise_std plot it seems like the answer hinges on how one defines “non-important to the model”.</a><ul>
+<li><a class="reference internal" href="#So-whilst-in-theory---based-on-the-formula-used-to-calculate-the-r2-score---adding-an-extra-feature-should-always-increase-the-r-squared-score---hence-the-need-for-adjusted-r-squareds,-it-actually-hinges-on-what-is-considered-“non-important”.-Hence-I-would-suggest-rewording-the-multiple-choice-question-to-reflect-this-somehow.">So whilst in theory - based on the formula used to calculate the r2 score - adding an extra feature should always increase the r-squared score - hence the need for adjusted r-squareds, it actually hinges on what is considered “non-important”. Hence I would suggest rewording the multiple choice question to reflect this somehow.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<section id="Looking-at-how-adding-an-extra-feature-with-varying-levels-of-relevance-effects-the-r2_score">
+<h1>Looking at how adding an extra feature with varying levels of relevance effects the r2_score<a class="headerlink" href="#Looking-at-how-adding-an-extra-feature-with-varying-levels-of-relevance-effects-the-r2_score" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">coef</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                             <span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                             <span class="n">n_informative</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                             <span class="n">n_targets</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                             <span class="n">bias</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                             <span class="n">effective_rank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">tail_strength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                             <span class="n">noise</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                             <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">coef</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coef</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;feat_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">coef</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feat_0</th>
+      <th>feat_1</th>
+      <th>feat_2</th>
+      <th>feat_3</th>
+      <th>feat_4</th>
+      <th>feat_5</th>
+      <th>feat_6</th>
+      <th>feat_7</th>
+      <th>feat_8</th>
+      <th>feat_9</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16.748258</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>63.643025</td>
+      <td>0.0</td>
+      <td>70.647573</td>
+      <td>0.0</td>
+      <td>10.456784</td>
+      <td>3.158614</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;feat_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+<span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]),</span>
+      <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feat_0</th>
+      <th>feat_1</th>
+      <th>feat_2</th>
+      <th>feat_3</th>
+      <th>feat_4</th>
+      <th>feat_5</th>
+      <th>feat_6</th>
+      <th>feat_7</th>
+      <th>feat_8</th>
+      <th>feat_9</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.926930</td>
+      <td>-1.430141</td>
+      <td>1.632411</td>
+      <td>-3.241267</td>
+      <td>-1.247783</td>
+      <td>-1.024388</td>
+      <td>0.130741</td>
+      <td>-0.059525</td>
+      <td>-0.252568</td>
+      <td>-0.440044</td>
+      <td>-186.494628</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.202923</td>
+      <td>0.334457</td>
+      <td>0.285865</td>
+      <td>1.547505</td>
+      <td>-0.387702</td>
+      <td>1.795878</td>
+      <td>2.010205</td>
+      <td>-1.515744</td>
+      <td>-0.612789</td>
+      <td>0.658544</td>
+      <td>191.976107</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.241236</td>
+      <td>0.456753</td>
+      <td>0.342725</td>
+      <td>-1.251539</td>
+      <td>1.117296</td>
+      <td>1.443765</td>
+      <td>0.447709</td>
+      <td>0.352055</td>
+      <td>-0.082151</td>
+      <td>0.569767</td>
+      <td>315.503594</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.289775</td>
+      <td>-1.008086</td>
+      <td>-2.038125</td>
+      <td>0.871125</td>
+      <td>-0.408075</td>
+      <td>-0.326024</td>
+      <td>-0.351513</td>
+      <td>2.075401</td>
+      <td>1.201214</td>
+      <td>-1.870792</td>
+      <td>100.185659</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.007973</td>
+      <td>-0.190339</td>
+      <td>-1.037246</td>
+      <td>0.077368</td>
+      <td>0.538910</td>
+      <td>-0.861284</td>
+      <td>-1.382800</td>
+      <td>1.479944</td>
+      <td>1.523124</td>
+      <td>-0.875618</td>
+      <td>-40.813080</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<section id="It-is-interesting-to-see-how-choosing-a-feature-with-a-high-coefficient-vs-one-with-a-coefficient-of-0-effects-the-outcome">
+<h2>It is interesting to see how choosing a feature with a high coefficient vs one with a coefficient of 0 effects the outcome<a class="headerlink" href="#It-is-interesting-to-see-how-choosing-a-feature-with-a-high-coefficient-vs-one-with-a-coefficient-of-0-effects-the-outcome" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">edit_feature</span> <span class="o">=</span> <span class="s2">&quot;feat_5&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_feat_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">edit_feature</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Create</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">):</span>
+    <span class="n">new_feat_df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;extra_feat_</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_feat_df</span><span class="p">[[</span><span class="n">edit_feature</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+&lt;ipython-input-9-15ece02a7e91&gt;:3: SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  new_feat_df[f&#34;extra_feat_{round(i, 2)}&#34;] = new_feat_df[[edit_feature]].add(np.random.normal(0,i,100).reshape(-1, 1))
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_feat_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feat_5</th>
+      <th>extra_feat_0.1</th>
+      <th>extra_feat_0.2</th>
+      <th>extra_feat_0.3</th>
+      <th>extra_feat_0.4</th>
+      <th>extra_feat_0.5</th>
+      <th>extra_feat_0.6</th>
+      <th>extra_feat_0.7</th>
+      <th>extra_feat_0.8</th>
+      <th>extra_feat_0.9</th>
+      <th>...</th>
+      <th>extra_feat_99.0</th>
+      <th>extra_feat_99.1</th>
+      <th>extra_feat_99.2</th>
+      <th>extra_feat_99.3</th>
+      <th>extra_feat_99.4</th>
+      <th>extra_feat_99.5</th>
+      <th>extra_feat_99.6</th>
+      <th>extra_feat_99.7</th>
+      <th>extra_feat_99.8</th>
+      <th>extra_feat_99.9</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.024388</td>
+      <td>-0.974716</td>
+      <td>-1.307462</td>
+      <td>-0.917051</td>
+      <td>-1.355986</td>
+      <td>-1.821601</td>
+      <td>-0.468681</td>
+      <td>-0.494496</td>
+      <td>-1.442566</td>
+      <td>-0.179932</td>
+      <td>...</td>
+      <td>-16.004939</td>
+      <td>133.364347</td>
+      <td>-58.934818</td>
+      <td>116.415540</td>
+      <td>124.949513</td>
+      <td>10.956874</td>
+      <td>152.970119</td>
+      <td>-61.107173</td>
+      <td>-140.130109</td>
+      <td>9.020166</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.795878</td>
+      <td>1.782051</td>
+      <td>1.711749</td>
+      <td>1.964113</td>
+      <td>1.571805</td>
+      <td>1.496190</td>
+      <td>2.941528</td>
+      <td>1.150362</td>
+      <td>2.635085</td>
+      <td>1.331437</td>
+      <td>...</td>
+      <td>122.317131</td>
+      <td>-51.718905</td>
+      <td>72.445362</td>
+      <td>-19.581405</td>
+      <td>-24.721140</td>
+      <td>19.987382</td>
+      <td>-32.259533</td>
+      <td>32.857998</td>
+      <td>-53.048834</td>
+      <td>-12.343040</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.443765</td>
+      <td>1.508533</td>
+      <td>1.375222</td>
+      <td>1.768680</td>
+      <td>1.742682</td>
+      <td>1.446386</td>
+      <td>0.604624</td>
+      <td>2.052489</td>
+      <td>0.880290</td>
+      <td>1.530273</td>
+      <td>...</td>
+      <td>-29.645214</td>
+      <td>-1.617802</td>
+      <td>-15.752390</td>
+      <td>62.461780</td>
+      <td>-33.942097</td>
+      <td>34.128823</td>
+      <td>94.635425</td>
+      <td>-103.690008</td>
+      <td>73.000333</td>
+      <td>-119.124344</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.326024</td>
+      <td>-0.173721</td>
+      <td>-0.486479</td>
+      <td>-0.009883</td>
+      <td>-0.081875</td>
+      <td>-0.302533</td>
+      <td>0.011758</td>
+      <td>0.622923</td>
+      <td>-1.452793</td>
+      <td>-0.742071</td>
+      <td>...</td>
+      <td>7.551026</td>
+      <td>-92.430132</td>
+      <td>41.112141</td>
+      <td>31.240235</td>
+      <td>17.735043</td>
+      <td>210.924356</td>
+      <td>51.918244</td>
+      <td>0.612539</td>
+      <td>39.567114</td>
+      <td>-123.228660</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.861284</td>
+      <td>-0.884700</td>
+      <td>-0.893541</td>
+      <td>-1.274585</td>
+      <td>-0.869645</td>
+      <td>-1.086317</td>
+      <td>-1.251670</td>
+      <td>-0.571880</td>
+      <td>-2.106588</td>
+      <td>-1.252331</td>
+      <td>...</td>
+      <td>-24.106935</td>
+      <td>-5.330764</td>
+      <td>82.459494</td>
+      <td>54.121763</td>
+      <td>7.279049</td>
+      <td>153.839735</td>
+      <td>-196.280966</td>
+      <td>159.187931</td>
+      <td>27.495354</td>
+      <td>19.974685</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 1000 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Show-the-fit-and-r2-score-of-the-original-data-frame-without-the-extra-noise-based-feature">
+<h2>Show the fit and r2-score of the original data frame without the extra noise based feature<a class="headerlink" href="#Show-the-fit-and-r2-score-of-the-original-data-frame-without-the-extra-noise-based-feature" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">&quot;feat&quot;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="mi">200</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;r_square = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/uninformative_feature_effect_on_R2_18_0.png" src="_images/uninformative_feature_effect_on_R2_18_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original_r2_score</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Run-the-same-regression-as-above-but-with-a-different-noise-feature-added-each-time">
+<h2>Run the same regression as above but with a different noise feature added each time<a class="headerlink" href="#Run-the-same-regression-as-above-but-with-a-different-noise-feature-added-each-time" title="Permalink to this headline">¶</a></h2>
+<p>(thus seeing how adding a different feature with more or less noise effects the r2 score of the model)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noise_features_list</span> <span class="o">=</span> <span class="n">new_feat_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">edit_feature</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_r2_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">noise_feat</span> <span class="ow">in</span> <span class="n">noise_features_list</span><span class="p">:</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">&quot;feat&quot;</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">new_feat_df</span><span class="p">[[</span><span class="n">noise_feat</span><span class="p">]]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+
+    <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+    <span class="n">current_r2_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;added_feature&quot;</span><span class="p">:</span> <span class="n">noise_feat</span><span class="p">,</span>
+                                  <span class="s2">&quot;noise_std&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">noise_feat</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]),</span>
+                                  <span class="s2">&quot;r2&quot;</span><span class="p">:</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">all_r2_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">all_r2_df</span><span class="p">,</span> <span class="n">current_r2_df</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Show-an-example-of-one-of-the-X’s-to-compare-to-the-initial-data-frame-used-to-get-the-initial-r2-score-shown-above-in-the-scatter-plot">
+<h2>Show an example of one of the X’s to compare to the initial data frame used to get the initial r2 score shown above in the scatter plot<a class="headerlink" href="#Show-an-example-of-one-of-the-X’s-to-compare-to-the-initial-data-frame-used-to-get-the-initial-r2-score-shown-above-in-the-scatter-plot" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">&quot;feat&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feat_0</th>
+      <th>feat_1</th>
+      <th>feat_2</th>
+      <th>feat_3</th>
+      <th>feat_4</th>
+      <th>feat_5</th>
+      <th>feat_6</th>
+      <th>feat_7</th>
+      <th>feat_8</th>
+      <th>feat_9</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.92693</td>
+      <td>-1.430141</td>
+      <td>1.632411</td>
+      <td>-3.241267</td>
+      <td>-1.247783</td>
+      <td>-1.024388</td>
+      <td>0.130741</td>
+      <td>-0.059525</td>
+      <td>-0.252568</td>
+      <td>-0.440044</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feat_0</th>
+      <th>feat_1</th>
+      <th>feat_2</th>
+      <th>feat_3</th>
+      <th>feat_4</th>
+      <th>feat_5</th>
+      <th>feat_6</th>
+      <th>feat_7</th>
+      <th>feat_8</th>
+      <th>feat_9</th>
+      <th>extra_feat_99.9</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.92693</td>
+      <td>-1.430141</td>
+      <td>1.632411</td>
+      <td>-3.241267</td>
+      <td>-1.247783</td>
+      <td>-1.024388</td>
+      <td>0.130741</td>
+      <td>-0.059525</td>
+      <td>-0.252568</td>
+      <td>-0.440044</td>
+      <td>9.020166</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Plot-all-the-r2-scores">
+<h2>Plot all the r2 scores<a class="headerlink" href="#Plot-all-the-r2-scores" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">all_r2_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;noise_std&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">all_r2_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;noise_std&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">original_r2_score</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original r2 score, before adding an extra feature&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/uninformative_feature_effect_on_R2_27_0.png" src="_images/uninformative_feature_effect_on_R2_27_0.png" />
+</div>
+</div>
+</section>
+<section id="Initial-multiple-choice-question:">
+<h2>Initial multiple choice question:<a class="headerlink" href="#Initial-multiple-choice-question:" title="Permalink to this headline">¶</a></h2>
+<p>Adding a non-important feature to a linear regression model may result in: 1. Increase in R-square 2. Decrease in R-square</p>
+<p>Answer: Only 1 is correct</p>
+</section>
+<section id="Based-on-the-r2-vs-noise_std-plot-it-seems-like-the-answer-hinges-on-how-one-defines-“non-important-to-the-model”.">
+<h2>Based on the r2 vs noise_std plot it seems like the answer hinges on how one defines “non-important to the model”.<a class="headerlink" href="#Based-on-the-r2-vs-noise_std-plot-it-seems-like-the-answer-hinges-on-how-one-defines-“non-important-to-the-model”." title="Permalink to this headline">¶</a></h2>
+<section id="So-whilst-in-theory---based-on-the-formula-used-to-calculate-the-r2-score---adding-an-extra-feature-should-always-increase-the-r-squared-score---hence-the-need-for-adjusted-r-squareds,-it-actually-hinges-on-what-is-considered-“non-important”.-Hence-I-would-suggest-rewording-the-multiple-choice-question-to-reflect-this-somehow.">
+<h3>So whilst in theory - based on the formula used to calculate the r2 score - adding an extra feature should always increase the r-squared score - hence the need for adjusted r-squareds, it actually hinges on what is considered “non-important”. Hence I would suggest rewording the multiple choice question to reflect this somehow.<a class="headerlink" href="#So-whilst-in-theory---based-on-the-formula-used-to-calculate-the-r2-score---adding-an-extra-feature-should-always-increase-the-r-squared-score---hence-the-need-for-adjusted-r-squareds,-it-actually-hinges-on-what-is-considered-“non-important”.-Hence-I-would-suggest-rewording-the-multiple-choice-question-to-reflect-this-somehow." title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/uninformative_feature_effect_on_R2.nblink.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2022, James Twose.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

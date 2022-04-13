@@ -1,0 +1,3 @@
+{
+  "path": "../../Linear_Analysis/uninformative_feature_effect_on_R2.ipynb"
+}

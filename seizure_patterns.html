@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Looking for patterns in grand mal seizures &#8212; Data-Science NA documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing out rolling smoothing functions" href="smoothing_options.html" />
+    <link rel="prev" title="Methodology" href="fatigue_change_over_time.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Data-Science</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Linear Analysis Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Bootstrapped_t_test_example.html">Create a bootstrapped t_test function and show it off using the iris data set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="groupby_apply_ML.html">An example of a use of groupby apply to apply a model to a set of individual groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random_walk_on_pink_background.html">Random Walk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uninformative_feature_effect_on_R2.html">Looking at how adding an extra feature with varying levels of relevance effects the r2_score</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Machine Learning Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html">Gower clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Multiclass-example-1.">Multiclass example 1.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Multiclass-example-2.">Multiclass example 2.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gower_clustering.html#Binary-example">Binary example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML-workflow.html">Machine Learning Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html">Stress prediction based on biometrics data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html#Read-in-data">Read in data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stress_prediction.html#Exploratory-Data-Analysis-(EDA)">Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthetic_ordinal_data.html">Creating synthetic ordinal data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthetic_ordinal_data.html#Shuffle-the-target-so-there-are-no-variables-which-have-a-perfect-classification">Shuffle the target so there are no variables which have a perfect classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="understanding_SHAP.html">Using a toy dataset to better understand SHapley Additive exPlanations (SHAP)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NLTSA Notebooks</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html">Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html#Plot-all-of-the-time-series-levels-of-the-FACS">Plot all of the time series levels of the FACS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fatigue_change_over_time.html">Methodology</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Looking for patterns in grand mal seizures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#Context">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#About-Tubular-Sclerosis">About Tubular Sclerosis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smoothing_options.html">Testing out rolling smoothing functions</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Looking for patterns in grand mal seizures</a></li>
+<li><a class="reference internal" href="#Context">Context</a></li>
+<li><a class="reference internal" href="#About-Tubular-Sclerosis">About Tubular Sclerosis</a><ul>
+<li><a class="reference internal" href="#RQA-plotting">RQA plotting</a></li>
+<li><a class="reference internal" href="#TS_levels">TS_levels</a></li>
+<li><a class="reference internal" href="#Dynamic-time-warping-of-ts-levels-time-series">Dynamic time warping of ts levels time series</a></li>
+<li><a class="reference internal" href="#Dynamic-Complexity">Dynamic Complexity</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<section id="Looking-for-patterns-in-grand-mal-seizures">
+<h1>Looking for patterns in grand mal seizures<a class="headerlink" href="#Looking-for-patterns-in-grand-mal-seizures" title="Permalink to this headline">¶</a></h1>
+<p><strong>Author:</strong> James Twose <strong>Date:</strong> 20-03-2021</p>
+</section>
+<section id="Context">
+<h1>Context<a class="headerlink" href="#Context" title="Permalink to this headline">¶</a></h1>
+<p>This data set is 12 months of seizure frequency data of a 20 year old male that lives in Iowa City, Iowa. He sufferers from grand mal seizures that result from Tubular Sclerosis that affects his brain. This is my nephew Michael, and I love him, and I want to access the smartest and best data resources to help provide insight and maybe support that can give him some relief.</p>
+<p>I am providing this data in hopes of creating a contest that can help identify and predict a pattern to his seizures based on this frequency data and state (sleep/awake), and environmental data including weather, allergens, temperature, and other potential sources.</p>
+</section>
+<section id="About-Tubular-Sclerosis">
+<h1>About Tubular Sclerosis<a class="headerlink" href="#About-Tubular-Sclerosis" title="Permalink to this headline">¶</a></h1>
+<p>Tubular Sclerosis is an uncommon genetic disorder that causes noncancerous (benign) tumors — unexpected overgrowths of normal tissue — to develop in many parts of the body.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># utility packages</span>
+<span class="kn">from</span> <span class="nn">sinfo</span> <span class="kn">import</span> <span class="n">sinfo</span>
+
+<span class="c1"># data manipulation packages</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+
+<span class="c1"># plotting packages</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1">#analysis packages</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">distance_matrix</span>
+
+<span class="kn">from</span> <span class="nn">jmspack.NLTSA</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ts_levels</span><span class="p">,</span>
+                           <span class="n">distribution_uniformity</span><span class="p">,</span>
+                           <span class="n">fluctuation_intensity</span><span class="p">,</span>
+                           <span class="n">complexity_resonance</span><span class="p">,</span>
+                           <span class="n">complexity_resonance_diagram</span><span class="p">,</span>
+                          <span class="n">cumulative_complexity_peaks</span><span class="p">,</span>
+                          <span class="n">cumulative_complexity_peaks_plot</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">dtw</span> <span class="kn">import</span> <span class="n">dtw</span><span class="p">,</span> <span class="n">rabinerJuangStepPattern</span>
+
+<span class="kn">from</span> <span class="nn">pyrqa.time_series</span> <span class="kn">import</span> <span class="n">TimeSeries</span>
+<span class="kn">from</span> <span class="nn">pyrqa.settings</span> <span class="kn">import</span> <span class="n">Settings</span>
+<span class="kn">from</span> <span class="nn">pyrqa.analysis_type</span> <span class="kn">import</span> <span class="n">Classic</span>
+<span class="kn">from</span> <span class="nn">pyrqa.neighbourhood</span> <span class="kn">import</span> <span class="n">FixedRadius</span>
+<span class="kn">from</span> <span class="nn">pyrqa.metric</span> <span class="kn">import</span> <span class="n">EuclideanMetric</span>
+<span class="kn">from</span> <span class="nn">pyrqa.computation</span> <span class="kn">import</span> <span class="n">RQAComputation</span>
+<span class="kn">from</span> <span class="nn">pyrqa.computation</span> <span class="kn">import</span> <span class="n">RPComputation</span>
+<span class="kn">from</span> <span class="nn">pyrqa.image_generator</span> <span class="kn">import</span> <span class="n">ImageGenerator</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Importing the dtw module. When using in academic works please cite:
+  T. Giorgino. Computing and Visualizing Dynamic Time Warping Alignments in R: The dtw Package.
+  J. Stat. Soft., doi:10.18637/jss.v031.i07.
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sinfo</span><span class="p">(</span><span class="n">write_req_file</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-----
+dtw         1.1.6
+jmspack     0.0.2
+matplotlib  3.3.4
+numpy       1.19.2
+pandas      1.2.3
+pyrqa       NA
+scipy       1.6.1
+seaborn     0.11.1
+sinfo       0.3.1
+sklearn     0.23.2
+-----
+IPython             7.21.0
+jupyter_client      6.1.7
+jupyter_core        4.7.1
+jupyterlab          3.0.10
+notebook            6.2.0
+-----
+Python 3.8.8 (default, Feb 24 2021, 13:46:16) [Clang 10.0.0 ]
+macOS-10.16-x86_64-i386-64bit
+12 logical CPU cores, i386
+-----
+Session information updated at 2021-03-21 21:16
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interesting_weather_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;SNOW&#39;</span><span class="p">,</span> <span class="s1">&#39;PRCP&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;TMAX&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;TMIN&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weather_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;iowa_weather.csv&quot;</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">timestamp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;DATE&quot;</span><span class="p">]))</span>
+             <span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">interesting_weather_columns</span><span class="p">]</span>
+             <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mal_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;MB_SeizureRecords.xlsx&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">72</span><span class="p">,</span> <span class="p">:]</span>
+          <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">timestamp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;DATE&quot;</span><span class="p">]))</span>
+          <span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;STATE&quot;</span><span class="p">]]</span>
+          <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">grand_mal</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+         <span class="p">)</span>
+
+<span class="n">mal_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mal_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_times</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">mal_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+                          <span class="n">mal_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">troublesome_ts</span> <span class="o">=</span> <span class="p">(</span><span class="n">mal_df</span>
+ <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+ <span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;grand_mal&quot;</span><span class="p">]</span>
+ <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">index</span>
+ <span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">both_ts</span> <span class="o">=</span> <span class="p">(</span><span class="n">mal_df</span><span class="p">[</span><span class="n">mal_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">troublesome_ts</span><span class="p">)]</span>
+ <span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+ <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+ <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+ <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">index</span>
+ <span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mals</span> <span class="o">=</span> <span class="p">(</span><span class="n">mal_df</span>
+ <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+ <span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s2">&quot;grand_mal&quot;</span><span class="p">]]</span>
+<span class="p">)</span>
+
+<span class="n">states</span> <span class="o">=</span> <span class="p">(</span><span class="n">mal_df</span>
+ <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]]</span>
+<span class="p">)</span>
+
+<span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">mals</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">both_ts</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;both&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_df</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">all_times</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">_df</span><span class="p">[</span><span class="s2">&quot;grand_mal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="s2">&quot;grand_mal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">_df</span><span class="p">,</span>
+         <span class="n">weather_df</span><span class="p">[</span><span class="n">weather_df</span><span class="p">[</span><span class="s2">&quot;NAME&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;IOWA CITY, IA US&quot;</span><span class="p">)],</span>
+         <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+         <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;NAME&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_14_0.png" src="_images/seizure_patterns_14_0.png" />
+</div>
+</div>
+<section id="RQA-plotting">
+<h2>RQA plotting<a class="headerlink" href="#RQA-plotting" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scale_cols</span> <span class="o">=</span> <span class="n">interesting_weather_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;grand_mal&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scale_cols</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;SNOW&#39;, &#39;PRCP&#39;, &#39;TMAX&#39;, &#39;TMIN&#39;, &#39;grand_mal&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for feature in scale_cols:</span>
+<span class="c1"># # feature = &quot;grand_mal&quot;</span>
+<span class="c1"># # feature = &quot;TMIN&quot;</span>
+
+<span class="c1">#     data_points = df[feature].values.tolist()</span>
+
+<span class="c1">#     time_series = TimeSeries(data_points,</span>
+<span class="c1">#                              embedding_dimension=1,</span>
+<span class="c1">#                              time_delay=1)</span>
+<span class="c1">#     settings = Settings(time_series,</span>
+<span class="c1">#                         analysis_type=Classic,</span>
+<span class="c1">#                         neighbourhood=FixedRadius(0.65),</span>
+<span class="c1">#                         similarity_measure=EuclideanMetric,</span>
+<span class="c1">#                         theiler_corrector=1)</span>
+<span class="c1">#     computation = RQAComputation.create(settings,</span>
+<span class="c1">#                                         verbose=False)</span>
+<span class="c1">#     result = computation.run()</span>
+
+<span class="c1">#     computation = RPComputation.create(settings)</span>
+<span class="c1">#     result = computation.run()</span>
+<span class="c1">#     ImageGenerator.save_recurrence_plot(result.recurrence_matrix_reverse,</span>
+<span class="c1">#                                         f&#39;Img/{feature}_recurrence_plot.png&#39;)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="TS_levels">
+<h2>TS_levels<a class="headerlink" href="#TS_levels" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+DatetimeIndex: 359 entries, 2017-05-21 to 2018-05-14
+Data columns (total 7 columns):
+ #   Column     Non-Null Count  Dtype
+---  ------     --------------  -----
+ 0   grand_mal  359 non-null    float64
+ 1   state      60 non-null     object
+ 2   NAME       359 non-null    object
+ 3   SNOW       359 non-null    float64
+ 4   PRCP       359 non-null    float64
+ 5   TMAX       358 non-null    float64
+ 6   TMIN       357 non-null    float64
+dtypes: float64(5), object(2)
+memory usage: 30.5+ KB
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">scale_df</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">MinMaxScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">scale_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_df</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">scale_cols</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection</span> <span class="o">=</span> <span class="n">scale_cols</span> <span class="c1">#+ [&quot;grand_mal&quot;]</span>
+<span class="n">ts_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;NAME&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ts_levels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">feature_selection</span><span class="p">:</span>
+    <span class="n">ts_levels_df</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ts_levels</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_df</span><span class="p">[</span><span class="n">column</span><span class="p">],</span>
+                                  <span class="n">ts_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                  <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+                                  <span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                  <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                                  <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                  <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                                  <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">equal_spaced</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">n_x_ticks</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">ts_levels_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;t_steps&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ts_levels_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ts_levels_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+    <span class="n">all_ts_levels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">all_ts_levels</span><span class="p">,</span> <span class="n">ts_levels_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+         <span class="n">all_ts_levels</span><span class="p">,</span>
+         <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                  <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
+                  <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;grand_mal&quot;</span><span class="p">)],</span>
+                 <span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                  <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
+                  <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;grand_mal&quot;</span><span class="p">)],</span>
+                 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_26_0.png" src="_images/seizure_patterns_26_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">height</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                  <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
+                  <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;original_ts&quot;</span><span class="p">)],</span>
+                  <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                 <span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                  <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
+                  <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;ts_levels&quot;</span><span class="p">)],</span>
+                 <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Scaled Values&#39;</span><span class="p">,</span>
+           <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Weather and grand mal occurence ts levels&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_27_0.png" src="_images/seizure_patterns_27_0.png" />
+</div>
+</div>
+</section>
+<section id="Dynamic-time-warping-of-ts-levels-time-series">
+<h2>Dynamic time warping of ts levels time series<a class="headerlink" href="#Dynamic-time-warping-of-ts-levels-time-series" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;grand_mal_ts_levels&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">values</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;PRCP_ts_levels&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># template = plot_df[plot_df[&quot;variable&quot;].str.contains(&quot;TMAX_ts_levels&quot;)].value.values</span>
+<span class="c1"># query = plot_df[plot_df[&quot;variable&quot;].str.contains(&quot;TMIN_ts_levels&quot;)].value.values</span>
+
+<span class="c1"># template = plot_df[plot_df[&quot;variable&quot;].str.contains(&quot;TMAX_ts_levels&quot;)].value.values</span>
+<span class="c1"># query = plot_df[plot_df[&quot;variable&quot;].str.contains(&quot;TMAX_ts_levels&quot;)].value.values</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(356, 356)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Find the best match with the canonical recursion formula</span>
+<span class="n">alignment</span> <span class="o">=</span> <span class="n">dtw</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">keep_internals</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">## Display the warping curve, i.e. the alignment curve</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">alignment</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;threeway&quot;</span><span class="p">)</span>
+
+<span class="c1">## Align and plot with the Rabiner-Juang type VI-c unsmoothed recursion</span>
+<span class="n">dtw</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">keep_internals</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">step_pattern</span><span class="o">=</span><span class="n">rabinerJuangStepPattern</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">))</span>\
+    <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;twoway&quot;</span><span class="p">,</span><span class="n">offset</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># ## See the recursion relation, as formula and diagram</span>
+<span class="c1"># print(rabinerJuangStepPattern(6,&quot;c&quot;))</span>
+<span class="c1"># rabinerJuangStepPattern(6,&quot;c&quot;).plot()</span>
+
+<span class="n">alignment</span><span class="o">.</span><span class="n">distance</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_31_0.png" src="_images/seizure_patterns_31_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_31_1.png" src="_images/seizure_patterns_31_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10.25423849434186
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+<span class="c1">#                   hue=&quot;variable&quot;,</span>
+                  <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;grand_mal_ts_levels&quot;</span><span class="p">)],</span>
+                 <span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+<span class="c1">#                   hue=&quot;variable&quot;,</span>
+                  <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;PRCP_ts_levels&quot;</span><span class="p">)],</span>
+                 <span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Scaled Values&#39;</span><span class="p">,</span>
+           <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Weather and grand mal occurence ts levels&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_32_0.png" src="_images/seizure_patterns_32_0.png" />
+</div>
+</div>
+</section>
+<section id="Dynamic-Complexity">
+<h2>Dynamic Complexity<a class="headerlink" href="#Dynamic-Complexity" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fluctuation_intensity_df</span> <span class="o">=</span> <span class="n">fluctuation_intensity</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">ts_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">),</span>
+                                                  <span class="n">win</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                                                  <span class="n">xmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                                  <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                  <span class="n">col_first</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                  <span class="n">col_last</span><span class="o">=</span><span class="n">ts_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">distribution_uniformity_df</span> <span class="o">=</span> <span class="n">distribution_uniformity</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">ts_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">),</span>
+                                                  <span class="n">win</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                                                  <span class="n">xmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                                  <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                  <span class="n">col_first</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                  <span class="n">col_last</span><span class="o">=</span><span class="n">ts_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">complexity_resonance_df</span> <span class="o">=</span> <span class="n">complexity_resonance</span><span class="p">(</span><span class="n">fluctuation_intensity_df</span><span class="p">,</span> <span class="n">distribution_uniformity_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">complexity_resonance_diagram</span><span class="p">(</span><span class="n">fluctuation_intensity_df</span><span class="p">,</span> <span class="n">plot_title</span><span class="o">=</span><span class="s1">&#39;Fluctuation Intensity Diagram&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">complexity_resonance_diagram</span><span class="p">(</span><span class="n">distribution_uniformity_df</span><span class="p">,</span> <span class="n">plot_title</span><span class="o">=</span><span class="s1">&#39;Distribution Uniformity Diagram&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">complexity_resonance_diagram</span><span class="p">(</span><span class="n">complexity_resonance_df</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_35_0.png" src="_images/seizure_patterns_35_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_35_1.png" src="_images/seizure_patterns_35_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_35_2.png" src="_images/seizure_patterns_35_2.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cumulative_complexity_peaks_df</span><span class="p">,</span> <span class="n">significant_peaks_df</span> <span class="o">=</span> <span class="n">cumulative_complexity_peaks</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">complexity_resonance_df</span><span class="p">,</span>
+                            <span class="n">significant_level_item</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span>
+                            <span class="n">significant_level_time</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">cumulative_complexity_peaks_plot</span><span class="p">(</span><span class="n">cumulative_complexity_peaks_df</span><span class="p">,</span>
+                                     <span class="n">significant_peaks_df</span><span class="p">,</span>
+                                    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
+                                    <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/seizure_patterns_37_0.png" src="_images/seizure_patterns_37_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/seizure_patterns.nblink.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2022, James Twose.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
