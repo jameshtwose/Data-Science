@@ -44,6 +44,7 @@ NLTSA
 
    facs_test_CRDs.ipynb
    fatigue_change_over_time.ipynb
+   scikit-identification-example.ipynb
    seizure_patterns.ipynb
    smoothing_options.ipynb
 
