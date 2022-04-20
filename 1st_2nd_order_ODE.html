@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>scikit-identification Example &#8212; Data-Science NA documentation</title>
+    <title>first order and second order ordinary differential equations (ODE)s &#8212; Data-Science NA documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -22,8 +22,8 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Looking for patterns in grand mal seizures" href="seizure_patterns.html" />
-    <link rel="prev" title="Methodology" href="fatigue_change_over_time.html" />
+    <link rel="next" title="Methodology" href="facs_test_CRDs.html" />
+    <link rel="prev" title="Using a toy dataset to better understand SHapley Additive exPlanations (SHAP)" href="understanding_SHAP.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -84,13 +84,13 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">NLTSA Notebooks</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1st_2nd_order_ODE.html">first order and second order ordinary differential equations (ODE)s</a></li>
-<li class="toctree-l1"><a class="reference internal" href="1st_2nd_order_ODE.html#1st-order-ODE">1st order ODE</a></li>
-<li class="toctree-l1"><a class="reference internal" href="1st_2nd_order_ODE.html#2nd-order-ODE">2nd order ODE</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">first order and second order ordinary differential equations (ODE)s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#1st-order-ODE">1st order ODE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#2nd-order-ODE">2nd order ODE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html">Methodology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="facs_test_CRDs.html#Plot-all-of-the-time-series-levels-of-the-FACS">Plot all of the time series levels of the FACS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fatigue_change_over_time.html">Methodology</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">scikit-identification Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scikit-identification-example.html">scikit-identification Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html">Looking for patterns in grand mal seizures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html#Context">Context</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seizure_patterns.html#About-Tubular-Sclerosis">About Tubular Sclerosis</a></li>
@@ -108,12 +108,23 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">scikit-identification Example</a><ul>
+<li><a class="reference internal" href="#">first order and second order ordinary differential equations (ODE)s</a><ul>
 <li><a class="reference internal" href="#Initial-Parameters">Initial Parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#1st-order-ODE">1st order ODE</a><ul>
 <li><a class="reference internal" href="#Symbolics">Symbolics</a></li>
 <li><a class="reference internal" href="#Define-the-Dynamic-Model">Define the Dynamic Model</a></li>
 <li><a class="reference internal" href="#Run-the-forward-simulation-and-save-the-output-as-a-data-frame">Run the forward simulation and save the output as a data frame</a></li>
 <li><a class="reference internal" href="#Plot-the-output">Plot the output</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#2nd-order-ODE">2nd order ODE</a><ul>
+<li><a class="reference internal" href="#id1">Symbolics</a></li>
+<li><a class="reference internal" href="#TODO">TODO</a></li>
+<li><a class="reference internal" href="#id2">Define the Dynamic Model</a></li>
+<li><a class="reference internal" href="#id3">Run the forward simulation and save the output as a data frame</a></li>
+<li><a class="reference internal" href="#id4">Plot the output</a></li>
 </ul>
 </li>
 </ul>
@@ -393,30 +404,32 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<section id="scikit-identification-Example">
-<h1>scikit-identification Example<a class="headerlink" href="#scikit-identification-Example" title="Permalink to this headline">¶</a></h1>
+<section id="first-order-and-second-order-ordinary-differential-equations-(ODE)s">
+<h1>first order and second order ordinary differential equations (ODE)s<a class="headerlink" href="#first-order-and-second-order-ordinary-differential-equations-(ODE)s" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">session_info</span>
+<span class="kn">from</span> <span class="nn">jmspack.utils</span> <span class="kn">import</span> <span class="n">JmsColors</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmid.models</span> <span class="kn">import</span> <span class="n">generate_model_parameters</span><span class="p">,</span> <span class="n">DynamicModel</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmid.models</span> <span class="kn">import</span> <span class="n">generate_model_attributes</span><span class="p">,</span> <span class="n">DynamicModel</span>
 <span class="kn">from</span> <span class="nn">skmid.integrator</span> <span class="kn">import</span> <span class="n">RungeKutta4</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s2">&quot;jms_style_sheet&quot;</span> <span class="ow">in</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">available</span><span class="p">:</span>
@@ -424,50 +437,93 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<section id="Initial-Parameters">
-<h2>Initial Parameters<a class="headerlink" href="#Initial-Parameters" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[167]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lorenz</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">2.667</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Given:</span>
-<span class="sd">       x, y, z: a point of interest in three dimensional space</span>
-<span class="sd">       s, r, b: parameters defining the lorenz attractor</span>
-<span class="sd">    Returns:</span>
-<span class="sd">       x_dot, y_dot, z_dot: values of the lorenz attractor&#39;s partial</span>
-<span class="sd">           derivatives at the point x, y, z</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">x_dot</span> <span class="o">=</span> <span class="n">s</span><span class="o">*</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">y_dot</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">*</span><span class="n">z</span>
-    <span class="n">z_dot</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="n">b</span><span class="o">*</span><span class="n">z</span>
-    <span class="k">return</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">y_dot</span><span class="p">,</span> <span class="n">z_dot</span>
-
-
-<span class="k">def</span> <span class="nf">lorenz_arrays</span><span class="p">(</span><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">num_steps</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
-   <span class="c1"># Need one more for the initial values</span>
-   <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-   <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-   <span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-
-   <span class="c1"># Set initial values</span>
-   <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ys</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">zs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
-
-   <span class="c1"># Step through &quot;time&quot;, calculating the partial derivatives at the current point</span>
-   <span class="c1"># and using them to estimate the next point</span>
-   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
-      <span class="n">x_dot</span><span class="p">,</span> <span class="n">y_dot</span><span class="p">,</span> <span class="n">z_dot</span> <span class="o">=</span> <span class="n">lorenz</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ys</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">zs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-      <span class="n">xs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_dot</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
-      <span class="n">ys</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_dot</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
-      <span class="n">zs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">zs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">z_dot</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
-
-   <span class="k">return</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span>
-<br/></pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session_info</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<details>
+<summary>Click to view session information</summary>
+<pre>
+-----
+matplotlib          3.5.1
+numpy               1.20.3
+pandas              1.4.2
+seaborn             0.11.0
+session_info        1.0.0
+skmid               0.0.0
+-----
+</pre>
+<details>
+<summary>Click to view modules imported as dependencies</summary>
+<pre>
+PIL                 8.0.0
+appnope             0.1.0
+backcall            0.2.0
+beta_ufunc          NA
+binom_ufunc         NA
+bottleneck          1.3.2
+casadi              3.5.5
+cffi                1.14.3
+colorama            0.4.4
+cycler              0.10.0
+cython_runtime      NA
+dateutil            2.8.1
+decorator           4.4.2
+ipykernel           5.3.4
+ipython_genutils    0.2.0
+jedi                0.18.1
+kiwisolver          1.2.0
+mpl_toolkits        NA
+nbinom_ufunc        NA
+numexpr             2.7.1
+packaging           20.4
+parso               0.8.0
+pexpect             4.8.0
+pickleshare         0.7.5
+prompt_toolkit      3.0.8
+ptyprocess          0.6.0
+pygments            2.7.1
+pyparsing           2.4.7
+pytz                2020.1
+scipy               1.7.1
+six                 1.15.0
+statsmodels         0.12.0
+storemagic          NA
+swig_runtime_data4  NA
+tornado             6.0.4
+traitlets           5.0.5
+wcwidth             0.2.5
+zmq                 19.0.2
+</pre>
+</details> <!-- seems like this ends pre, so might as well be explicit -->
+<pre>
+-----
+IPython             7.18.1
+jupyter_client      6.1.7
+jupyter_core        4.6.3
+jupyterlab          2.2.6
+notebook            6.1.4
+-----
+Python 3.8.5 (default, Sep  4 2020, 02:22:02) [Clang 10.0.0 ]
+macOS-10.16-x86_64-i386-64bit
+-----
+Session information updated at 2022-04-20 12:31
+</pre>
+</details></div>
+</div>
+<section id="Initial-Parameters">
+<h2>Initial Parameters<a class="headerlink" href="#Initial-Parameters" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[235]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose an excitation signal</span>
@@ -482,13 +538,11 @@ div.rendered_html tbody tr:hover {
 
 <span class="n">df_input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;u1&quot;</span><span class="p">:</span> <span class="n">m</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">c</span><span class="p">,</span>
+        <span class="c1"># &quot;u1&quot;: m*x + c,</span>
         <span class="c1"># &quot;u1&quot;: 2 * np.random.random(N),</span>
         <span class="c1"># &quot;u2&quot;: 2 * np.random.random(N),</span>
-        <span class="c1"># &quot;u1&quot;: np.sin(np.pi * f * x / fs),</span>
-        <span class="s2">&quot;u2&quot;</span><span class="p">:</span> <span class="n">lorenz_arrays</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span>
-        <span class="s2">&quot;u3&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
-        <span class="s2">&quot;u4&quot;</span><span class="p">:</span> <span class="n">lorenz_arrays</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.01</span>
+        <span class="s2">&quot;u1&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">fs</span><span class="p">),</span>
+        <span class="c1"># &quot;u4&quot;: 2 * np.random.random(N),</span>
     <span class="p">},</span>
     <span class="n">index</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
 <span class="p">)</span>
@@ -539,46 +593,28 @@ Initial Parameters
     <tr style="text-align: right;">
       <th></th>
       <th>u1</th>
-      <th>u2</th>
-      <th>u3</th>
-      <th>u4</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0.0</th>
-      <td>1.0000</td>
-      <td>0.000000</td>
-      <td>0.749080</td>
-      <td>0.010500</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>1.0</th>
-      <td>0.9999</td>
-      <td>0.001000</td>
-      <td>1.901429</td>
-      <td>0.010220</td>
+      <td>6.123234e-16</td>
     </tr>
     <tr>
       <th>2.0</th>
-      <td>0.9998</td>
-      <td>0.001890</td>
-      <td>1.463988</td>
-      <td>0.009957</td>
+      <td>-1.224647e-15</td>
     </tr>
     <tr>
       <th>3.0</th>
-      <td>0.9997</td>
-      <td>0.002708</td>
-      <td>1.197317</td>
-      <td>0.009711</td>
+      <td>5.389684e-15</td>
     </tr>
     <tr>
       <th>4.0</th>
-      <td>0.9996</td>
-      <td>0.003485</td>
-      <td>0.312037</td>
-      <td>0.009480</td>
+      <td>-2.449294e-15</td>
     </tr>
   </tbody>
 </table>
@@ -589,11 +625,11 @@ Initial Parameters
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(2000, 4)
+(2000, 1)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[222]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -612,51 +648,49 @@ Initial Parameters
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/scikit-identification-example_7_0.png" src="_images/scikit-identification-example_7_0.png" />
+<img alt="_images/1st_2nd_order_ODE_7_0.png" src="_images/1st_2nd_order_ODE_7_0.png" />
 </div>
 </div>
 </section>
+</section>
+<section id="1st-order-ODE">
+<h1>1st order ODE<a class="headerlink" href="#1st-order-ODE" title="Permalink to this headline">¶</a></h1>
 <section id="Symbolics">
 <h2>Symbolics<a class="headerlink" href="#Symbolics" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[257]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> <span class="o">=</span> <span class="n">generate_model_parameters</span><span class="p">(</span><span class="n">nstate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ninput</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nparam</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> <span class="o">=</span> <span class="n">generate_model_attributes</span><span class="p">(</span><span class="n">state_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parameter_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># assign specific name</span>
-<span class="c1"># x1, x2 = x[0], x[1]</span>
-<span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">,</span> <span class="n">u4</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">ka</span><span class="p">,</span> <span class="n">kb</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># initial input value</span>
+<span class="n">kp</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">param_truth</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="c1"># ca.DM([0.1, 0.5])</span>
 
-<span class="c1"># rhs = [u1 + ka - x1, u1 + u2 / x1 + u1 / x2 / x1 + kb * x2]</span>
-<span class="n">rhs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">u2</span> <span class="o">-</span> <span class="n">ka</span> <span class="o">-</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">u1</span> <span class="o">*</span> <span class="n">kb</span> <span class="o">+</span> <span class="n">u3</span> <span class="o">+</span> <span class="n">kb</span> <span class="o">*</span> <span class="n">u4</span><span class="p">)</span> <span class="o">+</span> <span class="n">u1</span><span class="p">]</span>
-<span class="c1"># rhs = [u2 + u4 / x1 + u3 / x1 + kb*u1*u4]</span>
-<span class="c1"># rhs = [u2*u4/x1 + u3/x1*kb*u4 + u1/x1*kb*u4]</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="p">[((</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="n">kp</span> <span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="p">)]</span> <span class="c1">#1st order ODE</span>
 <span class="n">rhs</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[257]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[MX(@1=u[0], @2=param[1], (((((u[1]-param[0])-((x*@1)*@2))+u[2])+(@2*u[3]))+@1))]
+[MX(@1=p[1], (((p[0]/@1)*u)-(x/@1)))]
 </pre></div></div>
 </div>
 </section>
 <section id="Define-the-Dynamic-Model">
 <h2>Define the Dynamic Model<a class="headerlink" href="#Define-the-Dynamic-Model" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[258]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span> <span class="o">=</span> <span class="n">DynamicModel</span><span class="p">(</span><span class="n">states</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">model_dynamics</span><span class="o">=</span><span class="n">rhs</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span> <span class="o">=</span> <span class="n">DynamicModel</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">model_dynamics</span><span class="o">=</span><span class="n">rhs</span><span class="p">)</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -669,30 +703,29 @@ Initial Parameters
 Input Summary
 -----------------
 states    = [&#39;x1&#39;]
-inputs    = [&#39;u1&#39;, &#39;u2&#39;, &#39;u3&#39;, &#39;u4&#39;]
+inputs    = [&#39;u1&#39;]
 parameter = [&#39;p1&#39;, &#39;p2&#39;]
-output    = [&#39;y1&#39;]
+output    = [&#39;x1&#39;]
 
 Dimension Summary
 -----------------
  Number of inputs: 3
   Input 0 (&#34;x(t)&#34;): 1x1
-  Input 1 (&#34;u(t)&#34;): 4x1
+  Input 1 (&#34;u(t)&#34;): 1x1
   Input 2 (&#34;p&#34;): 2x1
- Number of outputs: 2
+ Number of outputs: 1
   Output 0 (&#34;xdot(t) = f(x(t), u(t), p)&#34;): 1x1
-  Output 1 (&#34;y(t) = g(x(t))&#34;): 1x1
 </pre></div></div>
 </div>
 </section>
 <section id="Run-the-forward-simulation-and-save-the-output-as-a-data-frame">
 <h2>Run the forward simulation and save the output as a data frame<a class="headerlink" href="#Run-the-forward-simulation-and-save-the-output-as-a-data-frame" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[259]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rk4</span> <span class="o">=</span> <span class="n">RungeKutta4</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">sys</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">rk4</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">input</span><span class="o">=</span><span class="n">df_input</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="n">param_truth</span><span class="p">)</span>
+<span class="n">rk4</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">initial_condition</span><span class="o">=</span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">input</span><span class="o">=</span><span class="n">df_input</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param_truth</span><span class="p">)</span>
 
 <span class="n">df_sim</span> <span class="o">=</span> <span class="n">rk4</span><span class="o">.</span><span class="n">output_sim_</span>
 
@@ -723,29 +756,29 @@ Dimension Summary
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>y1</th>
+      <th>x1</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0.0</th>
-      <td>1.000000</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>1.0</th>
-      <td>1.907833</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>2.0</th>
-      <td>3.365659</td>
+      <td>4.082156e-17</td>
     </tr>
     <tr>
       <th>3.0</th>
-      <td>3.906896</td>
+      <td>-6.803593e-17</td>
     </tr>
     <tr>
       <th>4.0</th>
-      <td>4.026225</td>
+      <td>3.366336e-16</td>
     </tr>
   </tbody>
 </table>
@@ -763,7 +796,7 @@ Dimension Summary
 <section id="Plot-the-output">
 <h2>Plot the output<a class="headerlink" href="#Plot-the-output" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[260]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -782,14 +815,149 @@ Dimension Summary
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/scikit-identification-example_15_0.png" src="_images/scikit-identification-example_15_0.png" />
+<img alt="_images/1st_2nd_order_ODE_16_0.png" src="_images/1st_2nd_order_ODE_16_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="n">df_input</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plot_df</span>
+                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
+                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
+                <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">2e-13</span><span class="p">,</span> <span class="mf">2e-13</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1st_2nd_order_ODE_17_0.png" src="_images/1st_2nd_order_ODE_17_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">df_input</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">df_input</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">JmsColors</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/1st_2nd_order_ODE_18_0.png" src="_images/1st_2nd_order_ODE_18_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="2nd-order-ODE">
+<h1>2nd order ODE<a class="headerlink" href="#2nd-order-ODE" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2>Symbolics<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="TODO">
+<h2>TODO<a class="headerlink" href="#TODO" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> <span class="o">=</span> <span class="n">generate_model_attributes</span><span class="p">(</span><span class="n">state_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parameter_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># assign specific name</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># initial input value</span>
+<span class="n">kp</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">param_truth</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="c1"># ca.DM([0.1, 0.5])</span>
+
+<span class="n">rhs</span> <span class="o">=</span> <span class="p">[((</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="n">kp</span> <span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="p">)]</span> <span class="c1">#1st order ODE</span>
+<span class="n">rhs</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>Define the Dynamic Model<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span> <span class="o">=</span> <span class="n">DynamicModel</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">model_dynamics</span><span class="o">=</span><span class="n">rhs</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>Run the forward simulation and save the output as a data frame<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rk4</span> <span class="o">=</span> <span class="n">RungeKutta4</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">sys</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">rk4</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">initial_condition</span><span class="o">=</span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">input</span><span class="o">=</span><span class="n">df_input</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param_truth</span><span class="p">)</span>
+
+<span class="n">df_sim</span> <span class="o">=</span> <span class="n">rk4</span><span class="o">.</span><span class="n">output_sim_</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>Plot the output<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sim</span>
+                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
+                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
+                <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="n">df_input</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plot_df</span>
+                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
+                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
+                <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">2e-13</span><span class="p">,</span> <span class="mf">2e-13</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">df_input</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -809,7 +977,7 @@ Dimension Summary
         <br/>
         
 <div id="sourcelink">
-  <a href="_sources/scikit-identification-example.nblink.txt"
+  <a href="_sources/1st_2nd_order_ODE.nblink.txt"
      rel="nofollow">Source</a>
 </div>
       
