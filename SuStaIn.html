@@ -399,7 +399,7 @@ div.rendered_html tbody tr:hover {
 <section id="Subtype-and-Stage-Inference-(SuStaIn)">
 <h1>Subtype and Stage Inference (SuStaIn)<a class="headerlink" href="#Subtype-and-Stage-Inference-(SuStaIn)" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[145]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -410,14 +410,16 @@ div.rendered_html tbody tr:hover {
 
 <span class="kn">import</span> <span class="nn">pySuStaIn</span> <span class="k">as</span> <span class="nn">ps</span>
 <span class="kn">from</span> <span class="nn">jmspack.utils</span> <span class="kn">import</span> <span class="n">apply_scaling</span>
+<span class="kn">from</span> <span class="nn">jmspack.ml_utils</span> <span class="kn">import</span> <span class="n">plot_confusion_matrix</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[135]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[149]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">auc</span>
 </pre></div>
 </div>
 </div>
@@ -1712,6 +1714,296 @@ Average test set log-likelihood for each subtype model: [-1464.8471909  -1463.34
 </div>
 <div class="output_area docutils container">
 <img alt="_images/SuStaIn_43_2.png" src="_images/SuStaIn_43_2.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[147]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zdata</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[147]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RID</th>
+      <th>Diagnosis</th>
+      <th>Age</th>
+      <th>Headsize</th>
+      <th>Biomarker1</th>
+      <th>Biomarker2</th>
+      <th>Biomarker3</th>
+      <th>Biomarker4</th>
+      <th>Biomarker5</th>
+      <th>ml_subtype</th>
+      <th>prob_ml_subtype</th>
+      <th>ml_stage</th>
+      <th>prob_ml_stage</th>
+      <th>prob_S0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>-0.276180</td>
+      <td>-0.787699</td>
+      <td>-0.830888</td>
+      <td>-0.535437</td>
+      <td>-0.780946</td>
+      <td>-0.007298</td>
+      <td>-0.066520</td>
+      <td>0.0</td>
+      <td>0.988207</td>
+      <td>0.0</td>
+      <td>0.172095</td>
+      <td>0.988207</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>-0.740595</td>
+      <td>-0.476933</td>
+      <td>0.283935</td>
+      <td>0.399624</td>
+      <td>0.519579</td>
+      <td>0.360694</td>
+      <td>1.500778</td>
+      <td>1.0</td>
+      <td>0.988605</td>
+      <td>1.0</td>
+      <td>0.131844</td>
+      <td>0.988605</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>-2.615462</td>
+      <td>0.576247</td>
+      <td>-0.406671</td>
+      <td>-1.240033</td>
+      <td>0.118529</td>
+      <td>0.115789</td>
+      <td>0.495540</td>
+      <td>0.0</td>
+      <td>0.988028</td>
+      <td>0.0</td>
+      <td>0.151258</td>
+      <td>0.988028</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>0.234506</td>
+      <td>-1.262940</td>
+      <td>-0.128704</td>
+      <td>-0.919541</td>
+      <td>0.202783</td>
+      <td>-1.158080</td>
+      <td>-0.248905</td>
+      <td>0.0</td>
+      <td>0.988692</td>
+      <td>0.0</td>
+      <td>0.170236</td>
+      <td>0.988692</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>1</td>
+      <td>0.046116</td>
+      <td>1.407189</td>
+      <td>0.930579</td>
+      <td>1.030132</td>
+      <td>1.701257</td>
+      <td>1.372103</td>
+      <td>1.756912</td>
+      <td>1.0</td>
+      <td>0.989070</td>
+      <td>2.0</td>
+      <td>0.123890</td>
+      <td>0.989070</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>495</th>
+      <td>496</td>
+      <td>1</td>
+      <td>1.119906</td>
+      <td>0.571858</td>
+      <td>1.122096</td>
+      <td>1.340379</td>
+      <td>0.321798</td>
+      <td>0.470860</td>
+      <td>2.604667</td>
+      <td>1.0</td>
+      <td>0.988569</td>
+      <td>1.0</td>
+      <td>0.119868</td>
+      <td>0.988569</td>
+    </tr>
+    <tr>
+      <th>496</th>
+      <td>497</td>
+      <td>1</td>
+      <td>-0.246835</td>
+      <td>0.389960</td>
+      <td>-0.302929</td>
+      <td>-0.486702</td>
+      <td>-0.296574</td>
+      <td>-0.340193</td>
+      <td>0.579880</td>
+      <td>0.0</td>
+      <td>0.988292</td>
+      <td>0.0</td>
+      <td>0.154557</td>
+      <td>0.988292</td>
+    </tr>
+    <tr>
+      <th>497</th>
+      <td>498</td>
+      <td>1</td>
+      <td>0.524801</td>
+      <td>1.685751</td>
+      <td>0.467129</td>
+      <td>0.267638</td>
+      <td>-0.056103</td>
+      <td>-0.649472</td>
+      <td>1.179206</td>
+      <td>1.0</td>
+      <td>0.988619</td>
+      <td>1.0</td>
+      <td>0.139940</td>
+      <td>0.988619</td>
+    </tr>
+    <tr>
+      <th>498</th>
+      <td>499</td>
+      <td>1</td>
+      <td>-1.150475</td>
+      <td>-0.465810</td>
+      <td>0.588425</td>
+      <td>-1.742670</td>
+      <td>0.862520</td>
+      <td>0.328767</td>
+      <td>-1.432088</td>
+      <td>0.0</td>
+      <td>0.988712</td>
+      <td>0.0</td>
+      <td>0.155753</td>
+      <td>0.988712</td>
+    </tr>
+    <tr>
+      <th>499</th>
+      <td>500</td>
+      <td>1</td>
+      <td>-0.678464</td>
+      <td>1.854392</td>
+      <td>-1.067955</td>
+      <td>-0.197901</td>
+      <td>0.137157</td>
+      <td>-0.330619</td>
+      <td>-0.499497</td>
+      <td>0.0</td>
+      <td>0.988864</td>
+      <td>0.0</td>
+      <td>0.169796</td>
+      <td>0.988864</td>
+    </tr>
+  </tbody>
+</table>
+<p>500 rows × 14 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[148]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cf_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">zdata</span><span class="p">[</span><span class="s2">&quot;Diagnosis&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">zdata</span><span class="p">[</span><span class="s2">&quot;ml_subtype&quot;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cf</span><span class="o">=</span><span class="n">cf_matrix</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix classifying Diagnosis&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/SuStaIn_45_0.png" src="_images/SuStaIn_45_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[153]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">zdata</span><span class="p">[</span><span class="s2">&quot;Diagnosis&quot;</span><span class="p">],</span> <span class="n">y_score</span><span class="o">=</span><span class="n">zdata</span><span class="p">[</span><span class="s2">&quot;ml_subtype&quot;</span><span class="p">],</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">drop_intermediate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">auc_score</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span><span class="n">tpr</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Mean AUC: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">auc_score</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ROC curve SuStaIn - Diagnosis classification&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/SuStaIn_46_0.png" src="_images/SuStaIn_46_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </div>
 </section>
