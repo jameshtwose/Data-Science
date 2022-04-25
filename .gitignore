@@ -193,3 +193,8 @@ dist
 .pnp.*
 
 *.Rproj
+
+SuStaIn_extras
+SuStaIn_example_output
+SuStaIn_tutorial_using_simulated_data.ipynb
+SuStaIn_example.ipynb

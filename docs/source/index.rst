@@ -32,6 +32,7 @@ Machine Learning
    gower_clustering.ipynb
    ML-workflow.ipynb
    stress_prediction.ipynb
+   SuStaIn.ipynb
    synthetic_ordinal_data.ipynb
    understanding_SHAP.ipynb
 
