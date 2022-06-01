@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Looking at how adding an extra feature with varying levels of relevance effects the r2_score &#8212; Data-Science NA documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,6 +14,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -403,7 +404,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Looking-at-how-adding-an-extra-feature-with-varying-levels-of-relevance-effects-the-r2_score">
-<h1>Looking at how adding an extra feature with varying levels of relevance effects the r2_score<a class="headerlink" href="#Looking-at-how-adding-an-extra-feature-with-varying-levels-of-relevance-effects-the-r2_score" title="Permalink to this headline">¶</a></h1>
+<h1>Looking at how adding an extra feature with varying levels of relevance effects the r2_score<a class="headerlink" href="#Looking-at-how-adding-an-extra-feature-with-varying-levels-of-relevance-effects-the-r2_score" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -629,7 +630,7 @@ div.rendered_html tbody tr:hover {
 </div></div>
 </div>
 <section id="It-is-interesting-to-see-how-choosing-a-feature-with-a-high-coefficient-vs-one-with-a-coefficient-of-0-effects-the-outcome">
-<h2>It is interesting to see how choosing a feature with a high coefficient vs one with a coefficient of 0 effects the outcome<a class="headerlink" href="#It-is-interesting-to-see-how-choosing-a-feature-with-a-high-coefficient-vs-one-with-a-coefficient-of-0-effects-the-outcome" title="Permalink to this headline">¶</a></h2>
+<h2>It is interesting to see how choosing a feature with a high coefficient vs one with a coefficient of 0 effects the outcome<a class="headerlink" href="#It-is-interesting-to-see-how-choosing-a-feature-with-a-high-coefficient-vs-one-with-a-coefficient-of-0-effects-the-outcome" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -859,7 +860,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </section>
 <section id="Show-the-fit-and-r2-score-of-the-original-data-frame-without-the-extra-noise-based-feature">
-<h2>Show the fit and r2-score of the original data frame without the extra noise based feature<a class="headerlink" href="#Show-the-fit-and-r2-score-of-the-original-data-frame-without-the-extra-noise-based-feature" title="Permalink to this headline">¶</a></h2>
+<h2>Show the fit and r2-score of the original data frame without the extra noise based feature<a class="headerlink" href="#Show-the-fit-and-r2-score-of-the-original-data-frame-without-the-extra-noise-based-feature" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -927,7 +928,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </section>
 <section id="Run-the-same-regression-as-above-but-with-a-different-noise-feature-added-each-time">
-<h2>Run the same regression as above but with a different noise feature added each time<a class="headerlink" href="#Run-the-same-regression-as-above-but-with-a-different-noise-feature-added-each-time" title="Permalink to this headline">¶</a></h2>
+<h2>Run the same regression as above but with a different noise feature added each time<a class="headerlink" href="#Run-the-same-regression-as-above-but-with-a-different-noise-feature-added-each-time" title="Permalink to this heading">¶</a></h2>
 <p>(thus seeing how adding a different feature with more or less noise effects the r2 score of the model)</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
@@ -965,7 +966,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </section>
 <section id="Show-an-example-of-one-of-the-X’s-to-compare-to-the-initial-data-frame-used-to-get-the-initial-r2-score-shown-above-in-the-scatter-plot">
-<h2>Show an example of one of the X’s to compare to the initial data frame used to get the initial r2 score shown above in the scatter plot<a class="headerlink" href="#Show-an-example-of-one-of-the-X’s-to-compare-to-the-initial-data-frame-used-to-get-the-initial-r2-score-shown-above-in-the-scatter-plot" title="Permalink to this headline">¶</a></h2>
+<h2>Show an example of one of the X’s to compare to the initial data frame used to get the initial r2 score shown above in the scatter plot<a class="headerlink" href="#Show-an-example-of-one-of-the-X’s-to-compare-to-the-initial-data-frame-used-to-get-the-initial-r2-score-shown-above-in-the-scatter-plot" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
@@ -1092,7 +1093,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </section>
 <section id="Plot-all-the-r2-scores">
-<h2>Plot all the r2 scores<a class="headerlink" href="#Plot-all-the-r2-scores" title="Permalink to this headline">¶</a></h2>
+<h2>Plot all the r2 scores<a class="headerlink" href="#Plot-all-the-r2-scores" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
@@ -1113,14 +1114,14 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </section>
 <section id="Initial-multiple-choice-question:">
-<h2>Initial multiple choice question:<a class="headerlink" href="#Initial-multiple-choice-question:" title="Permalink to this headline">¶</a></h2>
+<h2>Initial multiple choice question:<a class="headerlink" href="#Initial-multiple-choice-question:" title="Permalink to this heading">¶</a></h2>
 <p>Adding a non-important feature to a linear regression model may result in: 1. Increase in R-square 2. Decrease in R-square</p>
 <p>Answer: Only 1 is correct</p>
 </section>
 <section id="Based-on-the-r2-vs-noise_std-plot-it-seems-like-the-answer-hinges-on-how-one-defines-“non-important-to-the-model”.">
-<h2>Based on the r2 vs noise_std plot it seems like the answer hinges on how one defines “non-important to the model”.<a class="headerlink" href="#Based-on-the-r2-vs-noise_std-plot-it-seems-like-the-answer-hinges-on-how-one-defines-“non-important-to-the-model”." title="Permalink to this headline">¶</a></h2>
+<h2>Based on the r2 vs noise_std plot it seems like the answer hinges on how one defines “non-important to the model”.<a class="headerlink" href="#Based-on-the-r2-vs-noise_std-plot-it-seems-like-the-answer-hinges-on-how-one-defines-“non-important-to-the-model”." title="Permalink to this heading">¶</a></h2>
 <section id="So-whilst-in-theory---based-on-the-formula-used-to-calculate-the-r2-score---adding-an-extra-feature-should-always-increase-the-r-squared-score---hence-the-need-for-adjusted-r-squareds,-it-actually-hinges-on-what-is-considered-“non-important”.-Hence-I-would-suggest-rewording-the-multiple-choice-question-to-reflect-this-somehow.">
-<h3>So whilst in theory - based on the formula used to calculate the r2 score - adding an extra feature should always increase the r-squared score - hence the need for adjusted r-squareds, it actually hinges on what is considered “non-important”. Hence I would suggest rewording the multiple choice question to reflect this somehow.<a class="headerlink" href="#So-whilst-in-theory---based-on-the-formula-used-to-calculate-the-r2-score---adding-an-extra-feature-should-always-increase-the-r-squared-score---hence-the-need-for-adjusted-r-squareds,-it-actually-hinges-on-what-is-considered-“non-important”.-Hence-I-would-suggest-rewording-the-multiple-choice-question-to-reflect-this-somehow." title="Permalink to this headline">¶</a></h3>
+<h3>So whilst in theory - based on the formula used to calculate the r2 score - adding an extra feature should always increase the r-squared score - hence the need for adjusted r-squareds, it actually hinges on what is considered “non-important”. Hence I would suggest rewording the multiple choice question to reflect this somehow.<a class="headerlink" href="#So-whilst-in-theory---based-on-the-formula-used-to-calculate-the-r2-score---adding-an-extra-feature-should-always-increase-the-r-squared-score---hence-the-need-for-adjusted-r-squareds,-it-actually-hinges-on-what-is-considered-“non-important”.-Hence-I-would-suggest-rewording-the-multiple-choice-question-to-reflect-this-somehow." title="Permalink to this heading">¶</a></h3>
 </section>
 </section>
 </section>
@@ -1145,7 +1146,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br/>
     </p>
   </div>
 </footer>

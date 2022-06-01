@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Create a bootstrapped t_test function and show it off using the iris data set &#8212; Data-Science NA documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,6 +14,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -401,7 +402,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Create-a-bootstrapped-t_test-function-and-show-it-off-using-the-iris-data-set">
-<h1>Create a bootstrapped t_test function and show it off using the iris data set<a class="headerlink" href="#Create-a-bootstrapped-t_test-function-and-show-it-off-using-the-iris-data-set" title="Permalink to this headline">¶</a></h1>
+<h1>Create a bootstrapped t_test function and show it off using the iris data set<a class="headerlink" href="#Create-a-bootstrapped-t_test-function-and-show-it-off-using-the-iris-data-set" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -417,7 +418,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="Load-in-the-iris-data-set-and-plot-it-a-bit">
-<h2>Load in the iris data set and plot it a bit<a class="headerlink" href="#Load-in-the-iris-data-set-and-plot-it-a-bit" title="Permalink to this headline">¶</a></h2>
+<h2>Load in the iris data set and plot it a bit<a class="headerlink" href="#Load-in-the-iris-data-set-and-plot-it-a-bit" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -462,7 +463,7 @@ Categories (3, object): [setosa, versicolor, virginica]
 </div>
 </section>
 <section id="Define-a-function-which-generates-many-bootstrapped-p-values-from-an-independent-t-test">
-<h2>Define a function which generates many bootstrapped p-values from an independent t-test<a class="headerlink" href="#Define-a-function-which-generates-many-bootstrapped-p-values-from-an-independent-t-test" title="Permalink to this headline">¶</a></h2>
+<h2>Define a function which generates many bootstrapped p-values from an independent t-test<a class="headerlink" href="#Define-a-function-which-generates-many-bootstrapped-p-values-from-an-independent-t-test" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -511,7 +512,7 @@ Categories (3, object): [setosa, versicolor, virginica]
 </div>
 </section>
 <section id="Plot-all-the-p_values-from-a-single-feature">
-<h2>Plot all the p_values from a single feature<a class="headerlink" href="#Plot-all-the-p_values-from-a-single-feature" title="Permalink to this headline">¶</a></h2>
+<h2>Plot all the p_values from a single feature<a class="headerlink" href="#Plot-all-the-p_values-from-a-single-feature" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
@@ -533,7 +534,7 @@ Categories (3, object): [setosa, versicolor, virginica]
 </div>
 </section>
 <section id="Plot-all-the-p_values-from-a-list-of-features">
-<h2>Plot all the p_values from a list of features<a class="headerlink" href="#Plot-all-the-p_values-from-a-list-of-features" title="Permalink to this headline">¶</a></h2>
+<h2>Plot all the p_values from a list of features<a class="headerlink" href="#Plot-all-the-p_values-from-a-list-of-features" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
@@ -571,7 +572,7 @@ petal_width
 </div>
 </div>
 <section id="Using-the-p-values-from-the-bootstrapped-t_test-correct-using-Benjamini/Hochberg-(non-negative)-using-“multipletests”-from-statsmodels-and-compare-to-ideal-p-values">
-<h3>Using the p-values from the bootstrapped t_test correct using Benjamini/Hochberg (non-negative) using “multipletests” from statsmodels and compare to ideal p-values<a class="headerlink" href="#Using-the-p-values-from-the-bootstrapped-t_test-correct-using-Benjamini/Hochberg-(non-negative)-using-“multipletests”-from-statsmodels-and-compare-to-ideal-p-values" title="Permalink to this headline">¶</a></h3>
+<h3>Using the p-values from the bootstrapped t_test correct using Benjamini/Hochberg (non-negative) using “multipletests” from statsmodels and compare to ideal p-values<a class="headerlink" href="#Using-the-p-values-from-the-bootstrapped-t_test-correct-using-Benjamini/Hochberg-(non-negative)-using-“multipletests”-from-statsmodels-and-compare-to-ideal-p-values" title="Permalink to this heading">¶</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
@@ -587,7 +588,7 @@ petal_width
 </section>
 </section>
 <section id="Define-and-plot-the-comparison">
-<h2>Define and plot the comparison<a class="headerlink" href="#Define-and-plot-the-comparison" title="Permalink to this headline">¶</a></h2>
+<h2>Define and plot the comparison<a class="headerlink" href="#Define-and-plot-the-comparison" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
@@ -639,7 +640,7 @@ petal_width
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br/>
     </p>
   </div>
 </footer>

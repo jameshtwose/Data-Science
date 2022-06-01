@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Stress prediction based on biometrics data &#8212; Data-Science NA documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,6 +14,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -397,7 +398,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Stress-prediction-based-on-biometrics-data">
-<h1>Stress prediction based on biometrics data<a class="headerlink" href="#Stress-prediction-based-on-biometrics-data" title="Permalink to this headline">¶</a></h1>
+<h1>Stress prediction based on biometrics data<a class="headerlink" href="#Stress-prediction-based-on-biometrics-data" title="Permalink to this heading">¶</a></h1>
 <p><strong>Author:</strong> James Twose <strong>Date:</strong> 20-03-2021</p>
 <p>This dataset comprises of heart rate variability (HRV) and Electrodermal activity (EDA) computed from the SWELL1 and the WESAD2 datasets. It comprises of the following three directories and sub-directories: 1) interim —contains the intermediate data that has been transformed directly from the raw datasets. The raw datasets are not included but they can be obtained from their respective publishers. This folder contains the following major contents: - a) Labels —the ground truth of the
 experiments. For the details of how these were obtained, please refer to the papers included in the root of this director. - b) eda —the raw eda signals - c) rri —the inter-beat (RR) interval extracted from the electrocardiogram (ECG) signal 2) processed —containes files that were computed from those in the intermidiate directory facilitate the analysis</p>
@@ -410,14 +411,14 @@ experiments. For the details of how these were obtained, please refer to the pap
 </li>
 </ol>
 <section id="Targets:">
-<h2>Targets:<a class="headerlink" href="#Targets:" title="Permalink to this headline">¶</a></h2>
+<h2>Targets:<a class="headerlink" href="#Targets:" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>NASA-TLX for the SWELL</p></li>
 <li><p>SSSQ for the WESAD</p></li>
 </ul>
 </section>
 <section id="Import-all-necessary-packages-and-functions">
-<h2>Import all necessary packages and functions<a class="headerlink" href="#Import-all-necessary-packages-and-functions" title="Permalink to this headline">¶</a></h2>
+<h2>Import all necessary packages and functions<a class="headerlink" href="#Import-all-necessary-packages-and-functions" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
 </pre></div>
@@ -492,7 +493,7 @@ Session information updated at 2021-03-21 15:35
 </section>
 </section>
 <section id="Read-in-data">
-<h1>Read in data<a class="headerlink" href="#Read-in-data" title="Permalink to this headline">¶</a></h1>
+<h1>Read in data<a class="headerlink" href="#Read-in-data" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[142]:
 </pre></div>
@@ -596,7 +597,7 @@ memory usage: 30.2+ MB
 </div>
 </section>
 <section id="Exploratory-Data-Analysis-(EDA)">
-<h1>Exploratory Data Analysis (EDA)<a class="headerlink" href="#Exploratory-Data-Analysis-(EDA)" title="Permalink to this headline">¶</a></h1>
+<h1>Exploratory Data Analysis (EDA)<a class="headerlink" href="#Exploratory-Data-Analysis-(EDA)" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[157]:
 </pre></div>
@@ -1317,7 +1318,7 @@ User == 22 plotted with errors
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br/>
     </p>
   </div>
 </footer>
