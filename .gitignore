@@ -62,9 +62,10 @@ docs/_build/
 .DS_Store
 
 # Data folders
-data/
+# data/
 .mypy_cache/
 Machine_learning/dataset/
+NLTSA/data/
 
 # config file
 .config

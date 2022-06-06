@@ -1,0 +1,264 @@
+{
+    "product": {
+        "data": {
+            "id": "478570DS",
+            "title": "Dr. Oetker Ristorante pizza salami 320g",
+            "quantityOptions": [
+                {
+                    "defaultAmount": 1,
+                    "minimumAmount": 1,
+                    "amountStep": 1,
+                    "unit": "pieces",
+                    "maximumAmount": 99
+                }
+            ],
+            "prices": {
+                "price": {
+                    "currency": "EUR",
+                    "amount": 289
+                },
+                "unitPrice": {
+                    "unit": "kg",
+                    "price": {
+                        "currency": "EUR",
+                        "amount": 903
+                    }
+                }
+            },
+            "available": true,
+            "productType": "Product",
+            "crossSellSKUList": [],
+            "nixProduct": false,
+            "quantity": "320 g",
+            "imageInfo": {
+                "primaryView": [
+                    {
+                        "url": "https://static-images.jumbo.com/product_images/050220221342_478570DS-1_180x180.png",
+                        "width": 180,
+                        "height": 180
+                    },
+                    {
+                        "url": "https://static-images.jumbo.com/product_images/050220221342_478570DS-1_720x720.png",
+                        "width": 720,
+                        "height": 720
+                    },
+                    {
+                        "url": "https://static-images.jumbo.com/product_images/050220221342_478570DS-1_360x360.png",
+                        "width": 360,
+                        "height": 360
+                    }
+                ],
+                "details": [
+                    {
+                        "url": "https://static-images.jumbo.com/product_images/050220221342_478570DS-9_720x720.png",
+                        "width": 720,
+                        "height": 720
+                    },
+                    {
+                        "url": "https://static-images.jumbo.com/product_images/050220221342_478570DS-9_360x360.png",
+                        "width": 360,
+                        "height": 360
+                    }
+                ]
+            },
+            "stickerBadges": [
+                "https://www.jumbo.com/INTERSHOP/static/WFS/Jumbo-Site/Grocery/Jumbo-Grocery/nl_NL/PIMProductBadge/sticker-freeze-51x51.png"
+            ],
+            "topLevelCategory": "Diepvries",
+            "topLevelCategoryId": "SG6",
+            "sample": false,
+            "availability": {
+                "sku": "478570DS",
+                "availability": "AVAILABLE"
+            },
+            "hasRelatedProducts": true,
+            "nutritionalInformation": [
+                {
+                    "productTitle": "Dr. Oetker Ristorante pizza salami 320g",
+                    "nutritionalGuidelines": {
+                        "entries": []
+                    },
+                    "nutritionalData": {
+                        "entries": [
+                            {
+                                "name": "energie",
+                                "valuePer100g": "1093 kJ",
+                                "valuePerPortion": "42%"
+                            },
+                            {
+                                "name": "",
+                                "valuePer100g": "261 kcal",
+                                "valuePerPortion": ""
+                            },
+                            {
+                                "name": "Vetten",
+                                "valuePer100g": "13 g",
+                                "valuePerPortion": "40 g"
+                            },
+                            {
+                                "name": "Waarvan verzadigd",
+                                "valuePer100g": "4.6 g",
+                                "valuePerPortion": "75%"
+                            },
+                            {
+                                "name": "Koolhydraten",
+                                "valuePer100g": "25 g",
+                                "valuePerPortion": "31%"
+                            },
+                            {
+                                "name": "Waarvan suikers",
+                                "valuePer100g": "2.9 g",
+                                "valuePerPortion": "10%"
+                            },
+                            {
+                                "name": "vezels",
+                                "valuePer100g": "2.3 g",
+                                "valuePerPortion": ""
+                            },
+                            {
+                                "name": "Eiwitten",
+                                "valuePer100g": "10 g",
+                                "valuePerPortion": "66%"
+                            },
+                            {
+                                "name": "Zout",
+                                "valuePer100g": "1.3 g",
+                                "valuePerPortion": "70%"
+                            },
+                            {
+                                "name": "*Referentie-inname van een gemiddelde volwassene (8400 kJ / 2000 kcal)",
+                                "valuePer100g": "",
+                                "valuePerPortion": ""
+                            }
+                        ],
+                        "portionSize": "%*"
+                    }
+                }
+            ],
+            "detailsText": "Ristorante salame is een heerlijke diepvries pizza, rijk belegd met (hoe kan het ook anders) salami, mozzarella en Edammer kaas. We say salame, you say salami.. En mmm!\n\n- Krokante dunne bodem, rijkelijk belegd tot aan de rand\n- Een echte pizza party voor de kaas- en vleesliefhebber\n- Romantisch aan tafel, knus op de bank of gezellig tijdens de borrel\n- Oven: elektrisch 220Â°C of hetelucht ca. 200Â°C, 10-12 min\n\nGeef jouw dag meer amore met Ristorante! Verwarm eerst de oven voor tot de aangegeven temperatuur. Zet ook de boven- en onderwarmte functie van de oven aan, zodat de pizza nÃ³g beter smaakt. Leg nu de pizza op een rooster in het midden van de oven en terwijl je de pizza afbakt, zorg jij voor wat gezellige Ã -Ã -ambiance!",
+            "regulatedTitle": "Pizza rijkelijk belegd met tomatensaus, salami en kaas op een krokante, dunne bodem. Diepvries.",
+            "allergyText": "Bevat Melk,Bevat Tarwe",
+            "ingredientInfo": [
+                {
+                    "productTitle": "Dr. Oetker Ristorante pizza salami 320g",
+                    "ingredients": [
+                        {
+                            "name": "Tarwebloem",
+                            "containsAllergens": false,
+                            "highlights": [
+                                {
+                                    "length": 10,
+                                    "offset": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "14% gezeefde tomaten",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "12% mozzarella kaas",
+                            "containsAllergens": false,
+                            "highlights": [
+                                {
+                                    "length": 10,
+                                    "offset": 4
+                                },
+                                {
+                                    "length": 4,
+                                    "offset": 15
+                                }
+                            ]
+                        },
+                        {
+                            "name": "12% salami (varkensvlees, spek, zout, specerijen, dextrose, uienpoeder, knoflookpoeder, specerijenextracten, stabilisator (natriumnitriet), antioxidant (extract van rozemarijn), rook)",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "water",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "7,3% tomatenconcentraat",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "4,6% edammer kaas",
+                            "containsAllergens": false,
+                            "highlights": [
+                                {
+                                    "length": 4,
+                                    "offset": 13
+                                },
+                                {
+                                    "length": 7,
+                                    "offset": 5
+                                }
+                            ]
+                        },
+                        {
+                            "name": "raapzaadolie",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "bakkersgist",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "zout",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "suiker",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "olijfolie extra vierge",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "oregano",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "basilicum",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "peper",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "paprika",
+                            "containsAllergens": false
+                        },
+                        {
+                            "name": "peterselie",
+                            "containsAllergens": false
+                        }
+                    ]
+                }
+            ],
+            "allergyInfo": {
+                "allergyText": "Bevat Tarwe"
+            },
+            "usageAndSafetyInfo": {
+                "storageType": "Bij -18Â°C (***-vak of diepvries) ten minste houdbaar tot einde: zie datum op zijkant. Na ontdooiing niet opnieuw invriezen.",
+                "preparationAndUsage": "1.\nOven: 220 Â°C; Heteluchtoven: 200 Â°C; Gasovenstand: 4\n- Oven voorverwarmen\n2.\n- Folie verwijderen\n3.\n- Bak de diepgevroren pizza op een rooster onderin de oven.\n10-12 Min."
+            },
+            "additiveInfo": {
+                "additives": "Zonder Kunstmatige smaakstoffen, Zonder Kleurstoffen",
+                "moreAboutAdditives": "No added colours",
+                "thirdparty": "EAC"
+            },
+            "originInfo": {
+                "countryOfOrigin": "Duitsland"
+            },
+            "brandInfo": {
+                "brandDescription": "Deze Ristorante pizza met heerlijke plakjes salami en nu nog meer kaas-kaas-kaas, is een echte pizza klassieker. Met een pizza salami zit je eigenlijk altijd goed en maak je veel pizza-eters erg gelukkig! \n\nRistorante pizza's zorgen voor een romantische pizzabelevenis, gewoon bij jouw thuis aan de keukentafel. Leg een paar Ristorante pizza's in de diepvries en bak ze aan het einde van een drukke dag in de oven. Dek de tafel en maak er een romantische avond van, plof op de bank en pak wat pizzagenot mee terwijl je jouw favoriete serie kijkt of heb een gezellige avond en serveer de pizzapunten als borrelhapje. Buon appetito!",
+                "manufacturerAddress": "Dr. Oetker Nederland B.V. - Antwoordnummer 7204 - 3800 TE Amersfoort",
+                "webAddress": "www.oetker.com"
+            }
+        }
+    }
+}
