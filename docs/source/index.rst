@@ -32,6 +32,7 @@ Machine Learning
    gower_clustering.ipynb
    ML-workflow.ipynb
    stress_prediction.ipynb
+   SuStaIn.ipynb
    synthetic_ordinal_data.ipynb
    understanding_SHAP.ipynb
 
@@ -42,6 +43,7 @@ NLTSA
    :name: NLTSA-notebook-gallery
    :glob:
 
+   1st_2nd_order_ODE.ipynb
    facs_test_CRDs.ipynb
    fatigue_change_over_time.ipynb
    scikit-identification-example.ipynb

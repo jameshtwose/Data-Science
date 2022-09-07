@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <py-env>
+        - numpy
+        - matplotlib
+        - pandas
+        - seaborn
+    </py-env>
+
+    <title>Trying out pyscript</title>
+</head>
+
+<body>
+    <py-script> print('Hello, World!') </py-script>
+    <py-script>
+print("Let's compute π:")
+def wallis(n):
+    pi = 2
+    for i in range(1,n):
+        pi *= 4 * i ** 2 / (4 * i ** 2 - 1)
+    return pi
+
+pi = wallis(100000)
+s = f"π is approximately {pi:.3f}"
+print(s)
+    </py-script>
+    
+    <div id="plot"></div>
+    <py-script output="plot">
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.randn(100)
+y = np.random.randn(100)
+fig, ax = plt.subplots()
+ax.scatter(x, y)
+fig
+    </py-script>
+    <h1><b>pyscript REPL</b></h1>
+    Tip: press Shift-ENTER to evaluate a cell
+    <br>
+    <div>
+      <py-repl id="my-repl" auto-generate="true"> </py-repl>
+    </div>
+
+</body>
+
+</html>

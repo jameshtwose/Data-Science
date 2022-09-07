@@ -1,0 +1,34 @@
+body {
+    /* margin: 2%;
+    padding: 2%; */
+    font-family: 'Raleway', sans-serif;
+    --grey: #282d32;
+    --purple: #8f0fd4;
+    --yellow: #fcdd14;
+    --offwhite: #fff8ca27;
+    color: var(--purple);
+}
+
+p {
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+    /* padding-top: 10%;
+    padding-left: 10%; */
+    color: var(--purple);
+}
+
+ul li a {
+    /* padding-top: 2%;
+    padding-left: 8%; */
+    color: var(--purple);
+}
+
+li {
+    color: var(--purple);
+    padding: 0.2%;
+
+}
+

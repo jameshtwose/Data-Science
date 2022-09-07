@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Example Presentation
+    </title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- This section is the main part of the page -->
+    <section id='mainbody'>
+        <h1>Example Presentation</h1>
+            <ul>
+                <h3>A html and css combination to display information in a ppt style setup</h3>
+
+                <p id="top">
+                    <a href="#middle">Go to the middle</a><br>
+                    <a href="#1@#%^-bottom">Go to the bottom</a>
+                </p>
+                
+                <p>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
+                </p>
+                
+                <p id="middle"><a href="#1@#%^-bottom">Go to the bottom</a></p>
+                
+                <p>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+                    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
+                </p>
+                
+                <p id="1@#%^-bottom"><a href="#mainbody">Go back to the top</a></p>
+            </ul>
+
+        <div class="flex-container">
+            <div>1 
+                <iframe 
+                    id="examplePlot"
+                    title="Iframe example plot"
+                    width="1500"
+                    height="900"
+                    src="https://jameshtwose.github.io/EWS-supplemental-material/interactive_example_user_composite_scores_time_series.html">
+                </iframe>
+            </div>
+            <div>2</div>
+            <div>3</div>
+        </div>
+
+
+    </section>
+
+    <!-- This section is for the header and the dropdown parts -->
+    <section id="info-bar">
+        <div class="nav-bar">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="https://services.jms.rocks"><img
+                        src="https://services.jms.rocks/img/logo.png" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#mainbody">Home</a>
+                        </li>
+
+
+                        <div class="btn-group">
+                            <button type="button" class="btn
+                                        btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Presentation-parts
+                            </button>
+                            <ul class="dropdown-menu">
+
+                                <li><a class="dropdown-item" href="#mainbody">top</a></li>
+                                <li><a class="dropdown-item" href="#middle">middle</a></li>
+                                <li><a class="dropdown-item" href="#1@#%^-bottom">bottom</a></li>
+
+                            </ul>
+                        </div>
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <script>
+        var scroll = new SmoothScroll('a[href*="#"]', {
+            speed: 300
+        });
+    </script>
+
+</body>
+
+</html>
