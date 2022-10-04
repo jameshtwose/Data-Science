@@ -1,3 +1,0 @@
-{
-  "path": "../../Machine_learning/SuStaIn.ipynb"
-}

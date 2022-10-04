@@ -1,0 +1,3 @@
+{
+  "path": "../../Machine_learning/Neural_Style_Transfer/neural_style.ipynb"
+}
