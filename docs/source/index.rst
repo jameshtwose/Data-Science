@@ -35,6 +35,7 @@ Machine Learning
    SuStaIn.ipynb
    synthetic_ordinal_data.ipynb
    understanding_SHAP.ipynb
+   neural_style.ipynb
 
 NLTSA
 -----------------------------------
