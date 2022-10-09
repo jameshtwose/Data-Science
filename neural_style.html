@@ -475,7 +475,7 @@ device(type=&#39;cpu&#39;)
 <h2>Loading the Images<a class="headerlink" href="#Loading-the-Images" title="Permalink to this heading">¶</a></h2>
 <p>Now we will import the style and content images. The original PIL images have values between 0 and 255, but when transformed into torch tensors, their values are converted to be between 0 and 1. The images also need to be resized to have the same dimensions. An important detail to note is that neural networks from the torch library are trained with tensor values ranging from 0 to 1. If you try to feed the networks with 0 to 255 tensor images, then the activated feature maps will be unable to
 sense the intended content and style. However, pre-trained networks from the Caffe library are trained with 0 to 255 tensor images.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
@@ -506,26 +506,36 @@ sense the intended content and style. However, pre-trained networks from the Caf
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+we need to import style and content images of the same size
+Style Image size: torch.Size([1, 3, 157, 128])
+Content Image size: torch.Size([1, 3, 170, 128])
+</pre></div></div>
+</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">style_img</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">style_img</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">195</span><span class="p">,</span> <span class="mi">128</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">style_img</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">style_img</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">170</span><span class="p">,</span> <span class="mi">128</span><span class="p">])</span>
 <span class="n">style_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-torch.Size([1, 3, 195, 128])
+torch.Size([1, 3, 170, 128])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">content_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
@@ -533,16 +543,16 @@ torch.Size([1, 3, 195, 128])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-torch.Size([1, 3, 195, 128])
+torch.Size([1, 3, 170, 128])
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">style_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">content_img</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> \
@@ -552,7 +562,7 @@ torch.Size([1, 3, 195, 128])
 </div>
 <p>Now, let’s create a function that displays an image by reconverting a copy of it to PIL format and displaying the copy using <code class="docutils literal notranslate"><span class="pre">plt.imshow</span></code>. We will try displaying the content and style images to ensure they were imported correctly.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unloader</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()</span>  <span class="c1"># reconvert into PIL image</span>
@@ -603,7 +613,7 @@ this function as a torch module with a constructor that takes <span class="math 
 <p>We will add this content loss module directly after the convolution layer(s) that are being used to compute the content distance. This way each time the network is fed an input image the content losses will be computed at the desired layers and because of auto grad, all the gradients will be computed. Now, in order to make the content loss layer transparent we must define a <code class="docutils literal notranslate"><span class="pre">forward</span></code> method that computes the content loss and then returns the layer’s input. The computed loss is saved as a
 parameter of the module.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ContentLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -627,7 +637,7 @@ parameter of the module.</p>
 <span class="math notranslate nohighlight">\(\hat{F}_{XL}\)</span>, a <span class="math notranslate nohighlight">\(K\)</span> x <span class="math notranslate nohighlight">\(N\)</span> matrix, where <span class="math notranslate nohighlight">\(K\)</span> is the number of feature maps at layer <span class="math notranslate nohighlight">\(L\)</span> and <span class="math notranslate nohighlight">\(N\)</span> is the length of any vectorized feature map <span class="math notranslate nohighlight">\(F_{XL}^k\)</span>. For example, the first line of <span class="math notranslate nohighlight">\(\hat{F}_{XL}\)</span> corresponds to the first vectorized feature map <span class="math notranslate nohighlight">\(F_{XL}^1\)</span>.</p>
 <p>Finally, the gram matrix must be normalized by dividing each element by the total number of elements in the matrix. This normalization is to counteract the fact that <span class="math notranslate nohighlight">\(\hat{F}_{XL}\)</span> matrices with a large <span class="math notranslate nohighlight">\(N\)</span> dimension yield larger values in the Gram matrix. These larger values will cause the first layers (before pooling layers) to have a larger impact during the gradient descent. Style features tend to be in the deeper layers of the network so this normalization step is crucial.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gram_matrix</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
@@ -647,7 +657,7 @@ parameter of the module.</p>
 </div>
 <p>Now the style loss module looks almost exactly like the content loss module. The style distance is also computed using the mean square error between <span class="math notranslate nohighlight">\(G_{XL}\)</span> and <span class="math notranslate nohighlight">\(G_{SL}\)</span>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">StyleLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -669,7 +679,7 @@ parameter of the module.</p>
 <p>Now we need to import a pre-trained neural network. We will use a 19 layer VGG network like the one used in the paper.</p>
 <p>PyTorch’s implementation of VGG is a module divided into two child <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> modules: <code class="docutils literal notranslate"><span class="pre">features</span></code> (containing convolution and pooling layers), and <code class="docutils literal notranslate"><span class="pre">classifier</span></code> (containing fully connected layers). We will use the <code class="docutils literal notranslate"><span class="pre">features</span></code> module because we need the output of the individual convolution layers to measure content and style loss. Some layers have different behavior during training than evaluation, so we must set the network to evaluation mode using <code class="docutils literal notranslate"><span class="pre">.eval()</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnn</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">vgg19</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
@@ -689,7 +699,7 @@ parameter of the module.</p>
 </div>
 <p>Additionally, VGG networks are trained on images with each channel normalized by mean=[0.485, 0.456, 0.406] and std=[0.229, 0.224, 0.225]. We will use them to normalize the image before sending it into the network.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnn_normalization_mean</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
@@ -714,7 +724,7 @@ parameter of the module.</p>
 </div>
 <p>A <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> module contains an ordered list of child modules. For instance, <code class="docutils literal notranslate"><span class="pre">vgg19.features</span></code> contains a sequence (Conv2d, ReLU, MaxPool2d, Conv2d, ReLU…) aligned in the right order of depth. We need to add our content loss and style loss layers immediately after the convolution layer they are detecting. To do this we must create a new <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> module that has content loss and style loss modules correctly inserted.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># desired depth layers to compute style/content losses :</span>
@@ -791,7 +801,7 @@ parameter of the module.</p>
 </div>
 <p>Next, we select the input image. You can use a copy of the content image or white noise.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">input_img</span> <span class="o">=</span> <span class="n">content_img</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
@@ -815,7 +825,7 @@ parameter of the module.</p>
 <h2>Gradient Descent<a class="headerlink" href="#Gradient-Descent" title="Permalink to this heading">¶</a></h2>
 <p>As Leon Gatys, the author of the algorithm, suggested <code class="docutils literal notranslate"><span class="pre">here</span> <span class="pre">&lt;https://discuss.pytorch.org/t/pytorch-tutorial-for-neural-transfert-of-artistic-style/336/20?u=alexis-jacq&gt;</span></code>__, we will use L-BFGS algorithm to run our gradient descent. Unlike training a network, we want to train the input image in order to minimise the content/style losses. We will create a PyTorch L-BFGS optimizer <code class="docutils literal notranslate"><span class="pre">optim.LBFGS</span></code> and pass our image to it as the tensor to optimize.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_input_optimizer</span><span class="p">(</span><span class="n">input_img</span><span class="p">):</span>
@@ -828,7 +838,7 @@ parameter of the module.</p>
 <p>Finally, we must define a function that performs the neural transfer. For each iteration of the networks, it is fed an updated input and computes new losses. We will run the <code class="docutils literal notranslate"><span class="pre">backward</span></code> methods of each loss module to dynamicaly compute their gradients. The optimizer requires a “closure” function, which reevaluates the module and returns the loss.</p>
 <p>We still have one final constraint to address. The network may try to optimize the input with values that exceed the 0 to 1 tensor range for the image. We can address this by correcting the input values to be between 0 to 1 each time the network is run.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_style_transfer</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span>
@@ -897,7 +907,7 @@ parameter of the module.</p>
 </div>
 <p>Finally, we can run the algorithm.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">run_style_transfer</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span>
@@ -906,8 +916,8 @@ parameter of the module.</p>
                             <span class="n">content_img</span><span class="p">,</span>
                             <span class="n">style_img</span><span class="p">,</span>
                             <span class="n">input_img</span><span class="p">,</span>
-                            <span class="n">num_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-                            <span class="n">style_weight</span><span class="o">=</span><span class="mi">100000</span> <span class="c1">#1000000</span>
+                            <span class="n">num_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                            <span class="n">style_weight</span><span class="o">=</span><span class="mi">1000000</span> <span class="c1">#1000000</span>
                             <span class="p">)</span>
 
 <span class="c1"># plt.figure()</span>
@@ -932,9 +942,9 @@ Building the style transfer model..
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/var/folders/76/w4hjx50937lb151qm8l0xq_w0000gn/T/ipykernel_39273/1744401072.py:12: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+/var/folders/76/w4hjx50937lb151qm8l0xq_w0000gn/T/ipykernel_73027/1744401072.py:12: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
   self.mean = torch.tensor(mean).view(-1, 1, 1)
-/var/folders/76/w4hjx50937lb151qm8l0xq_w0000gn/T/ipykernel_39273/1744401072.py:13: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+/var/folders/76/w4hjx50937lb151qm8l0xq_w0000gn/T/ipykernel_73027/1744401072.py:13: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
   self.std = torch.tensor(std).view(-1, 1, 1)
 </pre></div></div>
 </div>
@@ -945,39 +955,24 @@ Building the style transfer model..
 <div class="highlight"><pre>
 Optimizing..
 run [100]:
-Style Loss : 144.184830 Content Loss: 39.559868
+Style Loss : 474.479095 Content Loss: 62.232918
 
 run [200]:
-Style Loss : 135.998047 Content Loss: 39.902378
+Style Loss : 378.271027 Content Loss: 65.982285
 
 run [300]:
-Style Loss : 129.409164 Content Loss: 40.302376
+Style Loss : 306.477478 Content Loss: 67.984390
 
 run [400]:
-Style Loss : 124.077606 Content Loss: 40.647102
+Style Loss : 258.166260 Content Loss: 69.344818
 
 run [500]:
-Style Loss : 119.500244 Content Loss: 40.976032
-
-run [600]:
-Style Loss : 116.018959 Content Loss: 41.300007
-
-run [700]:
-Style Loss : 115.090515 Content Loss: 41.824276
-
-run [800]:
-Style Loss : 110.009369 Content Loss: 41.861122
-
-run [900]:
-Style Loss : 112.410553 Content Loss: 42.622932
-
-run [1000]:
-Style Loss : 103.446396 Content Loss: 42.373981
+Style Loss : 240.144394 Content Loss: 70.163918
 
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mixed</span> <span class="o">=</span> <span class="n">imshow</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Output Image&#39;</span><span class="p">)</span>
@@ -992,7 +987,7 @@ Style Loss : 103.446396 Content Loss: 42.373981
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mixed</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">600</span><span class="p">,</span> <span class="mi">800</span><span class="p">))</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;images/mixed_img.png&quot;</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
