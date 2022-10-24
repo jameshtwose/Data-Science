@@ -65,6 +65,7 @@ docs/_build/
 # data/
 .mypy_cache/
 Machine_learning/dataset/
+Machine_learning/NLP/audio_files/
 NLTSA/data/
 
 # config file
