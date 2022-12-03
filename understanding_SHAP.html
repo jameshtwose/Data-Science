@@ -251,10 +251,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -403,15 +404,15 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">shap</span>
-<span class="kn">from</span> <span class="nn">jmspack.utils</span> <span class="kn">import</span> <span class="n">apply_scaling</span><span class="p">,</span> <span class="n">JmsColors</span>
-<span class="kn">from</span> <span class="nn">jmspack.ml_utils</span> <span class="kn">import</span> <span class="n">multi_roc_auc_plot</span><span class="p">,</span> <span class="n">optimize_model</span><span class="p">,</span> <span class="n">plot_confusion_matrix</span><span class="p">,</span> <span class="n">summary_performance_metrics_classification</span><span class="p">,</span> <span class="n">plot_learning_curve</span><span class="p">,</span> <span class="n">plot_decision_boundary</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">initjs</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import math
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import shap
+from jmspack.utils import apply_scaling, JmsColors
+from jmspack.ml_utils import multi_roc_auc_plot, optimize_model, plot_confusion_matrix, summary_performance_metrics_classification, plot_learning_curve, plot_decision_boundary
+shap.initjs()
 </pre></div>
 </div>
 </div>
@@ -464,9 +465,9 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">RepeatedStratifiedKFold</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_validate, RepeatedStratifiedKFold
 </pre></div>
 </div>
 </div>
@@ -474,8 +475,8 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s2">&quot;jms_style_sheet&quot;</span> <span class="ow">in</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">available</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;jms_style_sheet&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>if &quot;jms_style_sheet&quot; in plt.style.available:
+    plt.style.use(&quot;jms_style_sheet&quot;)
 </pre></div>
 </div>
 </div>
@@ -483,7 +484,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&quot;https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv&quot;).dropna()
 </pre></div>
 </div>
 </div>
@@ -491,7 +492,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
 </pre></div>
 </div>
 </div>
@@ -586,7 +587,7 @@ n===t._wrapperState.initialValue&&(e.value=n)}});t.exports=l},function(t,e,n){"u
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.info()
 </pre></div>
 </div>
 </div>
@@ -615,7 +616,7 @@ memory usage: 20.8+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = sns.pairplot(data=df, hue=&quot;species&quot;, height=1.5)
 </pre></div>
 </div>
 </div>
@@ -630,7 +631,7 @@ memory usage: 20.8+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = sns.pairplot(data=df, hue=&quot;sex&quot;, height=1.5)
 </pre></div>
 </div>
 </div>
@@ -645,10 +646,10 @@ memory usage: 20.8+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_list</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;sex&quot;</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">features_list</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>features_list = df.select_dtypes(&quot;number&quot;).columns.tolist()
+target = &quot;sex&quot;
+X = df[features_list]
+y = df[target]
 </pre></div>
 </div>
 </div>
@@ -656,20 +657,20 @@ memory usage: 20.8+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">optimized_estimator</span><span class="p">,</span>
-<span class="n">feature_ranking</span><span class="p">,</span>
-<span class="n">feature_selected</span><span class="p">,</span>
-<span class="n">feature_importance</span><span class="p">,</span>
-<span class="n">optimized_params_df</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">=</span> <span class="n">optimize_model</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(),</span>
-    <span class="n">grid_params_dict</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
-        <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
-        <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;log2&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;criterion&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;gini&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy&quot;</span><span class="p">],</span>
-    <span class="p">},</span>
-    <span class="n">gridsearch_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;scoring&quot;</span><span class="p">:</span> <span class="s2">&quot;roc_auc&quot;</span><span class="p">,</span> <span class="s2">&quot;cv&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;n_jobs&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">},</span>
-    <span class="n">rfe_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;n_features_to_select&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(optimized_estimator,
+feature_ranking,
+feature_selected,
+feature_importance,
+optimized_params_df,
+) = optimize_model(X=X, y=y, estimator= RandomForestClassifier(),
+    grid_params_dict = {
+        &quot;max_depth&quot;: [1, 2, 3, 4, 5, 10],
+        &quot;n_estimators&quot;: [10, 20, 30, 40, 50],
+        &quot;max_features&quot;: [&quot;log2&quot;, &quot;auto&quot;, &quot;sqrt&quot;],
+        &quot;criterion&quot;: [&quot;gini&quot;, &quot;entropy&quot;],
+    },
+    gridsearch_kwargs = {&quot;scoring&quot;: &quot;roc_auc&quot;, &quot;cv&quot;: 3, &quot;n_jobs&quot;: -2},
+    rfe_kwargs = {&quot;n_features_to_select&quot;: 2, &quot;verbose&quot;: 1})
 </pre></div>
 </div>
 </div>
@@ -699,7 +700,7 @@ Fitting estimator with 3 features.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimized_params_df</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>optimized_params_df
 </pre></div>
 </div>
 </div>
@@ -776,7 +777,7 @@ Fitting estimator with 3 features.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_importance_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">feature_importance</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;feature&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;feature_importance&quot;</span><span class="p">})</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_importance_df = pd.DataFrame(feature_importance.sort_values(ascending=False)).reset_index().rename(columns={&quot;index&quot;: &quot;feature&quot;, 0: &quot;feature_importance&quot;})
 </pre></div>
 </div>
 </div>
@@ -784,8 +785,8 @@ Fitting estimator with 3 features.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">feature_importance_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;feature_importance&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;feature&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(7, 3))
+_ = sns.barplot(data=feature_importance_df, x=&quot;feature_importance&quot;, y=&quot;feature&quot;)
 </pre></div>
 </div>
 </div>
@@ -800,8 +801,8 @@ Fitting estimator with 3 features.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">optimized_estimator</span><span class="p">)</span>
-<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>explainer = shap.TreeExplainer(optimized_estimator)
+shap_values = explainer(X)
 </pre></div>
 </div>
 </div>
@@ -809,7 +810,7 @@ Fitting estimator with 3 features.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">beeswarm</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap.plots.beeswarm(shap_values[:, :, 1])
 </pre></div>
 </div>
 </div>
@@ -824,8 +825,8 @@ Fitting estimator with 3 features.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap_actual_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">features_list</span><span class="p">)</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">value_name</span><span class="o">=</span><span class="s2">&quot;shap_data&quot;</span><span class="p">),</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">features_list</span><span class="p">)</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">value_name</span><span class="o">=</span><span class="s2">&quot;actual_data&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap_actual_df = pd.concat([pd.DataFrame(shap_values[:, :, 1].values, columns=features_list).melt(value_name=&quot;shap_data&quot;),
+pd.DataFrame(shap_values[:, :, 1].data, columns=features_list).melt(value_name=&quot;actual_data&quot;).drop(&quot;variable&quot;, axis=1)], axis=1)
 </pre></div>
 </div>
 </div>
@@ -833,7 +834,7 @@ Fitting estimator with 3 features.
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap_actual_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap_actual_df.info()
 </pre></div>
 </div>
 </div>
@@ -858,7 +859,7 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap_actual_df</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap_actual_df
 </pre></div>
 </div>
 </div>
@@ -966,31 +967,31 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="kn">import</span> <span class="n">inset_axes</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">shap_actual_df</span><span class="p">,</span>
-                  <span class="n">x</span><span class="o">=</span><span class="s2">&quot;shap_data&quot;</span><span class="p">,</span>
-                  <span class="n">y</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
-                  <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;actual_data&quot;</span><span class="p">,</span>
-                  <span class="n">order</span><span class="o">=</span><span class="n">shap_actual_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;variable&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">var</span><span class="p">()[</span><span class="s2">&quot;shap_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
-                  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                  <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([],[],</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+ax = sns.stripplot(data=shap_actual_df,
+                  x=&quot;shap_data&quot;,
+                  y=&quot;variable&quot;,
+                  hue=&quot;actual_data&quot;,
+                  order=shap_actual_df.groupby(&quot;variable&quot;).var()[&quot;shap_data&quot;].sort_values(ascending=False).index.tolist(),
+                  alpha=0.5,
+                  palette=&quot;viridis&quot;)
+_ = plt.legend([],[], frameon=False)
 
-<span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="n">cmap_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">cmap_values</span><span class="p">)</span>
-<span class="n">norm</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">shap_actual_df</span><span class="p">[</span><span class="s2">&quot;actual_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">vmax</span><span class="o">=</span><span class="n">shap_actual_df</span><span class="p">[</span><span class="s2">&quot;actual_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+N = 2
+cmap = matplotlib.cm.get_cmap(&#39;viridis&#39;)
+cmap_values = np.linspace(0., 1., N)
+colors = cmap(cmap_values)
+norm = matplotlib.colors.Normalize(vmin=shap_actual_df[&quot;actual_data&quot;].min(), vmax=shap_actual_df[&quot;actual_data&quot;].max())
 
-<span class="c1"># vertical colorbar</span>
-<span class="n">cbaxes</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">(),</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;3%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;80%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
-<span class="n">cbar</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colorbar</span><span class="o">.</span><span class="n">ColorbarBase</span><span class="p">(</span><span class="n">cbaxes</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
-                                        <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
-                                        <span class="c1"># ticks=ticks</span>
-                                        <span class="p">)</span>
-<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;scale&#39;</span><span class="p">)</span>
-<span class="c1"># cbar.ax.set_yticklabels(ticks, fontsize=12)</span>
+# vertical colorbar
+cbaxes = inset_axes(plt.gca(), width=&quot;3%&quot;, height=&quot;80%&quot;, loc=&quot;lower right&quot;)
+cbar = matplotlib.colorbar.ColorbarBase(cbaxes, cmap=cmap,
+                                        norm=norm,
+                                        # ticks=ticks
+                                        )
+cbar.set_label(&#39;scale&#39;)
+# cbar.ax.set_yticklabels(ticks, fontsize=12)
 </pre></div>
 </div>
 </div>
@@ -1005,7 +1006,7 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="p">,</span> <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;layered_violin&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap.summary_plot(shap_values[:, :, 1], X, plot_type=&quot;layered_violin&quot;, color=&#39;coolwarm&#39;)
 </pre></div>
 </div>
 </div>
@@ -1020,7 +1021,7 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">instance_order</span><span class="o">=</span><span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap.plots.heatmap(shap_values[:, :, 1], instance_order=shap_values[:, :, 1].sum(1))
 </pre></div>
 </div>
 </div>
@@ -1035,10 +1036,10 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># shap.dependence_plot(&#39;bill_length_mm&#39;, shap_values.values[:, :, 0], X)</span>
-<span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span><span class="n">explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                <span class="n">shap_values</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
-               <span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># shap.dependence_plot(&#39;bill_length_mm&#39;, shap_values.values[:, :, 0], X)
+shap.force_plot(explainer.expected_value[0],
+                shap_values.values[:, :, 0]
+               )
 </pre></div>
 </div>
 </div>
@@ -1066,7 +1067,7 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">dependence_plot</span><span class="p">(</span><span class="s1">&#39;bill_length_mm&#39;</span><span class="p">,</span> <span class="n">shap_values</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap.dependence_plot(&#39;bill_length_mm&#39;, shap_values.values[:, :, 0], X)
 </pre></div>
 </div>
 </div>
@@ -1081,8 +1082,8 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># shap.plots.scatter(shap_values.values[&quot;bill_length_mm&quot;], color=shap_values.values[:, :, 1])</span>
-<span class="c1"># shap.plots.scatter(shap_values[:,&quot;Age&quot;])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># shap.plots.scatter(shap_values.values[&quot;bill_length_mm&quot;], color=shap_values.values[:, :, 1])
+# shap.plots.scatter(shap_values[:,&quot;Age&quot;])
 </pre></div>
 </div>
 </div>
@@ -1090,7 +1091,7 @@ memory usage: 31.3+ KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap_values</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap_values.values[:, :, 0]
 </pre></div>
 </div>
 </div>
@@ -1113,7 +1114,7 @@ array([[-0.08610135, -0.27917051, -0.05639864, -0.07031806],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap_values</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>shap_values[:, :, 1]
 </pre></div>
 </div>
 </div>
@@ -1215,17 +1216,17 @@ array([[  39.1,   18.7,  181. , 3750. ],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">RepeatedStratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">scoring_list</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
- <span class="s1">&#39;balanced_accuracy&#39;</span><span class="p">,</span>
- <span class="s1">&#39;f1&#39;</span><span class="p">,</span>
- <span class="s1">&#39;f1_weighted&#39;</span><span class="p">,</span>
- <span class="s1">&#39;precision&#39;</span><span class="p">,</span>
- <span class="s1">&#39;precision_weighted&#39;</span><span class="p">,</span>
- <span class="s1">&#39;recall&#39;</span><span class="p">,</span>
- <span class="s1">&#39;recall_weighted&#39;</span><span class="p">,</span>
- <span class="s1">&#39;roc_auc&#39;</span><span class="p">,</span>
-               <span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=10, random_state=1)
+scoring_list = (&#39;accuracy&#39;,
+ &#39;balanced_accuracy&#39;,
+ &#39;f1&#39;,
+ &#39;f1_weighted&#39;,
+ &#39;precision&#39;,
+ &#39;precision_weighted&#39;,
+ &#39;recall&#39;,
+ &#39;recall_weighted&#39;,
+ &#39;roc_auc&#39;,
+               )
 </pre></div>
 </div>
 </div>
@@ -1233,7 +1234,7 @@ array([[  39.1,   18.7,  181. , 3750. ],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp_out</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">optimized_estimator</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="n">feature_selected</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring_list</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tmp_out = cross_validate(estimator=optimized_estimator, X=X[feature_selected], y=y.astype(&quot;category&quot;).cat.codes, groups=None, scoring=scoring_list, cv=cv, n_jobs=-1)
 </pre></div>
 </div>
 </div>
@@ -1241,7 +1242,7 @@ array([[  39.1,   18.7,  181. , 3750. ],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp_out</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;fit_time&quot;</span><span class="p">,</span> <span class="s2">&quot;score_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.DataFrame(tmp_out).drop([&quot;fit_time&quot;, &quot;score_time&quot;], axis=1).agg([&quot;mean&quot;, &quot;median&quot;, &quot;std&quot;]).round(3)
 </pre></div>
 </div>
 </div>
@@ -1324,7 +1325,7 @@ array([[  39.1,   18.7,  181. , 3750. ],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp_out</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;fit_time&quot;</span><span class="p">,</span> <span class="s2">&quot;score_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">var_name</span><span class="o">=</span><span class="s2">&quot;Metric&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv_metrics_df = pd.DataFrame(tmp_out).drop([&quot;fit_time&quot;, &quot;score_time&quot;], axis=1).melt(var_name=&quot;Metric&quot;)
 </pre></div>
 </div>
 </div>
@@ -1332,14 +1333,14 @@ array([[  39.1,   18.7,  181. , 3750. ],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">cv_metrics_df</span><span class="p">,</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;Metric&quot;</span><span class="p">,</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">cv_metrics_df</span><span class="p">,</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;Metric&quot;</span><span class="p">,</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All performance metrics </span><span class="si">{</span><span class="n">optimized_estimator</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> with cross validation&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(25,5))
+_ = sns.boxplot(data = cv_metrics_df,
+                x = &quot;Metric&quot;,
+                y = &quot;value&quot;)
+_ = sns.swarmplot(data = cv_metrics_df,
+                x = &quot;Metric&quot;,
+                y = &quot;value&quot;, edgecolor=&quot;white&quot;, linewidth=1)
+_ = plt.title(f&quot;All performance metrics {optimized_estimator.__class__.__name__} with cross validation&quot;)
 </pre></div>
 </div>
 </div>
@@ -1363,19 +1364,19 @@ array([[  39.1,   18.7,  181. , 3750. ],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_learning_curve</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">optimized_estimator</span><span class="p">,</span>
-                          <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Learning Curve of </span><span class="si">{</span><span class="n">optimized_estimator</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> of penguins&#39;</span><span class="p">,</span>
-                          <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="n">feature_selected</span><span class="p">],</span>
-                          <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
-                          <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">cross_color</span><span class="o">=</span><span class="n">JmsColors</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
-                          <span class="n">test_color</span><span class="o">=</span><span class="n">JmsColors</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">,</span>
-                          <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">,</span>
-                          <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-                          <span class="n">n_jobs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-                          <span class="n">train_sizes</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
-                          <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig = plot_learning_curve(estimator=optimized_estimator,
+                          title=f&#39;Learning Curve of {optimized_estimator.__class__.__name__} of penguins&#39;,
+                          X=X[feature_selected],
+                          y=y,
+                          groups=None,
+                          cross_color=JmsColors.PURPLE,
+                          test_color=JmsColors.YELLOW,
+                          scoring=&#39;roc_auc&#39;,
+                          ylim=None,
+                          cv=cv,
+                          n_jobs=10,
+                          train_sizes=np.linspace(.1, 1.0, 40),
+                          figsize=(10,5))
 </pre></div>
 </div>
 </div>
@@ -1390,13 +1391,13 @@ array([[  39.1,   18.7,  181. , 3750. ],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plot_decision_boundary</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="n">feature_selected</span><span class="p">],</span>
-                           <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
-                           <span class="n">clf</span><span class="o">=</span><span class="n">optimized_estimator</span><span class="p">,</span>
-                           <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Decision Boundary - </span><span class="si">{</span><span class="n">optimized_estimator</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                           <span class="n">legend_title</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
-                          <span class="n">h</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-                          <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plot_decision_boundary(X=X[feature_selected],
+                           y=y,
+                           clf=optimized_estimator,
+                           title = f&#39;Decision Boundary - {optimized_estimator.__class__.__name__}&#39;,
+                           legend_title = target,
+                          h=0.1,
+                          figsize=(8, 6))
 </pre></div>
 </div>
 </div>

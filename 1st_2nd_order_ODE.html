@@ -269,10 +269,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -421,12 +422,12 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">session_info</span>
-<span class="kn">from</span> <span class="nn">jmspack.utils</span> <span class="kn">import</span> <span class="n">JmsColors</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import session_info
+from jmspack.utils import JmsColors
 </pre></div>
 </div>
 </div>
@@ -434,8 +435,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skmid.models</span> <span class="kn">import</span> <span class="n">generate_model_attributes</span><span class="p">,</span> <span class="n">DynamicModel</span>
-<span class="kn">from</span> <span class="nn">skmid.integrator</span> <span class="kn">import</span> <span class="n">RungeKutta4</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from skmid.models import generate_model_attributes, DynamicModel
+from skmid.integrator import RungeKutta4
 </pre></div>
 </div>
 </div>
@@ -443,8 +444,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s2">&quot;jms_style_sheet&quot;</span> <span class="ow">in</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">available</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;jms_style_sheet&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>if &quot;jms_style_sheet&quot; in plt.style.available:
+    plt.style.use(&quot;jms_style_sheet&quot;)
 </pre></div>
 </div>
 </div>
@@ -452,7 +453,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session_info</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>session_info.show()
 </pre></div>
 </div>
 </div>
@@ -537,37 +538,37 @@ Session information updated at 2022-04-20 12:31
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose an excitation signal</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">2000</span>  <span class="c1"># Number of samples</span>
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Sampling frequency [hz]</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">fs</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span>
-<span class="n">m</span><span class="o">=-</span><span class="mf">0.0001</span>
-<span class="n">c</span><span class="o">=</span><span class="mi">1</span>
-<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-<span class="n">f</span><span class="o">=</span><span class="mi">5</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Choose an excitation signal
+np.random.seed(42)
+N = 2000  # Number of samples
+fs = 1  # Sampling frequency [hz]
+t = np.linspace(0, (N - 1) * (1 / fs), N)
+m=-0.0001
+c=1
+x=np.arange(N)
+f=5
 
-<span class="n">df_input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">{</span>
-        <span class="c1"># &quot;u1&quot;: m*x + c,</span>
-        <span class="c1"># &quot;u1&quot;: 2 * np.random.random(N),</span>
-        <span class="c1"># &quot;u2&quot;: 2 * np.random.random(N),</span>
-        <span class="s2">&quot;u1&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">fs</span><span class="p">),</span>
-        <span class="c1"># &quot;u4&quot;: 2 * np.random.random(N),</span>
-    <span class="p">},</span>
-    <span class="n">index</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
-<span class="p">)</span>
+df_input = pd.DataFrame(
+    data={
+        # &quot;u1&quot;: m*x + c,
+        # &quot;u1&quot;: 2 * np.random.random(N),
+        # &quot;u2&quot;: 2 * np.random.random(N),
+        &quot;u1&quot;: np.sin(np.pi * f * x / fs),
+        # &quot;u4&quot;: 2 * np.random.random(N),
+    },
+    index=t,
+)
 
-<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Initial Condition x0 = [0;0]; [nx = 2]</span>
+x0 = [1, -1]  # Initial Condition x0 = [0;0]; [nx = 2]
 
-<span class="n">parameter_dict</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;N&quot;</span><span class="p">:</span> <span class="n">N</span><span class="p">,</span>
-                <span class="s2">&quot;fs&quot;</span><span class="p">:</span> <span class="n">fs</span><span class="p">,</span>
-                <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
-                <span class="s2">&quot;x0&quot;</span><span class="p">:</span> <span class="n">x0</span><span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial Parameters&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parameter_dict</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">df_input</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_input</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+parameter_dict={&quot;N&quot;: N,
+                &quot;fs&quot;: fs,
+                &quot;t&quot;: t,
+                &quot;x0&quot;: x0}
+print(&quot;Initial Parameters&quot;)
+print(parameter_dict)
+display(df_input.head())
+print(df_input.shape)
 </pre></div>
 </div>
 </div>
@@ -643,15 +644,15 @@ Initial Parameters
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_input</span>
-                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
-                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
-                <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(20, 5))
+_ = sns.lineplot(data=df_input
+                .reset_index()
+                .melt(id_vars=&quot;index&quot;),
+                x=&quot;index&quot;,
+                y=&quot;value&quot;,
+                hue=&quot;variable&quot;
+                )
+_ = sns.despine()
 </pre></div>
 </div>
 </div>
@@ -672,16 +673,16 @@ Initial Parameters
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> <span class="o">=</span> <span class="n">generate_model_attributes</span><span class="p">(</span><span class="n">state_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parameter_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(x, u, param) = generate_model_attributes(state_size=1, input_size=1, parameter_size=2)
 
-<span class="c1"># assign specific name</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># initial input value</span>
-<span class="n">kp</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+# assign specific name
+x0 = [0] # initial input value
+kp, tp = param[0], param[1]
 
-<span class="n">param_truth</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="c1"># ca.DM([0.1, 0.5])</span>
+param_truth = [0.1, 0.5]  # ca.DM([0.1, 0.5])
 
-<span class="n">rhs</span> <span class="o">=</span> <span class="p">[((</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="n">kp</span> <span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="p">)]</span> <span class="c1">#1st order ODE</span>
-<span class="n">rhs</span>
+rhs = [((-1/ tp)*x) + ((kp / tp)*u)] #1st order ODE
+rhs
 </pre></div>
 </div>
 </div>
@@ -701,8 +702,8 @@ Initial Parameters
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span> <span class="o">=</span> <span class="n">DynamicModel</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">model_dynamics</span><span class="o">=</span><span class="n">rhs</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sys = DynamicModel(state=x, input=u, parameter=param, model_dynamics=rhs)
+sys.print_summary()
 </pre></div>
 </div>
 </div>
@@ -735,13 +736,13 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rk4</span> <span class="o">=</span> <span class="n">RungeKutta4</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">sys</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">rk4</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">initial_condition</span><span class="o">=</span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">input</span><span class="o">=</span><span class="n">df_input</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param_truth</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rk4 = RungeKutta4(model=sys, fs=fs)
+rk4.simulate(initial_condition=x0[0], input=df_input, parameter=param_truth)
 
-<span class="n">df_sim</span> <span class="o">=</span> <span class="n">rk4</span><span class="o">.</span><span class="n">output_sim_</span>
+df_sim = rk4.output_sim_
 
-<span class="n">display</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+display(df_sim.head())
+print(df_sim.shape)
 </pre></div>
 </div>
 </div>
@@ -810,15 +811,15 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sim</span>
-                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
-                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
-                <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(20, 5))
+_ = sns.lineplot(data=df_sim
+                .reset_index()
+                .melt(id_vars=&quot;index&quot;),
+                x=&quot;index&quot;,
+                y=&quot;value&quot;,
+                hue=&quot;variable&quot;
+                )
+_ = sns.despine()
 </pre></div>
 </div>
 </div>
@@ -833,18 +834,18 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="n">df_input</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plot_df</span>
-                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
-                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
-                <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">2e-13</span><span class="p">,</span> <span class="mf">2e-13</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_df = pd.merge(df_sim, df_input, left_index=True, right_index=True)
+_ = plt.figure(figsize=(20, 5))
+_ = sns.lineplot(data=plot_df
+                .reset_index()
+                .melt(id_vars=&quot;index&quot;),
+                x=&quot;index&quot;,
+                y=&quot;value&quot;,
+                hue=&quot;variable&quot;
+                )
+_ = sns.despine()
+_ = plt.xlim(0,500)
+_ = plt.ylim(-2e-13, 2e-13)
 </pre></div>
 </div>
 </div>
@@ -859,8 +860,8 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">df_input</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">df_input</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">JmsColors</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.scatter(df_sim.values[1:], df_input.values)
+_ = plt.plot(df_sim.values[1:], df_input.values, c=JmsColors.YELLOW)
 </pre></div>
 </div>
 </div>
@@ -884,16 +885,16 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span> <span class="o">=</span> <span class="n">generate_model_attributes</span><span class="p">(</span><span class="n">state_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parameter_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(x, u, param) = generate_model_attributes(state_size=1, input_size=1, parameter_size=2)
 
-<span class="c1"># assign specific name</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># initial input value</span>
-<span class="n">kp</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+# assign specific name
+x0 = [0] # initial input value
+kp, tp = param[0], param[1]
 
-<span class="n">param_truth</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="c1"># ca.DM([0.1, 0.5])</span>
+param_truth = [0.1, 0.5]  # ca.DM([0.1, 0.5])
 
-<span class="n">rhs</span> <span class="o">=</span> <span class="p">[((</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="n">kp</span> <span class="o">/</span> <span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="p">)]</span> <span class="c1">#1st order ODE</span>
-<span class="n">rhs</span>
+rhs = [((-1/ tp)*x) + ((kp / tp)*u)] #1st order ODE
+rhs
 </pre></div>
 </div>
 </div>
@@ -904,8 +905,8 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span> <span class="o">=</span> <span class="n">DynamicModel</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">model_dynamics</span><span class="o">=</span><span class="n">rhs</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sys = DynamicModel(state=x, input=u, parameter=param, model_dynamics=rhs)
+sys.print_summary()
 </pre></div>
 </div>
 </div>
@@ -916,13 +917,13 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rk4</span> <span class="o">=</span> <span class="n">RungeKutta4</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">sys</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">rk4</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">initial_condition</span><span class="o">=</span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">input</span><span class="o">=</span><span class="n">df_input</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="n">param_truth</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rk4 = RungeKutta4(model=sys, fs=fs)
+rk4.simulate(initial_condition=x0[0], input=df_input, parameter=param_truth)
 
-<span class="n">df_sim</span> <span class="o">=</span> <span class="n">rk4</span><span class="o">.</span><span class="n">output_sim_</span>
+df_sim = rk4.output_sim_
 
-<span class="n">display</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+display(df_sim.head())
+print(df_sim.shape)
 </pre></div>
 </div>
 </div>
@@ -933,15 +934,15 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sim</span>
-                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
-                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
-                <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(20, 5))
+_ = sns.lineplot(data=df_sim
+                .reset_index()
+                .melt(id_vars=&quot;index&quot;),
+                x=&quot;index&quot;,
+                y=&quot;value&quot;,
+                hue=&quot;variable&quot;
+                )
+_ = sns.despine()
 </pre></div>
 </div>
 </div>
@@ -949,18 +950,18 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="n">df_input</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plot_df</span>
-                <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-                <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
-                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span>
-                <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">2e-13</span><span class="p">,</span> <span class="mf">2e-13</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_df = pd.merge(df_sim, df_input, left_index=True, right_index=True)
+_ = plt.figure(figsize=(20, 5))
+_ = sns.lineplot(data=plot_df
+                .reset_index()
+                .melt(id_vars=&quot;index&quot;),
+                x=&quot;index&quot;,
+                y=&quot;value&quot;,
+                hue=&quot;variable&quot;
+                )
+_ = sns.despine()
+_ = plt.xlim(0,500)
+_ = plt.ylim(-2e-13, 2e-13)
 </pre></div>
 </div>
 </div>
@@ -968,7 +969,7 @@ Dimension Summary
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">df_input</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.scatter(df_sim.values[1:], df_input.values)
 </pre></div>
 </div>
 </div>

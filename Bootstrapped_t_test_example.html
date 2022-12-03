@@ -261,10 +261,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -413,13 +414,13 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">statsmodels.stats.weightstats</span> <span class="k">as</span> <span class="nn">smsw</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="kn">from</span> <span class="nn">statsmodels.stats.multitest</span> <span class="kn">import</span> <span class="n">multipletests</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.stats.weightstats as smsw
+from scipy import stats
+from statsmodels.stats.multitest import multipletests
 </pre></div>
 </div>
 </div>
@@ -429,10 +430,10 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ir_df</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
-<span class="c1">#ir_df.head(), ir_df.info()</span>
-<span class="n">ir_df</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ir_df</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
-<span class="n">ir_df</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ir_df = sns.load_dataset(&quot;iris&quot;)
+#ir_df.head(), ir_df.info()
+ir_df[&quot;species&quot;] = ir_df[&quot;species&quot;].astype(&#39;category&#39;)
+ir_df[&quot;species&quot;].unique()
 </pre></div>
 </div>
 </div>
@@ -450,13 +451,13 @@ Categories (3, object): [setosa, versicolor, virginica]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">group_1</span> <span class="o">=</span> <span class="n">ir_df</span><span class="p">[</span><span class="n">ir_df</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;setosa&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sepal_length</span>
-<span class="n">group_2</span> <span class="o">=</span> <span class="n">ir_df</span><span class="p">[</span><span class="n">ir_df</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;versicolor&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sepal_length</span>
-<span class="n">group_3</span> <span class="o">=</span> <span class="n">ir_df</span><span class="p">[</span><span class="n">ir_df</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;virginica&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sepal_length</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">group_1</span><span class="p">)),</span> <span class="n">group_1</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">group_2</span><span class="p">)),</span> <span class="n">group_2</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">group_3</span><span class="p">)),</span> <span class="n">group_3</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(12,7))
+group_1 = ir_df[ir_df[&quot;species&quot;]==&quot;setosa&quot;].sepal_length
+group_2 = ir_df[ir_df[&quot;species&quot;]==&quot;versicolor&quot;].sepal_length
+group_3 = ir_df[ir_df[&quot;species&quot;]==&quot;virginica&quot;].sepal_length
+_ = sns.scatterplot(range(0,len(group_1)), group_1)
+_ = sns.scatterplot(range(0,len(group_2)), group_2)
+_ = sns.scatterplot(range(0,len(group_3)), group_3)
 </pre></div>
 </div>
 </div>
@@ -474,45 +475,45 @@ Categories (3, object): [setosa, versicolor, virginica]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## define a function which generates many bootstrapped p-values from an independent t-test</span>
-<span class="k">def</span> <span class="nf">boot_independent_t_test</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">grouping_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                            <span class="n">grouping_grp1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">grouping_grp2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="p">:</span>
-    <span class="c1"># select the &#39;feature&#39; and &#39;grouping_var&#39; columns and remove row if any nan present</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">feature</span><span class="p">,</span> <span class="n">grouping_var</span><span class="p">]]</span>
-    <span class="n">_</span>    <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>## define a function which generates many bootstrapped p-values from an independent t-test
+def boot_independent_t_test(data: pd.DataFrame, feature: str, grouping_var: str,
+                            grouping_grp1: str, grouping_grp2: str, size = 10) :
+    # select the &#39;feature&#39; and &#39;grouping_var&#39; columns and remove row if any nan present
+    data = data.copy()
+    data = data[[feature, grouping_var]]
+    _    = data.dropna(axis = 0, how = &#39;any&#39;, inplace = True)
 
-    <span class="c1"># New dataframes</span>
-    <span class="n">group1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">grouping_var</span><span class="p">]</span> <span class="o">==</span> <span class="n">grouping_grp1</span><span class="p">]</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">group1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="n">group2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">grouping_var</span><span class="p">]</span> <span class="o">==</span> <span class="n">grouping_grp2</span><span class="p">]</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">group2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    # New dataframes
+    group1 = data.loc[data[grouping_var] == grouping_grp1]
+    _ = group1.reset_index(inplace = True)
+    group2 = data.loc[data[grouping_var] == grouping_grp2]
+    _ = group2.reset_index(inplace = True)
 
-    <span class="c1"># Check assumption: homogeneity of variances</span>
-    <span class="p">(</span><span class="n">levene</span><span class="p">,</span> <span class="n">p_value</span><span class="p">)</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">levene</span><span class="p">(</span><span class="n">group1</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="n">group2</span><span class="p">[</span><span class="n">feature</span><span class="p">])</span>
+    # Check assumption: homogeneity of variances
+    (levene, p_value) = stats.levene(group1[feature], group2[feature])
 
-    <span class="c1"># Initialize empty numpy array for the bootstrapping</span>
-    <span class="n">bs_replicates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    # Initialize empty numpy array for the bootstrapping
+    bs_replicates = np.empty(size)
 
-    <span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="p">:</span>
-        <span class="c1"># YES: Run t-test using statsmodels - unequal variance</span>
-        <span class="n">group_variance</span> <span class="o">=</span> <span class="s2">&quot;Unequal&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-            <span class="n">bs_sample_gr_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">group1</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">group1</span><span class="p">[</span><span class="n">feature</span><span class="p">]),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">bs_sample_gr_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">group2</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">group2</span><span class="p">[</span><span class="n">feature</span><span class="p">]),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">bs_replicates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smsw</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">bs_sample_gr_1</span><span class="p">,</span>
-                                              <span class="n">bs_sample_gr_2</span><span class="p">,</span>
-                                              <span class="n">usevar</span> <span class="o">=</span> <span class="s1">&#39;unequal&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">else</span> <span class="p">:</span>
-        <span class="c1"># NO: Run t-test using statsmodels - equal variances</span>
-        <span class="n">group_variance</span> <span class="o">=</span> <span class="s2">&quot;Equal&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-            <span class="n">bs_sample_gr_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">group1</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">group1</span><span class="p">[</span><span class="n">feature</span><span class="p">]),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">bs_sample_gr_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">group2</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">group2</span><span class="p">[</span><span class="n">feature</span><span class="p">]),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">bs_replicates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smsw</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">bs_sample_gr_1</span><span class="p">,</span>
-                                              <span class="n">bs_sample_gr_2</span><span class="p">,</span>
-                                              <span class="n">usevar</span> <span class="o">=</span> <span class="s1">&#39;pooled&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">bs_replicates</span>
+    if p_value &lt; 0.05 :
+        # YES: Run t-test using statsmodels - unequal variance
+        group_variance = &quot;Unequal&quot;
+        for i in range(size):
+            bs_sample_gr_1 = np.random.choice(group1[feature], len(group1[feature]), replace=True)
+            bs_sample_gr_2 = np.random.choice(group2[feature], len(group2[feature]), replace=True)
+            bs_replicates[i] = smsw.ttest_ind(bs_sample_gr_1,
+                                              bs_sample_gr_2,
+                                              usevar = &#39;unequal&#39;)[1]
+    else :
+        # NO: Run t-test using statsmodels - equal variances
+        group_variance = &quot;Equal&quot;
+        for i in range(size):
+            bs_sample_gr_1 = np.random.choice(group1[feature], len(group1[feature]), replace=True)
+            bs_sample_gr_2 = np.random.choice(group2[feature], len(group2[feature]), replace=True)
+            bs_replicates[i] = smsw.ttest_ind(bs_sample_gr_1,
+                                              bs_sample_gr_2,
+                                              usevar = &#39;pooled&#39;)[1]
+    return bs_replicates
 </pre></div>
 </div>
 </div>
@@ -523,11 +524,11 @@ Categories (3, object): [setosa, versicolor, virginica]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">bs_replicates_sp_l</span> <span class="o">=</span> <span class="n">boot_independent_t_test</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ir_df</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="n">grouping_var</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span>
-                            <span class="n">grouping_grp1</span><span class="o">=</span><span class="s2">&quot;versicolor&quot;</span><span class="p">,</span> <span class="n">grouping_grp2</span><span class="o">=</span><span class="s2">&quot;virginica&quot;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">bs_replicates_sp_l</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">bs_replicates_sp_l</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">bs_replicates_sp_l</span><span class="p">)</span><span class="o">-</span><span class="mf">0.0005</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">bs_replicates_sp_l</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(12,7))
+bs_replicates_sp_l = boot_independent_t_test(data=ir_df, feature=&quot;sepal_length&quot;, grouping_var=&quot;species&quot;,
+                            grouping_grp1=&quot;versicolor&quot;, grouping_grp2=&quot;virginica&quot;, size = 1000)
+_ = sns.scatterplot(range(0,len(bs_replicates_sp_l)), np.sort(bs_replicates_sp_l))
+_ = plt.ylim(min(bs_replicates_sp_l)-0.0005, max(bs_replicates_sp_l))
 </pre></div>
 </div>
 </div>
@@ -545,17 +546,17 @@ Categories (3, object): [setosa, versicolor, virginica]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">size</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">feat_list</span> <span class="o">=</span> <span class="n">ir_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">feat_list</span><span class="p">)):</span>
-    <span class="n">leg_name</span> <span class="o">=</span> <span class="n">feat_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">leg_name</span><span class="p">)</span>
-    <span class="n">bs_replicates</span> <span class="o">=</span> <span class="n">boot_independent_t_test</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ir_df</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="n">feat_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">grouping_var</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span>
-                            <span class="n">grouping_grp1</span><span class="o">=</span><span class="s2">&quot;setosa&quot;</span><span class="p">,</span> <span class="n">grouping_grp2</span><span class="o">=</span><span class="s2">&quot;versicolor&quot;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">bs_replicates</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">bs_replicates</span><span class="p">))</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">bs_replicates</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">bs_replicates</span><span class="p">))</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">leg_name</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>size = 1000
+_ = plt.figure(figsize=(12,7))
+feat_list = ir_df.drop(&quot;species&quot;, axis=1).columns.values
+for i in range(0,len(feat_list)):
+    leg_name = feat_list[i]
+    print(leg_name)
+    bs_replicates = boot_independent_t_test(data=ir_df, feature=feat_list[i], grouping_var=&quot;species&quot;,
+                            grouping_grp1=&quot;setosa&quot;, grouping_grp2=&quot;versicolor&quot;, size = size)
+    _ = sns.scatterplot(range(0,len(bs_replicates)), np.sort(bs_replicates))
+    _ = plt.ylim(min(bs_replicates), max(bs_replicates))
+    _ = plt.legend(leg_name, loc=&#39;upper left&#39;)
 </pre></div>
 </div>
 </div>
@@ -583,11 +584,11 @@ petal_width
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvals</span> <span class="o">=</span> <span class="n">bs_replicates_sp_l</span> <span class="c1"># p-values from looking at sepal-length between versicolor and virginica</span>
-<span class="n">multi_test_method</span> <span class="o">=</span> <span class="s2">&quot;fdr_bh&quot;</span>
-<span class="n">reject</span><span class="p">,</span> <span class="n">pvals_corrected</span><span class="p">,</span> <span class="n">alphacSidak</span><span class="p">,</span> <span class="n">alphacBonf</span> <span class="o">=</span>\
-<span class="n">multipletests</span><span class="p">(</span><span class="n">pvals</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">multi_test_method</span><span class="p">,</span>
-              <span class="n">is_sorted</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">returnsorted</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pvals = bs_replicates_sp_l # p-values from looking at sepal-length between versicolor and virginica
+multi_test_method = &quot;fdr_bh&quot;
+reject, pvals_corrected, alphacSidak, alphacBonf =\
+multipletests(pvals, alpha=0.05, method=multi_test_method,
+              is_sorted=False, returnsorted=False)
 </pre></div>
 </div>
 </div>
@@ -599,20 +600,20 @@ petal_width
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rang_len</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bs_replicates_sp_l</span><span class="p">)</span>
-<span class="n">q</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># define ideal p-value</span>
-<span class="n">ideal_p_val</span> <span class="o">=</span> <span class="n">q</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="n">N</span>
-<span class="c1"># sort the corrected p-values</span>
-<span class="n">pvals_corrected_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">pvals_corrected</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">[:</span><span class="n">rang_len</span><span class="p">],</span> <span class="n">pvals_corrected_s</span><span class="p">[:</span><span class="n">rang_len</span><span class="p">],</span> <span class="s1">&#39;b.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$p(i)$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">[:</span><span class="n">rang_len</span><span class="p">],</span> <span class="n">ideal_p_val</span><span class="p">[:</span><span class="n">rang_len</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$q i / N$&#39;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$i$&#39;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$p$&#39;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rang_len = 1000
+_ = plt.figure(figsize=(12,7))
+N = len(bs_replicates_sp_l)
+q = 0.05
+i = np.arange(1, N+1)
+# define ideal p-value
+ideal_p_val = q * i / N
+# sort the corrected p-values
+pvals_corrected_s = np.sort(pvals_corrected)
+plt.plot(i[:rang_len], pvals_corrected_s[:rang_len], &#39;b.&#39;, label=&#39;$p(i)$&#39;)
+plt.plot(i[:rang_len], ideal_p_val[:rang_len], &#39;r&#39;, label=&#39;$q i / N$&#39;)
+_ = plt.xlabel(&#39;$i$&#39;)
+_ = plt.ylabel(&#39;$p$&#39;)
+_ = plt.legend()
 </pre></div>
 </div>
 </div>

@@ -257,10 +257,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -429,34 +430,34 @@ experiments. For the details of how these were obtained, please refer to the pap
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># utility packages</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">from</span> <span class="nn">sinfo</span> <span class="kn">import</span> <span class="n">sinfo</span>
-<span class="c1"># import warnings</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># utility packages
+import sys
+import os
+import glob
+from sinfo import sinfo
+# import warnings
 
-<span class="c1"># data manipulation packages</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="c1"># from pandas.io.json import json_normalize #package for flattening json in pandas df</span>
-<span class="c1"># from ast import literal_eval</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+# data manipulation packages
+import pandas as pd
+# from pandas.io.json import json_normalize #package for flattening json in pandas df
+# from ast import literal_eval
+import numpy as np
 
-<span class="c1"># plotting packages</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+# plotting packages
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import seaborn as sns
 
-<span class="c1"># analysis packages</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">VarianceThreshold</span>
-<span class="kn">from</span> <span class="nn">jmspack.NLTSA</span> <span class="kn">import</span> <span class="n">ts_levels</span>
+# analysis packages
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.feature_selection import VarianceThreshold
+from jmspack.NLTSA import ts_levels
 
-<span class="c1"># internal script</span>
-<span class="kn">from</span> <span class="nn">extras</span> <span class="kn">import</span> <span class="p">(</span><span class="n">swell_eda_features_cols</span><span class="p">,</span>
-                   <span class="n">swell_eda_target_cols</span><span class="p">,</span>
-                   <span class="n">variance_threshold</span><span class="p">,</span>
-                   <span class="n">nunique_threshold</span><span class="p">)</span>
+# internal script
+from extras import (swell_eda_features_cols,
+                   swell_eda_target_cols,
+                   variance_threshold,
+                   nunique_threshold)
 </pre></div>
 </div>
 </div>
@@ -464,7 +465,7 @@ experiments. For the details of how these were obtained, please refer to the pap
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sinfo</span><span class="p">(</span><span class="n">write_req_file</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sinfo(write_req_file=False)
 </pre></div>
 </div>
 </div>
@@ -504,24 +505,24 @@ Session information updated at 2021-03-21 15:35
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[142]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df_names_list = glob.glob(&quot;dataset/1. processed/eda/swell/*.xlsx&quot;)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># df_names_list = glob.glob(&quot;dataset/1. processed/eda/swell/*.xlsx&quot;)
 
-<span class="c1"># df = pd.DataFrame()</span>
-<span class="c1"># for df_name in df_names_list:</span>
-<span class="c1">#     current_df = pd.read_excel(df_name)</span>
-<span class="c1">#     current_df[&quot;user_id&quot;] = int(df_name.split(&quot;/&quot;)[-1].split(&quot;.&quot;)[0][1:])</span>
-<span class="c1">#     df = pd.concat([df, current_df], axis=0)</span>
+# df = pd.DataFrame()
+# for df_name in df_names_list:
+#     current_df = pd.read_excel(df_name)
+#     current_df[&quot;user_id&quot;] = int(df_name.split(&quot;/&quot;)[-1].split(&quot;.&quot;)[0][1:])
+#     df = pd.concat([df, current_df], axis=0)
 
-<span class="c1"># df = (df</span>
-<span class="c1">#  .sort_values([&quot;user_id&quot;, &quot;Time&quot;])</span>
-<span class="c1">#  .loc[:, [&quot;user_id&quot;] + [x for x in df.drop(&quot;user_id&quot;, axis=1).columns.tolist()]]</span>
-<span class="c1">#  .reset_index(drop=True)</span>
-<span class="c1"># )</span>
+# df = (df
+#  .sort_values([&quot;user_id&quot;, &quot;Time&quot;])
+#  .loc[:, [&quot;user_id&quot;] + [x for x in df.drop(&quot;user_id&quot;, axis=1).columns.tolist()]]
+#  .reset_index(drop=True)
+# )
 
-<span class="c1"># df.to_csv(&quot;swell_eda_all_participants.csv&quot;)</span>
+# df.to_csv(&quot;swell_eda_all_participants.csv&quot;)
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;swell_eda_all_participants.csv&quot;</span><span class="p">,</span>
-                <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+df = pd.read_csv(&quot;swell_eda_all_participants.csv&quot;,
+                index_col=0)
 </pre></div>
 </div>
 </div>
@@ -529,7 +530,7 @@ Session information updated at 2021-03-21 15:35
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[170]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.shape
 </pre></div>
 </div>
 </div>
@@ -546,7 +547,7 @@ Session information updated at 2021-03-21 15:35
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[143]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.info()
 </pre></div>
 </div>
 </div>
@@ -608,7 +609,7 @@ memory usage: 30.2+ MB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[157]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TARGET</span> <span class="o">=</span> <span class="s2">&quot;NasaTLX&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>TARGET = &quot;NasaTLX&quot;
 </pre></div>
 </div>
 </div>
@@ -616,11 +617,11 @@ memory usage: 30.2+ MB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[158]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">swell_eda_features_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">MinMaxScaler</span><span class="p">()</span>
-             <span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
-                 <span class="n">df</span><span class="p">[</span><span class="n">swell_eda_features_cols</span><span class="p">]</span>
-             <span class="p">),</span>
-             <span class="n">columns</span><span class="o">=</span><span class="n">swell_eda_features_cols</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[swell_eda_features_cols] = pd.DataFrame(MinMaxScaler()
+             .fit_transform(
+                 df[swell_eda_features_cols]
+             ),
+             columns=swell_eda_features_cols)
 </pre></div>
 </div>
 </div>
@@ -628,11 +629,11 @@ memory usage: 30.2+ MB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[159]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span><span class="o">+</span><span class="n">swell_eda_target_cols</span><span class="p">]</span>
- <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;condition&quot;</span><span class="p">])</span>
- <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-             <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_df = (df[[&quot;user_id&quot;]+swell_eda_target_cols]
+ .groupby([&quot;user_id&quot;, &quot;condition&quot;])
+ .mean()
+             .reset_index()
+)
 </pre></div>
 </div>
 </div>
@@ -640,11 +641,11 @@ memory usage: 30.2+ MB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[175]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span>
-                    <span class="n">y</span><span class="o">=</span><span class="n">TARGET</span><span class="p">,</span>
-                    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;condition&quot;</span><span class="p">,</span>
-                    <span class="n">data</span><span class="o">=</span><span class="n">target_df</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(30, 5))
+_ = sns.scatterplot(x=&quot;user_id&quot;,
+                    y=TARGET,
+                    hue=&quot;condition&quot;,
+                    data=target_df)
 </pre></div>
 </div>
 </div>
@@ -659,7 +660,7 @@ memory usage: 30.2+ MB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[179]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()[</span><span class="n">TARGET</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_df.groupby(&quot;user_id&quot;).count()[TARGET].value_counts()
 </pre></div>
 </div>
 </div>
@@ -680,7 +681,7 @@ Name: NasaTLX, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[167]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;condition&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()[</span><span class="n">TARGET</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_df.groupby(&quot;condition&quot;).describe()[TARGET]
 </pre></div>
 </div>
 </div>
@@ -781,21 +782,21 @@ Name: NasaTLX, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[115]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot_df = (df</span>
-<span class="c1">#  .loc[df[&quot;user_id&quot;] == 1, [&quot;user_id&quot;]+swell_eda_features_cols]</span>
-<span class="c1">#  .sample(frac=0.05, random_state=69420)</span>
-<span class="c1">#           .melt(id_vars=&quot;user_id&quot;))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># plot_df = (df
+#  .loc[df[&quot;user_id&quot;] == 1, [&quot;user_id&quot;]+swell_eda_features_cols]
+#  .sample(frac=0.05, random_state=69420)
+#           .melt(id_vars=&quot;user_id&quot;))
 
-<span class="c1"># _ = plt.figure(figsize=(20, 5))</span>
-<span class="c1"># _ = sns.histplot(x=&quot;value&quot;,</span>
-<span class="c1">#                  hue=&quot;variable&quot;,</span>
-<span class="c1">#                  data=plot_df,</span>
-<span class="c1">#                  bins=20,</span>
-<span class="c1">#                 kde=True)</span>
-<span class="c1"># _ = sns.kdeplot(x=&quot;value&quot;,</span>
-<span class="c1">#                  hue=&quot;variable&quot;,</span>
-<span class="c1">#                  data=plot_df</span>
-<span class="c1">#                )</span>
+# _ = plt.figure(figsize=(20, 5))
+# _ = sns.histplot(x=&quot;value&quot;,
+#                  hue=&quot;variable&quot;,
+#                  data=plot_df,
+#                  bins=20,
+#                 kde=True)
+# _ = sns.kdeplot(x=&quot;value&quot;,
+#                  hue=&quot;variable&quot;,
+#                  data=plot_df
+#                )
 </pre></div>
 </div>
 </div>
@@ -803,7 +804,7 @@ Name: NasaTLX, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[131]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">variance_summary</span> <span class="o">=</span> <span class="n">variance_threshold</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">swell_eda_features_cols</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>variance_summary = variance_threshold(df[swell_eda_features_cols], threshold=0.01)
 </pre></div>
 </div>
 </div>
@@ -811,7 +812,7 @@ Name: NasaTLX, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[136]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">variance_summary</span><span class="p">[</span><span class="o">~</span><span class="n">variance_summary</span><span class="p">[</span><span class="s2">&quot;discard&quot;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>variance_summary[~variance_summary[&quot;discard&quot;]]
 </pre></div>
 </div>
 </div>
@@ -900,7 +901,7 @@ Name: NasaTLX, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[130]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># nunique_threshold(df[swell_eda_features_cols], threshold=1500)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># nunique_threshold(df[swell_eda_features_cols], threshold=1500)
 </pre></div>
 </div>
 </div>
@@ -908,65 +909,65 @@ Name: NasaTLX, dtype: int64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[171]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selection</span> <span class="o">=</span> <span class="n">variance_summary</span><span class="p">[</span><span class="o">~</span><span class="n">variance_summary</span><span class="p">[</span><span class="s2">&quot;discard&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="c1"># feature_selection = swell_eda_features_cols</span>
-<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-    <span class="n">ts_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="p">,</span> <span class="n">feature_selection</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="s2">&quot;condition&quot;</span><span class="p">]]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_selection = variance_summary[~variance_summary[&quot;discard&quot;]].index.tolist()
+# feature_selection = swell_eda_features_cols
+for user in df[&quot;user_id&quot;].unique().tolist():
+    print(user)
+    ts_df = df.loc[df[&quot;user_id&quot;] == user, feature_selection + [&quot;Time&quot;, &quot;condition&quot;]]
 
-    <span class="n">all_ts_levels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    all_ts_levels = pd.DataFrame()
 
-    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">feature_selection</span><span class="p">:</span>
-        <span class="n">ts_levels_df</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ts_levels</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_df</span><span class="p">[</span><span class="n">column</span><span class="p">],</span>
-                                      <span class="n">ts_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                      <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;mse&quot;</span><span class="p">,</span>
-                                      <span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-                                      <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-                                      <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                                      <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-                                      <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                      <span class="n">equal_spaced</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                      <span class="n">n_x_ticks</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">ts_levels_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;t_steps&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">ts_levels_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">column</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ts_levels_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
-        <span class="n">all_ts_levels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">all_ts_levels</span><span class="p">,</span> <span class="n">ts_levels_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    for column in feature_selection:
+        ts_levels_df, fig, ax = ts_levels(ts=ts_df[column],
+                                      ts_x=None,
+                                      criterion=&quot;mse&quot;,
+                                      max_depth=10,
+                                      min_samples_leaf=15,
+                                      min_samples_split=2,
+                                      max_leaf_nodes=30,
+                                      plot=False,
+                                      equal_spaced=True,
+                                      n_x_ticks=10)
+        _ = ts_levels_df.set_index(&quot;t_steps&quot;, inplace=True)
+        ts_levels_df.columns = [f&quot;{column[1:]}_{x}&quot; for x in ts_levels_df.columns.tolist()]
+        all_ts_levels = pd.concat([all_ts_levels, ts_levels_df], axis=1)
 
-    <span class="n">plot_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-             <span class="n">all_ts_levels</span><span class="p">,</span>
-             <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-             <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-           <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">))</span>
+    plot_df = (pd.merge(ts_df[&quot;Time&quot;].reset_index(drop=True),
+             all_ts_levels,
+             left_index=True,
+             right_index=True)
+           .melt(id_vars=&quot;Time&quot;))
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-        <span class="n">height</span><span class="o">=</span><span class="mi">1</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span>
-                          <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                          <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
-                          <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
-                          <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;original_ts&quot;</span><span class="p">)],</span>
-                          <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                          <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
-                         <span class="p">)</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span>
-                          <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                          <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
-                          <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;gist_rainbow&quot;</span><span class="p">,</span>
-                          <span class="n">data</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;ts_levels&quot;</span><span class="p">)],</span>
-                         <span class="p">)</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;EDA&#39;</span><span class="p">,</span>
-                   <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Different Electro Dermal Activity ts-levels for user == </span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    try:
+        plt.figure(figsize=(30, 10))
+        height=1
+        ax = sns.scatterplot(x=&quot;Time&quot;,
+                          y=&quot;value&quot;,
+                          hue=&quot;variable&quot;,
+                          palette=&quot;gist_rainbow&quot;,
+                          data=plot_df[plot_df[&quot;variable&quot;].str.contains(&quot;original_ts&quot;)],
+                          legend=False,
+                          linestyle=&#39;dashed&#39;,
+                         )
+        ax = sns.lineplot(x=&quot;Time&quot;,
+                          y=&quot;value&quot;,
+                          hue=&quot;variable&quot;,
+                          palette=&quot;gist_rainbow&quot;,
+                          data=plot_df[plot_df[&quot;variable&quot;].str.contains(&quot;ts_levels&quot;)],
+                         )
+        _ = ax.set(xlabel=&#39;Time&#39;, ylabel=&#39;EDA&#39;,
+                   title=f&#39;Different Electro Dermal Activity ts-levels for user == {user}&#39;)
 
-        <span class="k">for</span> <span class="n">condition</span> <span class="ow">in</span> <span class="n">ts_df</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
-            <span class="n">x_index</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ts_df</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">condition</span><span class="p">,</span> <span class="s2">&quot;Time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
-            <span class="n">x_co</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">x_index</span><span class="p">,</span> <span class="s2">&quot;Time&quot;</span><span class="p">]</span>
-            <span class="n">width</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ts_df</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">condition</span><span class="p">,</span> <span class="s2">&quot;Time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x_co</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">x_co</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;#581845&quot;</span><span class="p">))</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_co</span> <span class="o">+</span> <span class="mf">0.4</span><span class="o">*</span><span class="n">width</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.005</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">condition</span><span class="p">)</span>
+        for condition in ts_df[&quot;condition&quot;].unique().tolist():
+            x_index = ts_df.loc[ts_df[&quot;condition&quot;] == condition, &quot;Time&quot;].index.tolist()[0]+1
+            x_co = ts_df.loc[x_index, &quot;Time&quot;]
+            width = ts_df.loc[ts_df[&quot;condition&quot;] == condition, &quot;Time&quot;].max() - x_co
+            _ = ax.add_patch(patches.Rectangle((x_co, 0), width, height, alpha=0.2, facecolor=&quot;#581845&quot;))
+            _ = plt.text(x=x_co + 0.4*width, y=1.005, s=condition)
 
-        <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User == </span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2"> plotted with errors&quot;</span><span class="p">)</span>
+        _ = plt.show()
+    except:
+        print(f&quot;User == {user} plotted with errors&quot;)
 </pre></div>
 </div>
 </div>
