@@ -1,0 +1,31 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <title>Google Oauth 2.0 Login for python Flask application</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <h3>Example of Google Login in Python Flask Application</h3>
+  {% if not google_data %}
+    <p style="color:#ac863e;">You are not logged in, Click on the below link to sign in with google.</p>
+    <a href="/login" class="google-btn">
+      <div class="google-icon-wrapper">
+        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+      </div>
+      <p class="btn-text"><b>Sign in with google</b></p>
+    </a>
+  {% else %}
+    <p>Hi {{ google_data.name }}, [<strong>{{ google_data.email }}</strong>]. You have logged in successfully from your Google Account. Check your below details.</p>
+  {% if google_data is not none %}
+    <div class="detail">
+      <p style="font-size: 15px; padding-bottom: 10px;">User info fetched from <strong>{{ fetch_url }}</strong></p>
+      {% for key, value in google_data.items() %}
+        <p><strong>{{ key }}</strong>: {{ value }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% endif %}
+
+</html>
