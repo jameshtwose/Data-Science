@@ -36,6 +36,12 @@ Machine Learning
    understanding_SHAP.ipynb
    neural_style.ipynb
 
+.. raw:: html
+
+   <ul>
+      <li><a href="_static/html/penguins_data_drift_report_evidently.html">Penguins Data Drift Report</a></li>
+   </ul>
+
 NLTSA
 -----------------------------------
 .. nbgallery::
