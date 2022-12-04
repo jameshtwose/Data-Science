@@ -20,7 +20,7 @@ FITBIT_SCOPES = [
     # "nutrition",
     "profile",
     # "settings",
-    # "sleep",
+    "sleep",
     # "social",
     # "weight",
 ]
@@ -42,9 +42,9 @@ def index():
     # user_info_endpoint = "1/user/-/profile.json"
     # user_info_endpoint = "1/user/-/activities.json"
     user_info_endpoint = f"1/user/-/activities/date/{str(date.today())}.json"
+    # user_info_endpoint = "1.2/user/-/sleep/list.json?afterDate=2022-12-04&sort=asc&offset=0&limit=1"
     if fitbit.authorized:
         fitbit_data = fitbit.get(user_info_endpoint).json()["summary"]
-        # print(fitbit_data["user"]["age"])
 
     return render_template(
         "index.j2", fitbit_data=fitbit_data, fetch_url=fitbit.base_url + user_info_endpoint
