@@ -12,16 +12,13 @@
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Using a toy dataset to better understand SHapley Additive exPlanations (SHAP)" href="understanding_SHAP.html" />
@@ -405,11 +402,11 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from jmspack.NLTSA import flatten
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">jmspack.NLTSA</span> <span class="kn">import</span> <span class="n">flatten</span>
 </pre></div>
 </div>
 </div>
@@ -417,21 +414,21 @@ from jmspack.NLTSA import flatten
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># column_amount = 10
-# answer_options = [1, 2, 3, 4, 5]
-# row_amount = 50
-# answer_probabilities = [0.4, 0.1, 0.1, 0.1, 0.3]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># column_amount = 10</span>
+<span class="c1"># answer_options = [1, 2, 3, 4, 5]</span>
+<span class="c1"># row_amount = 50</span>
+<span class="c1"># answer_probabilities = [0.4, 0.1, 0.1, 0.1, 0.3]</span>
 
-# df = pd.DataFrame()
-# for column_num in range(0, column_amount):
-#     np.random.seed(69420 + column_num)
-#     uniform_array = np.random.choice(
-#          a=answer_options,
-#          size=row_amount,
-#          p=answer_probabilities
-#     )
-#     current_df = pd.DataFrame({f&quot;likert_{len(answer_options)}_options_{column_num}&quot;:uniform_array})
-#     df = pd.concat([df, current_df], axis=1)
+<span class="c1"># df = pd.DataFrame()</span>
+<span class="c1"># for column_num in range(0, column_amount):</span>
+<span class="c1">#     np.random.seed(69420 + column_num)</span>
+<span class="c1">#     uniform_array = np.random.choice(</span>
+<span class="c1">#          a=answer_options,</span>
+<span class="c1">#          size=row_amount,</span>
+<span class="c1">#          p=answer_probabilities</span>
+<span class="c1">#     )</span>
+<span class="c1">#     current_df = pd.DataFrame({f&quot;likert_{len(answer_options)}_options_{column_num}&quot;:uniform_array})</span>
+<span class="c1">#     df = pd.concat([df, current_df], axis=1)</span>
 </pre></div>
 </div>
 </div>
@@ -439,36 +436,36 @@ from jmspack.NLTSA import flatten
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def ordinal_data_creation(column_amount,
-                          answer_options,
-                          row_amount,
-                          answer_probabilities):
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ordinal_data_creation</span><span class="p">(</span><span class="n">column_amount</span><span class="p">,</span>
+                          <span class="n">answer_options</span><span class="p">,</span>
+                          <span class="n">row_amount</span><span class="p">,</span>
+                          <span class="n">answer_probabilities</span><span class="p">):</span>
 
-    df = pd.DataFrame()
-    for column_num in range(0, column_amount):
-        np.random.seed(69420 + column_num)
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">column_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">column_amount</span><span class="p">):</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">69420</span> <span class="o">+</span> <span class="n">column_num</span><span class="p">)</span>
 
-        if answer_probabilities is None:
-            uniform_array = np.random.choice(
-                 a=answer_options,
-                 size=row_amount,
-                 p=flatten(np.random.dirichlet(np.ones(len(answer_options)),size=1).tolist())
-            )
+        <span class="k">if</span> <span class="n">answer_probabilities</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">uniform_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+                 <span class="n">a</span><span class="o">=</span><span class="n">answer_options</span><span class="p">,</span>
+                 <span class="n">size</span><span class="o">=</span><span class="n">row_amount</span><span class="p">,</span>
+                 <span class="n">p</span><span class="o">=</span><span class="n">flatten</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">dirichlet</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer_options</span><span class="p">)),</span><span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="p">)</span>
 
-            print({f&quot;likert_{len(answer_options)}_options_{column_num}&quot;: flatten(np.random.dirichlet(np.ones(len(answer_options)),size=1).tolist())})
+            <span class="nb">print</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;likert_</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">answer_options</span><span class="p">)</span><span class="si">}</span><span class="s2">_options_</span><span class="si">{</span><span class="n">column_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">flatten</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">dirichlet</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer_options</span><span class="p">)),</span><span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())})</span>
 
-        else:
-            uniform_array = np.random.choice(
-                 a=answer_options,
-                 size=row_amount,
-                 p=answer_probabilities
-            )
-            print({f&quot;likert_{len(answer_options)}_options_{column_num}&quot;: answer_probabilities})
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">uniform_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+                 <span class="n">a</span><span class="o">=</span><span class="n">answer_options</span><span class="p">,</span>
+                 <span class="n">size</span><span class="o">=</span><span class="n">row_amount</span><span class="p">,</span>
+                 <span class="n">p</span><span class="o">=</span><span class="n">answer_probabilities</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;likert_</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">answer_options</span><span class="p">)</span><span class="si">}</span><span class="s2">_options_</span><span class="si">{</span><span class="n">column_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">answer_probabilities</span><span class="p">})</span>
 
 
-        current_df = pd.DataFrame({f&quot;likert_{len(answer_options)}_options_{column_num}&quot;:uniform_array})
-        df = pd.concat([df, current_df], axis=1)
-    return df
+        <span class="n">current_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;likert_</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">answer_options</span><span class="p">)</span><span class="si">}</span><span class="s2">_options_</span><span class="si">{</span><span class="n">column_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span><span class="n">uniform_array</span><span class="p">})</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">current_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -476,36 +473,36 @@ from jmspack.NLTSA import flatten
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>row_amount = 2000
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">row_amount</span> <span class="o">=</span> <span class="mi">2000</span>
 
-df_1 = ordinal_data_creation(column_amount = 30,
-                        answer_options = [1, 2, 3, 4, 5],
-                        row_amount = row_amount,
-                        answer_probabilities = None)
+<span class="n">df_1</span> <span class="o">=</span> <span class="n">ordinal_data_creation</span><span class="p">(</span><span class="n">column_amount</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+                        <span class="n">answer_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+                        <span class="n">row_amount</span> <span class="o">=</span> <span class="n">row_amount</span><span class="p">,</span>
+                        <span class="n">answer_probabilities</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 
-df_2 = ordinal_data_creation(column_amount = 10,
-                        answer_options = [1, 2, 3, 4, 5],
-                        row_amount = row_amount,
-                        answer_probabilities = [0.4, 0.1, 0.1, 0.1, 0.3])
-df_2.columns = [x[:-1] + str(int(x[-1]) + 30) for x in df_2.columns.tolist()]
+<span class="n">df_2</span> <span class="o">=</span> <span class="n">ordinal_data_creation</span><span class="p">(</span><span class="n">column_amount</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                        <span class="n">answer_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+                        <span class="n">row_amount</span> <span class="o">=</span> <span class="n">row_amount</span><span class="p">,</span>
+                        <span class="n">answer_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="n">df_2</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">30</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df_2</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 
-df_3 = ordinal_data_creation(column_amount = 10,
-                        answer_options = [1, 2, 3, 4, 5, 6, 7],
-                        row_amount = row_amount,
-                        answer_probabilities = None)
+<span class="n">df_3</span> <span class="o">=</span> <span class="n">ordinal_data_creation</span><span class="p">(</span><span class="n">column_amount</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                        <span class="n">answer_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+                        <span class="n">row_amount</span> <span class="o">=</span> <span class="n">row_amount</span><span class="p">,</span>
+                        <span class="n">answer_probabilities</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 
-df_4 = ordinal_data_creation(column_amount = 10,
-                        answer_options = [0, 1],
-                        row_amount = row_amount,
-                        answer_probabilities = [0.9, 0.1])
+<span class="n">df_4</span> <span class="o">=</span> <span class="n">ordinal_data_creation</span><span class="p">(</span><span class="n">column_amount</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                        <span class="n">answer_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                        <span class="n">row_amount</span> <span class="o">=</span> <span class="n">row_amount</span><span class="p">,</span>
+                        <span class="n">answer_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
 
-bool_df = ordinal_data_creation(column_amount = 1,
-                        answer_options = [0, 1],
-                        row_amount = row_amount,
-                        answer_probabilities = [0.6, 0.4])
-bool_df.columns = [&quot;target&quot;]
+<span class="n">bool_df</span> <span class="o">=</span> <span class="n">ordinal_data_creation</span><span class="p">(</span><span class="n">column_amount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">answer_options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                        <span class="n">row_amount</span> <span class="o">=</span> <span class="n">row_amount</span><span class="p">,</span>
+                        <span class="n">answer_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">])</span>
+<span class="n">bool_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
 
-df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_1</span><span class="p">,</span> <span class="n">df_2</span><span class="p">,</span> <span class="n">df_3</span><span class="p">,</span> <span class="n">df_4</span><span class="p">,</span> <span class="n">bool_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -581,7 +578,7 @@ df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -764,7 +761,7 @@ df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = sns.scatterplot(x=df.index, y=df[&quot;likert_5_options_30&quot;], hue=df[&quot;target&quot;])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;likert_5_options_30&quot;</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -779,7 +776,7 @@ df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[0:int(row_amount/2), &quot;target&quot;] = df.loc[0:int(row_amount/2), &quot;target&quot;].sample(frac=1, random_state=69420).reset_index(drop=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row_amount</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">row_amount</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;target&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">69420</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -787,7 +784,7 @@ df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = df.sample(frac=1, random_state=69420).reset_index(drop=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">69420</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -795,7 +792,7 @@ df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = sns.scatterplot(x=df.index, y=df[&quot;likert_5_options_30&quot;], hue=df[&quot;target&quot;])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;likert_5_options_30&quot;</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -810,7 +807,7 @@ df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -990,7 +987,7 @@ df = pd.concat([df_1, df_2, df_3, df_4, bool_df], axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.info()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1073,7 +1070,7 @@ memory usage: 953.2 KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>features_list = df.drop(&quot;target&quot;, axis=1).columns.tolist()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_list</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1081,12 +1078,12 @@ memory usage: 953.2 KB
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axs = plt.subplots(figsize=(20,100), nrows=len(features_list), ncols=2, gridspec_kw={&#39;width_ratios&#39;: [2, 1]})
-fig.subplots_adjust(hspace = 0.5, wspace=0.1)
-axs = axs.ravel()
-for i in range(0, len(features_list)*2, 2):
-    _ = sns.histplot(data=df, x=features_list[int(i/2)], hue=&quot;target&quot;, kde=False, bins=10, ax=axs[i])
-    _ = sns.boxplot(data=df, x=&quot;target&quot;, y=features_list[int(i/2)], ax=axs[i+1])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">features_list</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width_ratios&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_list</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">features_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">features_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1101,7 +1098,7 @@ for i in range(0, len(features_list)*2, 2):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = df.to_csv(&quot;data/synthetic_likert_data.csv&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/synthetic_likert_data.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1127,7 +1124,7 @@ for i in range(0, len(features_list)*2, 2):
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3.<br/>
     </p>
   </div>
 </footer>

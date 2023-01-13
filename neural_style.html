@@ -12,16 +12,13 @@
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="first order and second order ordinary differential equations (ODE)s" href="1st_2nd_order_ODE.html" />
@@ -434,21 +431,21 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from __future__ import print_function
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 
-from PIL import Image
-import matplotlib.pyplot as plt
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-import torchvision.transforms as transforms
-import torchvision.models as models
-import torchvision.transforms.functional as fn
+<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
+<span class="kn">import</span> <span class="nn">torchvision.models</span> <span class="k">as</span> <span class="nn">models</span>
+<span class="kn">import</span> <span class="nn">torchvision.transforms.functional</span> <span class="k">as</span> <span class="nn">fn</span>
 
-import copy
+<span class="kn">import</span> <span class="nn">copy</span>
 </pre></div>
 </div>
 </div>
@@ -457,8 +454,8 @@ import copy
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
-device
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">device</span>
 </pre></div>
 </div>
 </div>
@@ -480,30 +477,30 @@ sense the intended content and style. However, pre-trained networks from the Caf
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># desired size of the output image
-imsize = 512 if torch.cuda.is_available() else 128  # use small size if no gpu
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># desired size of the output image</span>
+<span class="n">imsize</span> <span class="o">=</span> <span class="mi">512</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="mi">128</span>  <span class="c1"># use small size if no gpu</span>
 
-loader = transforms.Compose([
-    transforms.Resize(imsize),  # scale imported image
-    transforms.ToTensor()])  # transform it into a torch tensor
-
-
-def image_loader(image_name):
-    image = Image.open(image_name)
-    # fake batch dimension required to fit network&#39;s input dimensions
-    image = loader(image).unsqueeze(0)
-    return image.to(device, torch.float)
+<span class="n">loader</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">imsize</span><span class="p">),</span>  <span class="c1"># scale imported image</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()])</span>  <span class="c1"># transform it into a torch tensor</span>
 
 
-style_img = image_loader(&quot;images/style_img.jpg&quot;)
-content_img = image_loader(&quot;images/content_img.jpg&quot;)
+<span class="k">def</span> <span class="nf">image_loader</span><span class="p">(</span><span class="n">image_name</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+    <span class="c1"># fake batch dimension required to fit network&#39;s input dimensions</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">loader</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
 
-try:
-    assert style_img.size() == content_img.size()
-except:
-    print(&quot;we need to import style and content images of the same size&quot;)
-    print(f&quot;Style Image size: {style_img.size()}&quot;)
-    print(f&quot;Content Image size: {content_img.size()}&quot;)
+
+<span class="n">style_img</span> <span class="o">=</span> <span class="n">image_loader</span><span class="p">(</span><span class="s2">&quot;images/style_img.jpg&quot;</span><span class="p">)</span>
+<span class="n">content_img</span> <span class="o">=</span> <span class="n">image_loader</span><span class="p">(</span><span class="s2">&quot;images/content_img.jpg&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">style_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">content_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;we need to import style and content images of the same size&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Style Image size: </span><span class="si">{</span><span class="n">style_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content Image size: </span><span class="si">{</span><span class="n">content_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -521,8 +518,8 @@ Content Image size: torch.Size([1, 3, 170, 128])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>style_img = fn.resize(style_img, size=[170, 128])
-style_img.size()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">style_img</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">style_img</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">170</span><span class="p">,</span> <span class="mi">128</span><span class="p">])</span>
+<span class="n">style_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -539,7 +536,7 @@ torch.Size([1, 3, 170, 128])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>content_img.size()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">content_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -556,8 +553,8 @@ torch.Size([1, 3, 170, 128])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>assert style_img.size() == content_img.size(), \
-    &quot;we need to import style and content images of the same size&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">style_img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">content_img</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> \
+    <span class="s2">&quot;we need to import style and content images of the same size&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -566,28 +563,28 @@ torch.Size([1, 3, 170, 128])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unloader = transforms.ToPILImage()  # reconvert into PIL image
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unloader</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()</span>  <span class="c1"># reconvert into PIL image</span>
 
-plt.ion()
+<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
-def imshow(tensor, title=None):
-    image = tensor.cpu().clone()  # we clone the tensor to not do changes on it
-    image = image.squeeze(0)      # remove the fake batch dimension
-    image = unloader(image)
-    fig, ax = plt.subplots()
-    plt.imshow(image)
-    if title is not None:
-        plt.title(title)
-    plt.pause(0.001) # pause a bit so that plots are updated
+<span class="k">def</span> <span class="nf">imshow</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>  <span class="c1"># we clone the tensor to not do changes on it</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>      <span class="c1"># remove the fake batch dimension</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">unloader</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span> <span class="c1"># pause a bit so that plots are updated</span>
 
-    return image
+    <span class="k">return</span> <span class="n">image</span>
 
 
-# plt.figure()
-_ = imshow(style_img, title=&#39;Style Image&#39;)
+<span class="c1"># plt.figure()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">imshow</span><span class="p">(</span><span class="n">style_img</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Style Image&#39;</span><span class="p">)</span>
 
-# plt.figure()
-_ = imshow(content_img, title=&#39;Content Image&#39;)
+<span class="c1"># plt.figure()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">imshow</span><span class="p">(</span><span class="n">content_img</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Content Image&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -617,19 +614,19 @@ parameter of the module.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>class ContentLoss(nn.Module):
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ContentLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 
-    def __init__(self, target,):
-        super(ContentLoss, self).__init__()
-        # we &#39;detach&#39; the target content from the tree used
-        # to dynamically compute the gradient: this is a stated value,
-        # not a variable. Otherwise the forward method of the criterion
-        # will throw an error.
-        self.target = target.detach()
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ContentLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># we &#39;detach&#39; the target content from the tree used</span>
+        <span class="c1"># to dynamically compute the gradient: this is a stated value,</span>
+        <span class="c1"># not a variable. Otherwise the forward method of the criterion</span>
+        <span class="c1"># will throw an error.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
 
-    def forward(self, input):
-        self.loss = F.mse_loss(input, self.target)
-        return input
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">input</span>
 </pre></div>
 </div>
 </div>
@@ -641,18 +638,18 @@ parameter of the module.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def gram_matrix(input):
-    a, b, c, d = input.size()  # a=batch size(=1)
-    # b=number of feature maps
-    # (c,d)=dimensions of a f. map (N=c*d)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gram_matrix</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>  <span class="c1"># a=batch size(=1)</span>
+    <span class="c1"># b=number of feature maps</span>
+    <span class="c1"># (c,d)=dimensions of a f. map (N=c*d)</span>
 
-    features = input.view(a * b, c * d)  # resise F_XL into \hat F_XL
+    <span class="n">features</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>  <span class="c1"># resise F_XL into \hat F_XL</span>
 
-    G = torch.mm(features, features.t())  # compute the gram product
+    <span class="n">G</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">features</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>  <span class="c1"># compute the gram product</span>
 
-    # we &#39;normalize&#39; the values of the gram matrix
-    # by dividing by the number of element in each feature maps.
-    return G.div(a * b * c * d)
+    <span class="c1"># we &#39;normalize&#39; the values of the gram matrix</span>
+    <span class="c1"># by dividing by the number of element in each feature maps.</span>
+    <span class="k">return</span> <span class="n">G</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -661,16 +658,16 @@ parameter of the module.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>class StyleLoss(nn.Module):
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">StyleLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 
-    def __init__(self, target_feature):
-        super(StyleLoss, self).__init__()
-        self.target = gram_matrix(target_feature).detach()
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_feature</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StyleLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">gram_matrix</span><span class="p">(</span><span class="n">target_feature</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
 
-    def forward(self, input):
-        G = gram_matrix(input)
-        self.loss = F.mse_loss(G, self.target)
-        return input
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">gram_matrix</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">input</span>
 </pre></div>
 </div>
 </div>
@@ -683,7 +680,7 @@ parameter of the module.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cnn = models.vgg19(pretrained=True).features.to(device).eval()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnn</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">vgg19</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -703,23 +700,23 @@ parameter of the module.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cnn_normalization_mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
-cnn_normalization_std = torch.tensor([0.229, 0.224, 0.225]).to(device)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnn_normalization_mean</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">cnn_normalization_std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 
-# create a module to normalize input image so we can easily put it in a
-# nn.Sequential
-class Normalization(nn.Module):
-    def __init__(self, mean, std):
-        super(Normalization, self).__init__()
-        # .view the mean and std to make them [C x 1 x 1] so that they can
-        # directly work with image Tensor of shape [B x C x H x W].
-        # B is batch size. C is number of channels. H is height and W is width.
-        self.mean = torch.tensor(mean).view(-1, 1, 1)
-        self.std = torch.tensor(std).view(-1, 1, 1)
+<span class="c1"># create a module to normalize input image so we can easily put it in a</span>
+<span class="c1"># nn.Sequential</span>
+<span class="k">class</span> <span class="nc">Normalization</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Normalization</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># .view the mean and std to make them [C x 1 x 1] so that they can</span>
+        <span class="c1"># directly work with image Tensor of shape [B x C x H x W].</span>
+        <span class="c1"># B is batch size. C is number of channels. H is height and W is width.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">mean</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-    def forward(self, img):
-        # normalize img
-        return (img - self.mean) / self.std
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="c1"># normalize img</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">img</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span>
 </pre></div>
 </div>
 </div>
@@ -728,75 +725,75 @@ class Normalization(nn.Module):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># desired depth layers to compute style/content losses :
-content_layers_default = [&#39;conv_4&#39;]
-style_layers_default = [&#39;conv_1&#39;, &#39;conv_2&#39;,
-                        &#39;conv_3&#39;, &#39;conv_4&#39;,
-                        &#39;conv_5&#39;, &#39;conv_6&#39;,
-                        &#39;conv_7&#39;, &#39;conv_8&#39;,
-                        &#39;conv_9&#39;, &#39;conv_10&#39;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># desired depth layers to compute style/content losses :</span>
+<span class="n">content_layers_default</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;conv_4&#39;</span><span class="p">]</span>
+<span class="n">style_layers_default</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;conv_1&#39;</span><span class="p">,</span> <span class="s1">&#39;conv_2&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;conv_3&#39;</span><span class="p">,</span> <span class="s1">&#39;conv_4&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;conv_5&#39;</span><span class="p">,</span> <span class="s1">&#39;conv_6&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;conv_7&#39;</span><span class="p">,</span> <span class="s1">&#39;conv_8&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;conv_9&#39;</span><span class="p">,</span> <span class="s1">&#39;conv_10&#39;</span><span class="p">]</span>
 
-def get_style_model_and_losses(cnn,
-                                normalization_mean,
-                                normalization_std,
-                               style_img,
-                               content_img,
-                               content_layers=content_layers_default,
-                               style_layers=style_layers_default):
-    # normalization module
-    normalization = Normalization(normalization_mean, normalization_std).to(device)
+<span class="k">def</span> <span class="nf">get_style_model_and_losses</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span>
+                                <span class="n">normalization_mean</span><span class="p">,</span>
+                                <span class="n">normalization_std</span><span class="p">,</span>
+                               <span class="n">style_img</span><span class="p">,</span>
+                               <span class="n">content_img</span><span class="p">,</span>
+                               <span class="n">content_layers</span><span class="o">=</span><span class="n">content_layers_default</span><span class="p">,</span>
+                               <span class="n">style_layers</span><span class="o">=</span><span class="n">style_layers_default</span><span class="p">):</span>
+    <span class="c1"># normalization module</span>
+    <span class="n">normalization</span> <span class="o">=</span> <span class="n">Normalization</span><span class="p">(</span><span class="n">normalization_mean</span><span class="p">,</span> <span class="n">normalization_std</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 
-    # just in order to have an iterable access to or list of content/syle
-    # losses
-    content_losses = []
-    style_losses = []
+    <span class="c1"># just in order to have an iterable access to or list of content/syle</span>
+    <span class="c1"># losses</span>
+    <span class="n">content_losses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">style_losses</span> <span class="o">=</span> <span class="p">[]</span>
 
-    # assuming that cnn is a nn.Sequential, so we make a new nn.Sequential
-    # to put in modules that are supposed to be activated sequentially
-    model = nn.Sequential(normalization)
+    <span class="c1"># assuming that cnn is a nn.Sequential, so we make a new nn.Sequential</span>
+    <span class="c1"># to put in modules that are supposed to be activated sequentially</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">normalization</span><span class="p">)</span>
 
-    i = 0  # increment every time we see a conv
-    for layer in cnn.children():
-        if isinstance(layer, nn.Conv2d):
-            i += 1
-            name = &#39;conv_{}&#39;.format(i)
-        elif isinstance(layer, nn.ReLU):
-            name = &#39;relu_{}&#39;.format(i)
-            # The in-place version doesn&#39;t play very nicely with the ContentLoss
-            # and StyleLoss we insert below. So we replace with out-of-place
-            # ones here.
-            layer = nn.ReLU(inplace=False)
-        elif isinstance(layer, nn.MaxPool2d):
-            name = &#39;pool_{}&#39;.format(i)
-        elif isinstance(layer, nn.BatchNorm2d):
-            name = &#39;bn_{}&#39;.format(i)
-        else:
-            raise RuntimeError(&#39;Unrecognized layer: {}&#39;.format(layer.__class__.__name__))
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># increment every time we see a conv</span>
+    <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">cnn</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;conv_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;relu_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="c1"># The in-place version doesn&#39;t play very nicely with the ContentLoss</span>
+            <span class="c1"># and StyleLoss we insert below. So we replace with out-of-place</span>
+            <span class="c1"># ones here.</span>
+            <span class="n">layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;pool_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;bn_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Unrecognized layer: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 
-        model.add_module(name, layer)
+        <span class="n">model</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">layer</span><span class="p">)</span>
 
-        if name in content_layers:
-            # add content loss:
-            target = model(content_img).detach()
-            content_loss = ContentLoss(target)
-            model.add_module(&quot;content_loss_{}&quot;.format(i), content_loss)
-            content_losses.append(content_loss)
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">content_layers</span><span class="p">:</span>
+            <span class="c1"># add content loss:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">content_img</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+            <span class="n">content_loss</span> <span class="o">=</span> <span class="n">ContentLoss</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s2">&quot;content_loss_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">content_loss</span><span class="p">)</span>
+            <span class="n">content_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content_loss</span><span class="p">)</span>
 
-        if name in style_layers:
-            # add style loss:
-            target_feature = model(style_img).detach()
-            style_loss = StyleLoss(target_feature)
-            model.add_module(&quot;style_loss_{}&quot;.format(i), style_loss)
-            style_losses.append(style_loss)
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">style_layers</span><span class="p">:</span>
+            <span class="c1"># add style loss:</span>
+            <span class="n">target_feature</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">style_img</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+            <span class="n">style_loss</span> <span class="o">=</span> <span class="n">StyleLoss</span><span class="p">(</span><span class="n">target_feature</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s2">&quot;style_loss_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">style_loss</span><span class="p">)</span>
+            <span class="n">style_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">style_loss</span><span class="p">)</span>
 
-    # now we trim off the layers after the last content and style losses
-    for i in range(len(model) - 1, -1, -1):
-        if isinstance(model[i], ContentLoss) or isinstance(model[i], StyleLoss):
-            break
+    <span class="c1"># now we trim off the layers after the last content and style losses</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ContentLoss</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">StyleLoss</span><span class="p">):</span>
+            <span class="k">break</span>
 
-    model = model[:(i + 1)]
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">[:(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
 
-    return model, style_losses, content_losses
+    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">style_losses</span><span class="p">,</span> <span class="n">content_losses</span>
 </pre></div>
 </div>
 </div>
@@ -805,12 +802,12 @@ def get_style_model_and_losses(cnn,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>input_img = content_img.clone()
-# if you want to use white noise instead uncomment the below line:
-# input_img = torch.randn(content_img.data.size(), device=device)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">input_img</span> <span class="o">=</span> <span class="n">content_img</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+<span class="c1"># if you want to use white noise instead uncomment the below line:</span>
+<span class="c1"># input_img = torch.randn(content_img.data.size(), device=device)</span>
 
-# add the original input image to the figure:
-_ = imshow(input_img, title=&#39;Input Image&#39;)
+<span class="c1"># add the original input image to the figure:</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">imshow</span><span class="p">(</span><span class="n">input_img</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Input Image&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -829,10 +826,10 @@ _ = imshow(input_img, title=&#39;Input Image&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def get_input_optimizer(input_img):
-    # this line to show that input is a parameter that requires a gradient
-    optimizer = optim.LBFGS([input_img])
-    return optimizer
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_input_optimizer</span><span class="p">(</span><span class="n">input_img</span><span class="p">):</span>
+    <span class="c1"># this line to show that input is a parameter that requires a gradient</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">LBFGS</span><span class="p">([</span><span class="n">input_img</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">optimizer</span>
 </pre></div>
 </div>
 </div>
@@ -842,67 +839,67 @@ _ = imshow(input_img, title=&#39;Input Image&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def run_style_transfer(cnn,
-                        normalization_mean,
-                        normalization_std,
-                       content_img,
-                       style_img,
-                       input_img,
-                       num_steps=1000,
-                       style_weight=1000000, content_weight=1):
-    &quot;&quot;&quot;Run the style transfer.&quot;&quot;&quot;
-    print(&#39;Building the style transfer model..&#39;)
-    model, style_losses, content_losses = get_style_model_and_losses(cnn,
-        normalization_mean, normalization_std, style_img, content_img)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_style_transfer</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span>
+                        <span class="n">normalization_mean</span><span class="p">,</span>
+                        <span class="n">normalization_std</span><span class="p">,</span>
+                       <span class="n">content_img</span><span class="p">,</span>
+                       <span class="n">style_img</span><span class="p">,</span>
+                       <span class="n">input_img</span><span class="p">,</span>
+                       <span class="n">num_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                       <span class="n">style_weight</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span> <span class="n">content_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the style transfer.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Building the style transfer model..&#39;</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">style_losses</span><span class="p">,</span> <span class="n">content_losses</span> <span class="o">=</span> <span class="n">get_style_model_and_losses</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span>
+        <span class="n">normalization_mean</span><span class="p">,</span> <span class="n">normalization_std</span><span class="p">,</span> <span class="n">style_img</span><span class="p">,</span> <span class="n">content_img</span><span class="p">)</span>
 
-    # We want to optimize the input and not the model parameters so we
-    # update all the requires_grad fields accordingly
-    input_img.requires_grad_(True)
-    model.requires_grad_(False)
+    <span class="c1"># We want to optimize the input and not the model parameters so we</span>
+    <span class="c1"># update all the requires_grad fields accordingly</span>
+    <span class="n">input_img</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
-    optimizer = get_input_optimizer(input_img)
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">get_input_optimizer</span><span class="p">(</span><span class="n">input_img</span><span class="p">)</span>
 
-    print(&#39;Optimizing..&#39;)
-    run = [0]
-    while run[0] &lt;= num_steps:
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Optimizing..&#39;</span><span class="p">)</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">run</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">num_steps</span><span class="p">:</span>
 
-        def closure():
-            # correct the values of updated input image
-            with torch.no_grad():
-                input_img.clamp_(0, 1)
+        <span class="k">def</span> <span class="nf">closure</span><span class="p">():</span>
+            <span class="c1"># correct the values of updated input image</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">input_img</span><span class="o">.</span><span class="n">clamp_</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-            optimizer.zero_grad()
-            model(input_img)
-            style_score = 0
-            content_score = 0
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">model</span><span class="p">(</span><span class="n">input_img</span><span class="p">)</span>
+            <span class="n">style_score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">content_score</span> <span class="o">=</span> <span class="mi">0</span>
 
-            for sl in style_losses:
-                style_score += sl.loss
-            for cl in content_losses:
-                content_score += cl.loss
+            <span class="k">for</span> <span class="n">sl</span> <span class="ow">in</span> <span class="n">style_losses</span><span class="p">:</span>
+                <span class="n">style_score</span> <span class="o">+=</span> <span class="n">sl</span><span class="o">.</span><span class="n">loss</span>
+            <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">content_losses</span><span class="p">:</span>
+                <span class="n">content_score</span> <span class="o">+=</span> <span class="n">cl</span><span class="o">.</span><span class="n">loss</span>
 
-            style_score *= style_weight
-            content_score *= content_weight
+            <span class="n">style_score</span> <span class="o">*=</span> <span class="n">style_weight</span>
+            <span class="n">content_score</span> <span class="o">*=</span> <span class="n">content_weight</span>
 
-            loss = style_score + content_score
-            loss.backward()
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">style_score</span> <span class="o">+</span> <span class="n">content_score</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 
-            run[0] += 1
-            if run[0] % 100 == 0:
-                print(&quot;run {}:&quot;.format(run))
-                print(&#39;Style Loss : {:4f} Content Loss: {:4f}&#39;.format(
-                    style_score.item(), content_score.item()))
-                print()
+            <span class="n">run</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;run </span><span class="si">{}</span><span class="s2">:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">run</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Style Loss : </span><span class="si">{:4f}</span><span class="s1"> Content Loss: </span><span class="si">{:4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">style_score</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">content_score</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+                <span class="nb">print</span><span class="p">()</span>
 
-            return style_score + content_score
+            <span class="k">return</span> <span class="n">style_score</span> <span class="o">+</span> <span class="n">content_score</span>
 
-        optimizer.step(closure)
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="p">)</span>
 
-    # a last correction...
-    with torch.no_grad():
-        input_img.clamp_(0, 1)
+    <span class="c1"># a last correction...</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">input_img</span><span class="o">.</span><span class="n">clamp_</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-    return input_img
+    <span class="k">return</span> <span class="n">input_img</span>
 </pre></div>
 </div>
 </div>
@@ -911,22 +908,22 @@ _ = imshow(input_img, title=&#39;Input Image&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>output = run_style_transfer(cnn,
-                            cnn_normalization_mean,
-                            cnn_normalization_std,
-                            content_img,
-                            style_img,
-                            input_img,
-                            num_steps=500,
-                            style_weight=1000000 #1000000
-                            )
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">run_style_transfer</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span>
+                            <span class="n">cnn_normalization_mean</span><span class="p">,</span>
+                            <span class="n">cnn_normalization_std</span><span class="p">,</span>
+                            <span class="n">content_img</span><span class="p">,</span>
+                            <span class="n">style_img</span><span class="p">,</span>
+                            <span class="n">input_img</span><span class="p">,</span>
+                            <span class="n">num_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                            <span class="n">style_weight</span><span class="o">=</span><span class="mi">1000000</span> <span class="c1">#1000000</span>
+                            <span class="p">)</span>
 
-# plt.figure()
-# imshow(output, title=&#39;Output Image&#39;)
+<span class="c1"># plt.figure()</span>
+<span class="c1"># imshow(output, title=&#39;Output Image&#39;)</span>
 
-# # sphinx_gallery_thumbnail_number = 4
-# plt.ioff()
-# plt.show()
+<span class="c1"># # sphinx_gallery_thumbnail_number = 4</span>
+<span class="c1"># plt.ioff()</span>
+<span class="c1"># plt.show()</span>
 </pre></div>
 </div>
 </div>
@@ -976,7 +973,7 @@ Style Loss : 240.144394 Content Loss: 70.163918
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mixed = imshow(output, title=&#39;Output Image&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mixed</span> <span class="o">=</span> <span class="n">imshow</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Output Image&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -991,7 +988,7 @@ Style Loss : 240.144394 Content Loss: 70.163918
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mixed.resize((600, 800)).save(&quot;images/mixed_img.png&quot;, quality=400)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mixed</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">600</span><span class="p">,</span> <span class="mi">800</span><span class="p">))</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;images/mixed_img.png&quot;</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1018,7 +1015,7 @@ Style Loss : 240.144394 Content Loss: 70.163918
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3.<br/>
     </p>
   </div>
 </footer>

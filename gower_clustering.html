@@ -12,16 +12,13 @@
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Machine Learning Workflow" href="ML-workflow.html" />
@@ -419,16 +416,16 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-from pandas.api.types import CategoricalDtype
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.cluster import DBSCAN
-from sklearn.metrics import roc_auc_score, roc_curve, confusion_matrix
-from sklearn.datasets import make_classification
-import gower
-from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.api.types</span> <span class="kn">import</span> <span class="n">CategoricalDtype</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">import</span> <span class="nn">gower</span>
+<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">linkage</span><span class="p">,</span> <span class="n">fcluster</span><span class="p">,</span> <span class="n">dendrogram</span>
 </pre></div>
 </div>
 </div>
@@ -436,7 +433,7 @@ from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from extras import plot_confusion_matrix, tSNE
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">extras</span> <span class="kn">import</span> <span class="n">plot_confusion_matrix</span><span class="p">,</span> <span class="n">tSNE</span>
 </pre></div>
 </div>
 </div>
@@ -448,13 +445,13 @@ from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Creating a dictionary with the data
-df = pd.DataFrame({&quot;age&quot;: [22, 25, 30, 38, 42, 47, 55, 62, 61, 90],
-              &quot;gender&quot;: [&quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;, &quot;M&quot;],
-              &quot;civil_status&quot;: [&quot;SINGLE&quot;, &quot;SINGLE&quot;, &quot;SINGLE&quot;, &quot;MARRIED&quot;, &quot;MARRIED&quot;, &quot;SINGLE&quot;, &quot;MARRIED&quot;, &quot;DIVORCED&quot;, &quot;MARRIED&quot;, &quot;DIVORCED&quot;],
-              &quot;salary&quot;: [18000, 23000, 27000, 32000, 34000, 20000, 40000, 42000, 25000, 70000],
-              &quot;has_children&quot;: [False, False, False, True, True, False, False, False, False, True],
-              &quot;purchaser_type&quot;: [&quot;LOW_PURCHASER&quot;, &quot;LOW_PURCHASER&quot;, &quot;LOW_PURCHASER&quot;, &quot;HEAVY_PURCHASER&quot;, &quot;HEAVY_PURCHASER&quot;, &quot;LOW_PURCHASER&quot;, &quot;MEDIUM_PURCHASER&quot;, &quot;MEDIUM_PURCHASER&quot;, &quot;MEDIUM_PURCHASER&quot;, &quot;LOW_PURCHASER&quot;]})
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dictionary with the data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">22</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span>
+              <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;civil_status&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SINGLE&quot;</span><span class="p">,</span> <span class="s2">&quot;SINGLE&quot;</span><span class="p">,</span> <span class="s2">&quot;SINGLE&quot;</span><span class="p">,</span> <span class="s2">&quot;MARRIED&quot;</span><span class="p">,</span> <span class="s2">&quot;MARRIED&quot;</span><span class="p">,</span> <span class="s2">&quot;SINGLE&quot;</span><span class="p">,</span> <span class="s2">&quot;MARRIED&quot;</span><span class="p">,</span> <span class="s2">&quot;DIVORCED&quot;</span><span class="p">,</span> <span class="s2">&quot;MARRIED&quot;</span><span class="p">,</span> <span class="s2">&quot;DIVORCED&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;salary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">18000</span><span class="p">,</span> <span class="mi">23000</span><span class="p">,</span> <span class="mi">27000</span><span class="p">,</span> <span class="mi">32000</span><span class="p">,</span> <span class="mi">34000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">40000</span><span class="p">,</span> <span class="mi">42000</span><span class="p">,</span> <span class="mi">25000</span><span class="p">,</span> <span class="mi">70000</span><span class="p">],</span>
+              <span class="s2">&quot;has_children&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+              <span class="s2">&quot;purchaser_type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;LOW_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;LOW_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;LOW_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAVY_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAVY_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;LOW_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;MEDIUM_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;MEDIUM_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;MEDIUM_PURCHASER&quot;</span><span class="p">,</span> <span class="s2">&quot;LOW_PURCHASER&quot;</span><span class="p">]})</span>
 <br/></pre></div>
 </div>
 </div>
@@ -462,7 +459,7 @@ df = pd.DataFrame({&quot;age&quot;: [22, 25, 30, 38, 42, 47, 55, 62, 61, 90],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -596,7 +593,7 @@ df = pd.DataFrame({&quot;age&quot;: [22, 25, 30, 38, 42, 47, 55, 62, 61, 90],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>d_matrix = gower.gower_matrix(df.drop(&quot;purchaser_type&quot;, axis=1))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d_matrix</span> <span class="o">=</span> <span class="n">gower</span><span class="o">.</span><span class="n">gower_matrix</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;purchaser_type&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -604,7 +601,7 @@ df = pd.DataFrame({&quot;age&quot;: [22, 25, 30, 38, 42, 47, 55, 62, 61, 90],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>customer_names = [f&quot;c_{x}&quot; for x in range(d_matrix.shape[0])]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customer_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;c_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
@@ -612,12 +609,12 @@ df = pd.DataFrame({&quot;age&quot;: [22, 25, 30, 38, 42, 47, 55, 62, 61, 90],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(7,4))
-ax = sns.heatmap(data=pd.DataFrame(d_matrix, index=customer_names, columns=customer_names),
-               annot=True,
-                fmt=&#39;.2g&#39;)
-ax.xaxis.tick_top()
-ax.xaxis.set_label_position(&#39;top&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">customer_names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">customer_names</span><span class="p">),</span>
+               <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">tick_top</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -632,10 +629,10 @@ ax.xaxis.set_label_position(&#39;top&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Configuring the parameters of the clustering algorithm
-dbscan_cluster = DBSCAN(eps=0.3,
-                        min_samples=2,
-                        metric=&quot;precomputed&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuring the parameters of the clustering algorithm</span>
+<span class="n">dbscan_cluster</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                        <span class="n">min_samples</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;precomputed&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -643,8 +640,8 @@ dbscan_cluster = DBSCAN(eps=0.3,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Fitting the clustering algorithm
-dbscan_cluster.fit(d_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting the clustering algorithm</span>
+<span class="n">dbscan_cluster</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -661,8 +658,8 @@ DBSCAN(eps=0.3, metric=&#39;precomputed&#39;, min_samples=2)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Adding the results to a new column in the dataframe
-df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding the results to a new column in the dataframe</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;DBSCAN_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dbscan_cluster</span><span class="o">.</span><span class="n">labels_</span>
 </pre></div>
 </div>
 </div>
@@ -670,7 +667,7 @@ df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>l_matrix = linkage(d_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l_matrix</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -687,8 +684,8 @@ df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cld = fcluster(l_matrix, 3, criterion=&#39;maxclust&#39;)
-df[&quot;linkage_cluster&quot;] = cld
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cld</span> <span class="o">=</span> <span class="n">fcluster</span><span class="p">(</span><span class="n">l_matrix</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;maxclust&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cld</span>
 </pre></div>
 </div>
 </div>
@@ -696,8 +693,8 @@ df[&quot;linkage_cluster&quot;] = cld
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(20, 4))
-dn = dendrogram(l_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">dn</span> <span class="o">=</span> <span class="n">dendrogram</span><span class="p">(</span><span class="n">l_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -712,7 +709,7 @@ dn = dendrogram(l_matrix)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -868,7 +865,7 @@ dn = dendrogram(l_matrix)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ordered_cat = CategoricalDtype([&#39;HEAVY_PURCHASER&#39;, &#39;LOW_PURCHASER&#39;, &#39;MEDIUM_PURCHASER&#39;], ordered=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ordered_cat</span> <span class="o">=</span> <span class="n">CategoricalDtype</span><span class="p">([</span><span class="s1">&#39;HEAVY_PURCHASER&#39;</span><span class="p">,</span> <span class="s1">&#39;LOW_PURCHASER&#39;</span><span class="p">,</span> <span class="s1">&#39;MEDIUM_PURCHASER&#39;</span><span class="p">],</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -876,8 +873,8 @@ dn = dendrogram(l_matrix)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_test = df[&quot;purchaser_type&quot;].astype(ordered_cat).cat.codes + 1
-y_pred = df[&quot;linkage_cluster&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;purchaser_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">ordered_cat</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -885,9 +882,9 @@ y_pred = df[&quot;linkage_cluster&quot;]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cf_matrix = confusion_matrix(y_test, y_pred)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cf_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 
-fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clustering buying groups&quot;)
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cf</span><span class="o">=</span><span class="n">cf_matrix</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix clustering buying groups&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -905,8 +902,8 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Creating a dictionary with the data
-df = sns.load_dataset(&quot;iris&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dictionary with the data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -914,7 +911,7 @@ df = sns.load_dataset(&quot;iris&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -997,7 +994,7 @@ df = sns.load_dataset(&quot;iris&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>d_matrix = gower.gower_matrix(df.drop(&quot;species&quot;, axis=1))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d_matrix</span> <span class="o">=</span> <span class="n">gower</span><span class="o">.</span><span class="n">gower_matrix</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1005,7 +1002,7 @@ df = sns.load_dataset(&quot;iris&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>customer_names = [f&quot;c_{x}&quot; for x in range(d_matrix.shape[0])]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">customer_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;c_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
@@ -1013,12 +1010,12 @@ df = sns.load_dataset(&quot;iris&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(7,5))
-ax = sns.heatmap(data=pd.DataFrame(d_matrix),
-               annot=False,
-                fmt=&#39;.2g&#39;)
-ax.xaxis.tick_top()
-ax.xaxis.set_label_position(&#39;top&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">),</span>
+               <span class="n">annot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">tick_top</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1033,10 +1030,10 @@ ax.xaxis.set_label_position(&#39;top&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Configuring the parameters of the clustering algorithm
-dbscan_cluster = DBSCAN(eps=0.3,
-                        min_samples=10,
-                        metric=&quot;precomputed&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuring the parameters of the clustering algorithm</span>
+<span class="n">dbscan_cluster</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                        <span class="n">min_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                        <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;precomputed&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1044,8 +1041,8 @@ dbscan_cluster = DBSCAN(eps=0.3,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Fitting the clustering algorithm
-dbscan_cluster.fit(d_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting the clustering algorithm</span>
+<span class="n">dbscan_cluster</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1062,8 +1059,8 @@ DBSCAN(eps=0.3, metric=&#39;precomputed&#39;, min_samples=10)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Adding the results to a new column in the dataframe
-df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding the results to a new column in the dataframe</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;DBSCAN_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dbscan_cluster</span><span class="o">.</span><span class="n">labels_</span>
 </pre></div>
 </div>
 </div>
@@ -1071,7 +1068,7 @@ df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>l_matrix = linkage(d_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l_matrix</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1088,8 +1085,8 @@ df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cld = fcluster(l_matrix, 3, criterion=&#39;maxclust&#39;)
-df[&quot;linkage_cluster&quot;] = cld
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cld</span> <span class="o">=</span> <span class="n">fcluster</span><span class="p">(</span><span class="n">l_matrix</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;maxclust&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cld</span>
 </pre></div>
 </div>
 </div>
@@ -1097,8 +1094,8 @@ df[&quot;linkage_cluster&quot;] = cld
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(20, 4))
-dn = dendrogram(l_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">dn</span> <span class="o">=</span> <span class="n">dendrogram</span><span class="p">(</span><span class="n">l_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1113,7 +1110,7 @@ dn = dendrogram(l_matrix)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1208,7 +1205,7 @@ dn = dendrogram(l_matrix)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[&quot;linkage_cluster&quot;].unique()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1225,7 +1222,7 @@ array([1, 3, 2], dtype=int32)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ordered_cat = CategoricalDtype([&#39;setosa&#39;, &#39;virginica&#39;, &#39;versicolor&#39;,], ordered=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ordered_cat</span> <span class="o">=</span> <span class="n">CategoricalDtype</span><span class="p">([</span><span class="s1">&#39;setosa&#39;</span><span class="p">,</span> <span class="s1">&#39;virginica&#39;</span><span class="p">,</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">,],</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1233,8 +1230,8 @@ array([1, 3, 2], dtype=int32)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_test = df[&quot;species&quot;].astype(ordered_cat).cat.codes + 1
-y_pred = df[&quot;linkage_cluster&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">ordered_cat</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1242,7 +1239,7 @@ y_pred = df[&quot;linkage_cluster&quot;]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_test.unique()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1259,7 +1256,7 @@ array([1, 3, 2], dtype=int8)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_pred.unique()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1276,9 +1273,9 @@ array([1, 3, 2], dtype=int32)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cf_matrix = confusion_matrix(y_test, y_pred)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cf_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 
-fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clustering flower types&quot;)
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cf</span><span class="o">=</span><span class="n">cf_matrix</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix clustering flower types&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1293,7 +1290,7 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[&quot;linkage_cluster&quot;] = df[&quot;linkage_cluster&quot;].astype(str)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1301,7 +1298,7 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = tSNE(data=df, n_components=2, hue=&#39;species&#39;, tag=&#39;linkage_cluster&#39;, figsize=(15, 5))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">tSNE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;linkage_cluster&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1316,7 +1313,7 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = tSNE(data=df, n_components=2, hue=&#39;species&#39;, figsize=(7, 5))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">tSNE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1331,10 +1328,10 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = tSNE(data=df
-               .assign(species_int = lambda d: d[&quot;species&quot;].astype(&quot;category&quot;).cat.codes)
-               .drop(&quot;species&quot;, axis=1),
-               n_components=3, hue=&#39;species_int&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">tSNE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span>
+               <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">species_int</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span><span class="p">)</span>
+               <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+               <span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;species_int&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1361,15 +1358,15 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X, y = make_classification(n_samples=100,
-                             n_features=5,
-                             n_informative=5,
-                           n_redundant=0,
-                            n_repeated=0,
-                            n_classes=2,
-                            n_clusters_per_class=2,
-                             shuffle=True,
-                             random_state=42)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                             <span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                             <span class="n">n_informative</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                           <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                            <span class="n">n_repeated</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                            <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                            <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                             <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1377,10 +1374,10 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = (pd.DataFrame(X, columns=[f&quot;feat_{x}&quot; for x in range(0, X.shape[1])]).round(0).astype(str)
-.merge(pd.DataFrame(y, columns=[&quot;target&quot;]),
-      left_index=True,
-      right_index=True))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;feat_</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]),</span>
+      <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1388,7 +1385,7 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1477,7 +1474,7 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>d_matrix = gower.gower_matrix(df.drop(&quot;target&quot;, axis=1))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d_matrix</span> <span class="o">=</span> <span class="n">gower</span><span class="o">.</span><span class="n">gower_matrix</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1485,12 +1482,12 @@ fig, ax = plot_confusion_matrix(cf=cf_matrix, title=&quot;Confusion Matrix clust
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = plt.figure(figsize=(7,4))
-ax = sns.heatmap(data=pd.DataFrame(d_matrix),
-               annot=False,
-                fmt=&#39;.2g&#39;)
-ax.xaxis.tick_top()
-ax.xaxis.set_label_position(&#39;top&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">),</span>
+               <span class="n">annot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">tick_top</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1505,10 +1502,10 @@ ax.xaxis.set_label_position(&#39;top&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Configuring the parameters of the clustering algorithm
-dbscan_cluster = DBSCAN(eps=0.3,
-                        min_samples=2,
-                        metric=&quot;precomputed&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuring the parameters of the clustering algorithm</span>
+<span class="n">dbscan_cluster</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                        <span class="n">min_samples</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;precomputed&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1516,8 +1513,8 @@ dbscan_cluster = DBSCAN(eps=0.3,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Fitting the clustering algorithm
-dbscan_cluster.fit(d_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting the clustering algorithm</span>
+<span class="n">dbscan_cluster</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1534,8 +1531,8 @@ DBSCAN(eps=0.3, metric=&#39;precomputed&#39;, min_samples=2)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Adding the results to a new column in the dataframe
-df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding the results to a new column in the dataframe</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;DBSCAN_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dbscan_cluster</span><span class="o">.</span><span class="n">labels_</span>
 </pre></div>
 </div>
 </div>
@@ -1543,7 +1540,7 @@ df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>l_matrix = linkage(d_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l_matrix</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">d_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1560,8 +1557,8 @@ df[&quot;DBSCAN_cluster&quot;] = dbscan_cluster.labels_
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cld = fcluster(l_matrix, 3, criterion=&#39;maxclust&#39;)
-df[&quot;linkage_cluster&quot;] = cld
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cld</span> <span class="o">=</span> <span class="n">fcluster</span><span class="p">(</span><span class="n">l_matrix</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;maxclust&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;linkage_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cld</span>
 </pre></div>
 </div>
 </div>
@@ -1569,8 +1566,8 @@ df[&quot;linkage_cluster&quot;] = cld
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># _ = plt.figure(figsize=(20, 4))
-# dn = dendrogram(l_matrix)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># _ = plt.figure(figsize=(20, 4))</span>
+<span class="c1"># dn = dendrogram(l_matrix)</span>
 </pre></div>
 </div>
 </div>
@@ -1578,7 +1575,7 @@ df[&quot;linkage_cluster&quot;] = cld
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1679,8 +1676,8 @@ df[&quot;linkage_cluster&quot;] = cld
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_test = df[&quot;target&quot;]
-y_pred = df[&quot;DBSCAN_cluster&quot;] * -1
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;DBSCAN_cluster&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -1688,22 +1685,22 @@ y_pred = df[&quot;DBSCAN_cluster&quot;] * -1
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Compute False postive rate, and True positive rate
-fpr, tpr, thresholds = roc_curve(y_test, y_pred)
-# Calculate Area under the curve to display on the plot
-auc_score = roc_auc_score(y_test, y_pred, average=&quot;macro&quot;)
-# Now, plot the computed values
-_ = plt.plot(fpr,
-             tpr,
-             label=&quot;ROC curve (area = %0.2f)&quot; % auc_score,)
-# Custom settings for the plot
-_ = plt.plot([0, 1], [0, 1], c=&quot;grey&quot;, ls=&quot;--&quot;)
-_ = plt.xlim([0.0, 1.0])
-_ = plt.ylim([0.0, 1.05])
-_ = plt.xlabel(&quot;1-Specificity (False Positive Rate)&quot;)
-_ = plt.ylabel(&quot;Sensitivity (True Positive Rate)&quot;)
-_ = plt.title(&quot;Receiver Operating Characteristics&quot;)
-_ = plt.legend(loc=&quot;lower right&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute False postive rate, and True positive rate</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># Calculate Area under the curve to display on the plot</span>
+<span class="n">auc_score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;macro&quot;</span><span class="p">)</span>
+<span class="c1"># Now, plot the computed values</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span>
+             <span class="n">tpr</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ROC curve (area = </span><span class="si">%0.2f</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">auc_score</span><span class="p">,)</span>
+<span class="c1"># Custom settings for the plot</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;1-Specificity (False Positive Rate)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Sensitivity (True Positive Rate)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Receiver Operating Characteristics&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1736,7 +1733,7 @@ _ = plt.legend(loc=&quot;lower right&quot;)
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3.<br/>
     </p>
   </div>
 </footer>
