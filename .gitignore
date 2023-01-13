@@ -206,3 +206,5 @@ images/
 evidently_local/
 blogs/
 scratch*
+*.pbmm
+*.scorer
