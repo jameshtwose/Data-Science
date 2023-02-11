@@ -5,7 +5,7 @@ pandas==1.2.3
 seaborn==0.11.1
 sinfo==0.3.1
 sklearn==0.23.2
-IPython==7.31.1
+IPython==8.10.0
 jupyter_client==6.1.7
 jupyter_core==4.7.1
 jupyterlab==3.0.17
