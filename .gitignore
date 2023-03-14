@@ -205,3 +205,4 @@ output_pdfs
 images/
 evidently_local/
 scratch*
+local*
