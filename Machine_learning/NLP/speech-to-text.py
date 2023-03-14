@@ -3,12 +3,12 @@
 import speech_recognition as sr
 from dotenv import find_dotenv, load_dotenv
 # obtain path to "english.wav" in the same folder as this script
-from os import path, environ
+import os
 
 load_dotenv(find_dotenv())
 
 #%%
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "audio_files/Note_20221022_1630.wav")
+AUDIO_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), "audio_files/Note_20221022_1630.wav")
 # AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "french.aiff")
 # AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "chinese.flac")
 
@@ -19,7 +19,7 @@ with sr.AudioFile(AUDIO_FILE) as source:
     audio = r.record(source)  # read the entire audio file
 
 #%%
-use_pocket_sphinx=True
+use_pocket_sphinx=False
 if use_pocket_sphinx:
     # recognize speech using Sphinx
     try:
@@ -46,7 +46,7 @@ use_WIT=False
 if use_WIT:
     # recognize speech using Wit.ai
     # WIT_AI_KEY = "INSERT WIT.AI API KEY HERE"  # Wit.ai keys are 32-character uppercase alphanumeric strings
-    WIT_AI_KEY = environ["WIT_API_KEY"]
+    WIT_AI_KEY = os.environ["WIT_API_KEY"]
     try:
         print("Wit.ai thinks you said " + r.recognize_wit(audio, key=WIT_AI_KEY))
     except sr.UnknownValueError:
@@ -65,3 +65,20 @@ if use_IBM:
         print("IBM Speech to Text could not understand audio")
     except sr.RequestError as e:
         print("Could not request results from IBM Speech to Text service; {0}".format(e))
+        
+# %%
+use_houndify=True
+if use_houndify:
+    # recognize speech using Houndify
+    # HOUNDIFY_CLIENT_ID = "INSERT HOUNDIFY CLIENT ID HERE"  # Houndify client IDs are Base64-encoded strings
+    # HOUNDIFY_CLIENT_KEY = "INSERT HOUNDIFY CLIENT KEY HERE"  # Houndify client keys are Base64-encoded strings
+    HOUNDIFY_CLIENT_ID = os.environ["houndify_CLIENT_ID"]
+    HOUNDIFY_CLIENT_KEY = os.environ["houndify_CLIENT_KEY"]
+    
+    try:
+        print("Houndify thinks you said " + r.recognize_houndify(audio, client_id=HOUNDIFY_CLIENT_ID, client_key=HOUNDIFY_CLIENT_KEY))
+    except sr.UnknownValueError:
+        print("Houndify could not understand audio")
+    except sr.RequestError as e:
+        print("Could not request results from Houndify service; {0}".format(e))
+# %%
