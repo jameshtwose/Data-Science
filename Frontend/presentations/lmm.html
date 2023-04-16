@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Longitudinal Analysis Presentation</title>
+
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
+            />
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+            />
+        <script type="text/javascript" async=""
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script
+            src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap"
+            rel="stylesheet" />
+        <script
+            src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+
+    <body>
+        <!-- This section is the main part of the page -->
+        <section id="mainbody">
+            <section id="home">
+                <div class="flex-container">
+                    <h2>Estimating manual dexterity and cognition in users with
+                        multiple sclerosis in a longitudinal study</h2>
+                    <h5>By James Twose</h5>
+                    <div class="citation">
+                        <p>
+                            Lam, K. H., Twose, J., Lissenberg-Witte, B.,
+                            Licitra, G., Meijer, K., Uitdehaag, B., ... &
+                            Killestein, J. (2022). The Use of Smartphone
+                            Keystroke Dynamics to Passively Monitor Upper Limb
+                            and Cognitive Function in Multiple Sclerosis:
+                            Longitudinal Analysis.
+                            <em>
+                                Journal of Medical Internet Research, 24
+                            </em>
+                            (11), e37614.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="problem-statement">
+                <div class="flex-container">
+                    <h2>Problem Statement and Innovation</h2>
+                    <div class="row" id="text-explanation"></div>
+                    <div class="row" id="text-explanation">
+                        <h4>Goal</h4>
+                        <ul>
+                            <li>
+                                <h6>Estimate and explain cognition and
+                                    manual dexterity on a group level in the Amsterdam
+                                    UMC Multiple Sclerosis (MS)
+                                    project using smart phone interactions in a
+                                    real world setting</h6>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row" id="text-explanation">
+                        <h4>Challenges</h4>
+                        <ul>
+                            <li>
+                                <h6>Relatively small sample sizes</h6>
+                            </li>
+                            <li>
+                                <h6>Outcome measures collected at larger intervals than
+                                    smartphone interactions</h6>
+                            </li>
+                            <li>
+                                <h6>Nested/ hierarchical data due to
+                                    longitudinal design</h6>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row" id="text-explanation">
+                        <h4>Innovation</h4>
+                        <ul>
+                            <li>
+                                <h6>One of the first to use smartphone
+                                    interactions to estimate symptoms in MS</h6>
+                            </li>
+                            <li>
+                                <h6>Explainable machine learning using medical
+                                    data</h6>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="study">
+                <div class="flex-container">
+                    <h2>Study design</h2>
+                    <h6>
+                        Sample sizes: <i>PPMS</i>=11, <i>SPMS</i>=28,
+                        <i>RRMS</i>=51, <i>Total</i>=90
+                    </h6>
+                    <img src="study_design.png" id="study-setup" width="700px">
+                </div>
+            </section>
+
+            <section id="introduction">
+                <div class="flex-container">
+                    <h2>How are the features created?</h2>
+                    <img src="feature_engineering.png" id="study-setup"
+                        width="700px">
+                    <p id="footnote"><i>Overview of the Neurokeys
+                            keyboard (A) and a schematic representation of the
+                            keystroke dynamics features and clusters (B). APP:
+                            after-punctuation pause; CD: correction duration;
+                            FT: flight time; HT: hold time; post-CS:
+                            postcorrection slowing; PPL: press-press latency;
+                            pre-CS: precorrection slowing; RRL: release-release
+                            latency.</i></p>
+                </div>
+            </section>
+
+            <section id="eda">
+                <div class="flex-container">
+                    <h2>What does our data look like?</h2>
+                    <div id="lineplots">
+                        <div class="row">
+                            <div class="col-md-6" id="col-img">
+                                <img src="NHPT_ages.png"
+                                    id="study-setup"
+                                    width="500px">
+                                <p id="footnote"><i>fine motor score
+                                        cluster vs
+                                        NHPT coloured by age.</i></p>
+                            </div>
+
+                            <div class="col-md-6" id="col-img">
+                                <img src="SDMT_ages.png"
+                                    id="study-setup"
+                                    width="500px">
+                                <p id="footnote"><i>cognition score
+                                        cluster vs
+                                        SDMT coloured by age.</i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="results1">
+                <div class="flex-container">
+                    <h2>Results - intercepts, features vs outcome measures</h2>
+                    <div id="lineplots">
+                        <div class="row">
+                            <div class="col-md-6" id="col-img">
+                                <img src="NHPT_intercepts.png"
+                                    id="study-setup"
+                                    width="500px">
+                                <p id="footnote"><i>fine motor score
+                                        cluster vs
+                                        NHPT with group level and individual level intercepts.</i></p>
+                            </div>
+
+                            <div class="col-md-6" id="col-img">
+                                <img src="SDMT_intercepts.png"
+                                    id="study-setup"
+                                    width="500px">
+                                <p id="footnote"><i>cognition score
+                                        cluster vs
+                                        SDMT with group level and individual level intercepts.</i></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="results2">
+                <div class="flex-container">
+                    <h2>Coefficients, CI's and explanation</h2>
+                    <br>
+                    <br>
+                    <div class="col-md-6" id="text-explanation">
+                        <ul>
+                            <li><h5>NHPT</h5>
+                                <table class="tg">
+                                    <thead>
+                                        <tr>
+                                            <th class="tg-8zwo" colspan="2"><span
+                                                    style="font-weight:bold"></span></th>
+                                            <th class="tg-8zwo">β (95% CI)</th>
+                                            <th class="tg-8zwo">P value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="2">Fine
+                                                motor score cluster</td>
+                                            <td class="tg-0lax">12.62
+                                                (9.61-15.63)</td>
+                                            <td class="tg-0lax">&lt;.001</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="2">Fine
+                                                motor score cluster and
+                                                covariates</td>
+                                            <td class="tg-0lax">12.56
+                                                (8.96-16.16)</td>
+                                            <td class="tg-0lax">&lt;.001</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                An increase of 1 second in fine motor score
+                                cluster is associated with an increase of
+                                12.62 seconds in NHPT performance.
+                            </li>
+                            <li>
+                                The <b>longer</b> it takes a user to type a
+                                message the
+                                <b>worse</b> their manual dexterity.
+                            </li>
+                            <li>
+                                <h5>SDMT</h5>
+                                <table class="tg">
+                                    <thead>
+                                        <tr>
+                                            <th class="tg-8zwo" colspan="2"
+                                                style="font-weight:bold"></th>
+                                            <th class="tg-8zwo">β (95% CI)</th>
+                                            <th class="tg-8zwo">P value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="tg-wb09" colspan="2">Cognition
+                                                score cluster</td>
+                                            <td class="tg-wb09">–8.57 (–12.02 to
+                                                –5.12)</td>
+                                            <td class="tg-wb09">&lt;.001</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax" colspan="2">Cognition
+                                                score cluster and covariates</td>
+                                            <td class="tg-0lax">–5.02 (–9.02 to
+                                                –1.02)</td>
+                                            <td class="tg-0lax">&lt;.001</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                An increase of 1 second in the cognition score
+                                cluster is
+                                associated with a decrease of 8.57 points in
+                                SDMT score.
+                            </li>
+                            <li>
+                                The <b>longer</b> it takes a user to think about
+                                their corrections and punctuation
+                                usage the <b>worse</b> their cognition.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="discussion">
+                <div class="flex-container">
+                    <h2>What does this mean for us?</h2>
+                    <br>
+                    <div class="col-md-6" id="text-explanation-big">
+                        <ul>
+                            <li>
+                                <h5>We are able to <u><b>estimate</b></u> and
+                                    <u><b>explain</b></u>
+                                    the relationship between clinical outcomes
+                                    and the smartphone interactions
+                                    of users with MS
+                                </h5>
+                            </li>
+                            <li>
+                                <h5>The results hold even when including
+                                    covariates in the model</h5>
+                            </li>
+                            <li><h5>Currently the model assumes that the
+                                    relationship between
+                                    the feature and the outcome is linear (on
+                                    a group and individual user level)
+                                </h5></li>
+                            <li><h5>Method is generalisable (as long as the
+                                    outcome measure
+                                    is continuous)</h5></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="nextsteps">
+                <div class="flex-container">
+                    <h2>So what's next?</h2>
+                    <div class="col-md-6" id="text-explanation-big">
+                        <ul>
+                            <li><h5>Attempt non-linear hierarchical models to
+                                    see if
+                                    they fit (and generalize) better</h5></li>
+                            <li><h5>Follow up with the current population to see
+                                    if the
+                                    model continues to hold over a longer time
+                                    period</h5></li>
+                            <li><h5>Replicate the approach in different outcome
+                                    measures and in other datasets (consider
+                                    different disorders)</h5></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="appendix">
+                <div class="flex-container">
+                    <h2>Appendix 1</h2>
+
+                    <div id="lineplots">
+                        <img src="SDMT_CV.png"
+                            id="study-setup"
+                            width="800px">
+                        <p id="footnote"><i>SDMT fitted vs predicted values in training and hold out set.</i></p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- This section is for the header and the dropdown parts -->
+        <section id="info-bar">
+            <div class="nav-bar">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand"
+                        href="https://services.jms.rocks"><img
+                            src="https://services.jms.rocks/img/logo.png" /></a>
+                    <button class="navbar-toggler" type="button"
+                        data-toggle="collapse" data-outcome measures="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#mainbody">Home</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link"
+                                    href="#problem-statement">Problem
+                                    Statement</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#study">Study
+                                    Explanation</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#introduction">Feature
+                                    Engineering</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#eda">EDA</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#results1">Results
+                                    1</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#results2">Results
+                                    2</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#discussion">Discussion</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#nextsteps">Next
+                                    Steps</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#appendix">Appendix</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <script>
+            var scroll = new SmoothScroll('a[href*="#"]', {
+                speed: 300,
+            });
+        </script>
+    </body>
+
+</html>
