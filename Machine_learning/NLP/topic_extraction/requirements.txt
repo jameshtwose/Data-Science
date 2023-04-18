@@ -1,0 +1,6 @@
+pandas>=2.0.0
+spacy>=3.5.2
+bertopic>=0.14.1
+seaborn>=0.12.2
+nbformat>=5.8.0
+textblob>=0.17.1
