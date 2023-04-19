@@ -1,11 +1,13 @@
 # %%
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import spacy
 from bertopic import BERTopic
 from transformers import AutoTokenizer, BartForConditionalGeneration, pipeline
 from textblob import TextBlob
+from jmspack.utils import flatten
 
 # from nltk.corpus import stopwords
 
@@ -119,13 +121,14 @@ df[df["title"].isin(top_titles)].sort_values("title")
 # The following methods will be auditioned for topic extraction:
 # - spacy
 # - spacy with bertopic
+# - gensim LDAModel
 
 # %%[markdown]
 #### spacy with bertopic
 # %%
-# column_string = "text"
+column_string = "text"
 # column_string = "title"
-column_string = "adjectives_text"
+# column_string = "adjectives_text"
 low_docs = df.loc[lambda d: d["stars"] == 1, column_string].tolist()
 hi_docs = df.loc[lambda d: d["stars"] >= 3, column_string].tolist()
 docs = df[column_string].tolist()
@@ -140,10 +143,18 @@ topic_model = BERTopic(
 # %%
 for doc_version in [
     docs,
-    low_docs,
+    # low_docs,
     # hi_docs
 ]:
     topics, probs = topic_model.fit_transform(doc_version)
+    topics_list = [
+        x[0]
+        for x in flatten(
+            [topic_model.get_topic(topic) for topic in topic_model.get_topics().keys()]
+        )
+        if len(x[0]) > 1
+    ]
+    print(topics_list)
     fig = topic_model.visualize_topics()
     fig.show()
 # %%
@@ -152,5 +163,11 @@ for doc_version in [
 # This is done in the "prepped_text" column
 
 # %%
-
+pd.DataFrame(
+    [topic_model.get_topic(topic) for topic in topic_model.get_topics().keys()]
+)
+# %%
+topics_list
+# %%
+len(doc_version)
 # %%

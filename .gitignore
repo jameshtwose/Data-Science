@@ -209,3 +209,5 @@ local*
 blogs/
 *.pbmm
 *.scorer
+
+*/*/topic_extraction/model/
