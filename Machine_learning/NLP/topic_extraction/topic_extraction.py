@@ -1,11 +1,11 @@
 # %% [markdown]
-# ## Topic Extraction
+# # Topic Extraction
 # The following pipeline will be used to extract topics from the reviews:
 # - import the data (pandas)
 # - clean the data
 #   - correct spelling (autocorrect)
-#   - remove punctuation (nltk.tokenize.RegexpTokenizer)
-#   - remove stop words (nltk.corpus.stopwords)
+#   - remove punctuation (re.sub(r"[^\w\s]", "", text))
+#   - remove stop words
 #   - remove numbers (re.sub(r'\d+', '', text))
 #   - lemmatize (nltk.stem.WordNetLemmatizer)
 # - audition topic extraction methods
@@ -14,7 +14,7 @@
 #   - sklearn LDA, NMF, LSA, etc.
 # - visualize topics per topic extraction method
 # - consider grouping topics per star rating
-# - etc.
+# - discuss results
 
 # %%
 import pandas as pd
@@ -29,13 +29,11 @@ from gensim.corpora.dictionary import Dictionary
 from gensim.models import LdaModel
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation, NMF, TruncatedSVD
-
-# from nltk.tokenize import RegexpTokenizer
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
-
-# import string
 import re
+import random
+from wordcloud import WordCloud
 
 # set the plot style
 if "jms_style_sheet" in plt.style.available:
@@ -46,17 +44,43 @@ if "jms_style_sheet" in plt.style.available:
 # read in the stop words
 # stop words taken from https://gist.github.com/deekayen/4148741
 with open("data/stop_words.txt", "r") as f:
-    stop_words = [x.replace("\n", "") for x in f.readlines()[1:]]
+    stop_words = [x.replace("\n", "") for x in f.readlines()[1:]] + ["i", "ive", " "]
 
 
 # %%
+# create a function which will return a flattened list given a list of lists
+def flatten(l):
+    """This function takes a list of lists and returns a flattened list."""
+    return [item for sublist in l for item in sublist]
+
+
 # "adjectives_text" column
 def get_adjectives(text):
+    """This function takes a string of text and returns a list of adjectives."""
     blob = TextBlob(text)
     return [word for (word, tag) in blob.tags if tag == "JJ"]
 
 
+# "prepped_text" column
 def prepare_text(text):
+    """This function takes a string of text and returns a cleaned version of the text.
+
+    Parameters
+    ==========
+    text: str
+        A string of text to be cleaned
+
+    Returns
+    =======
+    str
+
+    Example
+    =======
+    >>> example_str = "This is a string of text. It has punctuation, numbers, and stop words - 1000."
+    >>> cleaned_str = prepare_text(example_str)
+
+    """
+
     auto_spell = Speller(lang="en")
     # correct spelling
     autocorrected_text = auto_spell(text)
@@ -77,29 +101,14 @@ def prepare_text(text):
     return lemmatized_text.lower()
 
 
-# %%
-# "autocorrect_text" column
-auto_spell = Speller(lang="en")
+# %%[markdown]
+# ### Importing the data and applying the preprocessing steps
 # %%
 df = (
     pd.read_json(path_or_buf="data/train_reviews.json").assign(
         **{
             # reassigning the stars column to be an integer
             "stars": lambda x: x["stars"].str.extract("(\d+)").astype(int),
-            # creating a "prepped" version of the text column by removing stopwords
-            # and converting to lowercase
-            "stopwords_removed_text": lambda x: x["text"]
-            .str.lower()
-            .str.replace(
-                # pat="$|".join([x for x in stopwords if len(x) > 2]),
-                pat="$|".join(stop_words),
-                repl="",
-                regex=True,
-            ),
-            # creating a "autocorrected" version of the text column
-            # the autocorrect takes around 2 mins to apply to each row
-            # "autocorrect_text": lambda x: x["text"].apply(lambda x: auto_spell(x)),
-            # creating a "prepped" version of the text column by applying the
             # prepare_text function to each row (this step takes about 4 mins)
             "prepped_text": lambda x: x["text"].apply(lambda x: prepare_text(x)),
             # creating a "adjectives_text" column pulling out all the
@@ -119,16 +128,68 @@ df = (
 )
 df.head()
 
+# %%[markdown]
+# ### Initial light Exploratory Data Analysis (EDA)
+# %%
+df.info()
+# %%[markdown]
+# It appears that there are a lot of one star reviews. This is likely
+# to influence the topic extraction output. Consider running the topic
+# extraction on the one star reviews and then the three - five star reviews.
+# %%
+_ = sns.countplot(x="stars", data=df)
 
+# %%[markdown]
+# It appears that the reviews are mostly from later years. This is likely
+# to influence the topic extraction output. Consider grouping the reviews
+# per year and then extracting topics.
+# %%
+_ = sns.lineplot(data=df, x="date", y="stars")
+_ = sns.scatterplot(
+    data=df, x="date", y="stars", edgecolor="grey", linewidth=2, zorder=1
+)
+# %%
+# show the date range of the reviews
+df["date"].min(), df["date"].max()
+
+# %%[markdown]
+# visualizing the top 20 adjectives used in the reviews to get an idea of the tone
+# %%
+count_cutoff = 20
+adjectives_df = (
+    df["adjectives_text"]
+    .str.split(",", expand=True)
+    .stack()
+    .reset_index()
+    .drop(["level_0", "level_1"], axis=1)
+    .rename(columns={0: "adjective"})
+    .value_counts()
+    .reset_index()
+    .rename(columns={"index": "adjective", 0: "count"})
+    .loc[lambda d: d["count"] > count_cutoff]
+    .loc[lambda d: ~d["adjective"].isin(["", " ’"])]
+)
+_ = plt.figure(figsize=(5, 8))
+_ = sns.barplot(data=adjectives_df, y="adjective", x="count")
+_ = plt.title(f"Adjectives with a count > {count_cutoff}")
+
+
+# %%[markdown]
+# It appears that there are duplicate review titles. These are often
+# one word titles like "Awful" or "Terrible". Another indication of tone.
+# %%
+title_counts = df["title"].value_counts()
+top_titles = title_counts[title_counts > 2].index.tolist()
+# select and visualize the reviews that have a title that is duplicated
+df[df["title"].isin(top_titles)].sort_values("title")
+
+
+# %%[markdown]
+# ## Define the different pipelines
 # %%[markdown]
 # ### Topic Extraction with Spacy and BERTopic
 # %%
-# create a function which will return a flattened list given a list of lists
-def flatten(l):
-    return [item for sublist in l for item in sublist]
-
-
-def spacy_bertopic_pipeline(list_of_texts, plot=True):
+def spacy_bertopic_pipeline(list_of_texts):
     """This function takes a list of texts and returns a dataframe of topics
     and their associated words with corresponding weights, based on the spacy
     and bertopic topic extraction methods.
@@ -137,8 +198,6 @@ def spacy_bertopic_pipeline(list_of_texts, plot=True):
     ==========
     list_of_texts: list
         A list of texts to be used to extract topics
-    plot: bool
-        A boolean indicating whether or not to plot the topics
 
     Returns
     =======
@@ -146,6 +205,11 @@ def spacy_bertopic_pipeline(list_of_texts, plot=True):
 
     Example
     =======
+    >>> import pandas as pd
+    >>> import seaborn as sns
+    >>> import random
+    >>> import spacy
+    >>> from bertopic import BERTopic
     >>> df = pd.read_json(path_or_buf="data/train_reviews.json")
     >>> df["adjectives_text"] = df.apply(lambda x: ", ".join(get_adjectives(x["prepped_text"])), axis=1)
     >>> topics_df = spacy_bertopic_pipeline(df["adjectives_text"].tolist(), plot=True)
@@ -162,66 +226,31 @@ def spacy_bertopic_pipeline(list_of_texts, plot=True):
         top_n_words=10,
         nr_topics=10,
     )
+    # fit the model to the list of texts
     _, _ = topic_model.fit_transform(list_of_texts)
-    if plot:
-        fig = topic_model.visualize_topics()
-        fig.show()
-
-    return pd.DataFrame(
-        [topic_model.get_topic(topic) for topic in topic_model.get_topics().keys()]
-    ).T
-
-
-# %%
-topics_df = spacy_bertopic_pipeline(df["adjectives_text"].tolist(), plot=True)
-# %%
-plot_df = (
-    topics_df.melt(var_name="topic_id")
-    .assign(
-        **{
-            "topic_id": lambda x: x["topic_id"].astype(str),
-            "word": lambda x: x["value"].str[0],
-            "weight": lambda x: x["value"].str[1].astype(float),
-        }
+    # get the topics and their associated words and weights
+    return (
+        pd.DataFrame(
+            [topic_model.get_topic(topic) for topic in topic_model.get_topics().keys()]
+        )
+        .T.melt(var_name="topic_id")
+        .assign(
+            **{
+                "topic_id": lambda x: x["topic_id"].astype(str),
+                "word": lambda x: x["value"].str[0],
+                "weight": lambda x: x["value"].str[1].astype(float),
+            }
+        )
+        .replace("", np.nan)
+        .dropna()
+        .drop(columns=["value"])
     )
-    .replace("", np.nan)
-    .dropna()
-    .drop(columns=["value"])
-)
-
-# %%
-_ = plt.figure(figsize=(10, 10))
-_ = sns.stripplot(
-    data=plot_df.sort_values(by=["topic_id", "weight"], ascending=False),
-    x="weight",
-    y="word",
-    hue="topic_id",
-)
-# %%
-_ = sns.boxplot(data=plot_df, x="weight", y="topic_id")
-_ = sns.stripplot(
-    data=plot_df,
-    x="weight",
-    y="topic_id",
-    hue="topic_id",
-    edgecolor="white",
-    linewidth=0.5,
-    alpha=0.9,
-)
-# %%
-multi_topic_words = plot_df["word"].value_counts().loc[lambda x: x > 1].index.tolist()
-_ = sns.stripplot(
-    data=plot_df.loc[lambda x: x["word"].isin(multi_topic_words)],
-    x="weight",
-    hue="word",
-    y="topic_id",
-)
 
 
 # %% [markdown]
 # ### Topic Extraction with LDA (gensim)
 # %%
-def lda_pipeline(list_of_texts, plot=True):
+def lda_pipeline(list_of_texts):
     """This function takes a list of texts and returns a dataframe of topics
     and their associated words with corresponding weights, based on the LDA
     topic extraction method.
@@ -239,6 +268,11 @@ def lda_pipeline(list_of_texts, plot=True):
 
     Example
     =======
+    >>> import pandas as pd
+    >>> import seaborn as sns
+    >>> import random
+    >>> import spacy
+    >>> from bertopic import BERTopic
     >>> df = pd.read_json(path_or_buf="data/train_reviews.json")
     >>> df["adjectives_text"] = df.apply(lambda x: ", ".join(get_adjectives(x["prepped_text"])), axis=1)
     >>> topics_df = lda_pipeline(df["adjectives_text"].tolist(), plot=True)
@@ -284,22 +318,7 @@ def lda_pipeline(list_of_texts, plot=True):
     )
 
 
-# %%
-topics_df = lda_pipeline(
-    list_of_texts=df["adjectives_text"].apply(lambda x: x.split(", ")).tolist(),
-    plot=True,
-)
-# %%
-_ = plt.figure(figsize=(5, 12))
-_ = sns.stripplot(
-    data=topics_df.sort_values(by=["topic_id", "weight"], ascending=False),
-    x="weight",
-    y="word",
-    hue="topic_id",
-)
-
-
-# %%
+# %%[markdown]
 # ### Topic Extraction with LDA, NMF, and LSA (sklearn)
 # %%
 def sklearn_pipeline(
@@ -308,7 +327,6 @@ def sklearn_pipeline(
     n_components=10,
     n_top_words=10,
     beta_loss="frobenius",
-    plot=True,
 ):
     """This function takes a list of texts and returns a dataframe of topics
     and their associated words with corresponding weights, based on the LDA,
@@ -364,14 +382,15 @@ def sklearn_pipeline(
             top_features_ind = topic.argsort()[: -n_top_words - 1 : -1]
             top_features = [feature_names[i] for i in top_features_ind]
             weights = topic[top_features_ind]
-            df_list.append(
-                pd.DataFrame(
-                    {"topic_id": topic_idx, "word": top_features, "weight": weights}
-                )
+            to_append_df = pd.DataFrame(
+                {"topic_id": topic_idx, "word": top_features, "weight": weights}
             )
+            df_list.append(to_append_df)
 
         return pd.concat(df_list).assign(
-            **{"topic_id": lambda x: x["topic_id"].astype(str)}
+            **{
+                "topic_id": lambda x: x["topic_id"].astype(str),
+            }
         )
     elif approach == "NMF":
         tfidf_vectorizer = TfidfVectorizer()
@@ -448,20 +467,201 @@ def sklearn_pipeline(
         raise ValueError("approach must be either 'LDA', 'NMF', or 'LSA'")
 
 
+# %%[markdown]
+# ### Run all the different topic extraction pipelines
+# - consider using `adjectives_text` instead of `prepped_text` for the `column_name` variable
+# for a cleaner set of topics
 # %%
-topics_df = sklearn_pipeline(
-    list_of_texts=df["adjectives_text"].tolist(),
-    approach="LSA",
-    # beta_loss="kullback-leibler",
+# column_name = "adjectives_text"
+column_name = "prepped_text"
+
+# BERTopic
+bertopic_topics_df = spacy_bertopic_pipeline(list_of_texts=df[column_name].tolist())
+
+# Gensim
+if column_name == "adjectives_text":
+    text_list = df[column_name].apply(lambda x: x.split(", ")).tolist()
+else:
+    text_list = df[column_name].apply(lambda x: x.split(" ")).tolist()
+
+lda_gensim_topics_df = lda_pipeline(list_of_texts=text_list)
+
+# Sklearn
+lda_topics_df = sklearn_pipeline(
+    list_of_texts=df[column_name].tolist(), approach="LDA", n_components=10
+)
+
+nmf_frobenius_topics_df = sklearn_pipeline(
+    list_of_texts=df[column_name].tolist(),
+    approach="NMF",
+    beta_loss="frobenius",
     n_components=10,
-    plot=True,
 )
+
+nmf_kl_topics_df = sklearn_pipeline(
+    list_of_texts=df[column_name].tolist(),
+    approach="NMF",
+    beta_loss="kullback-leibler",
+    n_components=10,
+)
+
+lsa_topics_df = sklearn_pipeline(
+    list_of_texts=df[column_name].tolist(),
+    approach="LSA",
+    n_components=10,
+)
+
 # %%
-_ = plt.figure(figsize=(5, 12))
-_ = sns.stripplot(
-    data=topics_df.sort_values(by=["topic_id", "weight"], ascending=False),
-    x="weight",
-    y="word",
-    hue="topic_id",
+# create a dictionary of the topic models
+model_name_dict = {
+    "BERT Topic": bertopic_topics_df,
+    "Latent Dirichlet Allocation (Gensim)": lda_gensim_topics_df,
+    "Latent Dirichlet Allocation (sklearn)": lda_topics_df,
+    "Non-Negative Matrix Factorization (sklearn, Frobenius)": nmf_frobenius_topics_df,
+    "Non-Negative Matrix Factorization (sklearn, KL)": nmf_kl_topics_df,
+    "Latent Semantic Analysis (sklearn)": lsa_topics_df,
+}
+
+
+# %%[markdown]
+# ### Evaluate the topic models
+# %%
+# create a function to evaluate the topic models
+# - visualize the top 10 words for each topic in each model as a barplot
+# - visualize the top words in each model as a wordcloud
+def evaluate_topic_model(
+    data: pd.DataFrame,
+    title: str = "Topic Model Evaluation",
+):
+    """A function to evaluate a topic model. It returns a facetgrid of plots the top 10 words for each topic.
+
+    Parameters
+    ==========
+    data: pd.DataFrame
+        A dataframe with the following columns: topic_id, word, weight
+    title: str
+        The suptitle of the plot
+
+    Returns
+    =======
+    g: sns.FacetGrid
+
+    Example
+    =======
+    >>> import pandas as pd
+    >>> import seaborn as sns
+    >>> import random
+    >>> import spacy
+    >>> from bertopic import BERTopic
+    >>> df = pd.read_json(path_or_buf="data/train_reviews.json")
+    >>> df["adjectives_text"] = df.apply(lambda x: ", ".join(get_adjectives(x["prepped_text"])), axis=1)
+    >>> bertopic_topics_df = spacy_bertopic_pipeline(list_of_texts=df["adjectives_text"].tolist())
+    >>> g, wordcloud_fig = evaluate_topic_model(
+    ...     data=bertopic_topics_df,
+    ...     title="BERTopic Topic Model Evaluation",
+    ... )
+    >>> g.fig.show()
+
+    """
+    r = lambda: random.randint(0, 255)
+    g = sns.FacetGrid(
+        data,
+        col="topic_id",
+        sharey=False,
+        col_wrap=4,
+        height=2,
+        aspect=1.2,
+    )
+    _ = g.map(sns.barplot, "weight", "word", color="#%02X%02X%02X" % (r(), r(), r()))
+    if len(g.axes) < 10:
+        _ = g.fig.subplots_adjust(top=0.75)
+    else:
+        _ = g.fig.subplots_adjust(top=0.9)
+    _ = g.fig.suptitle(title)
+
+    wordcloud = WordCloud(
+        background_color="#272322", max_font_size=40, max_words=30, colormap="Reds"
+    ).generate(data["word"].str.cat(sep=" "))
+    wordcloud_fig, _ = plt.subplots(figsize=(7, 7))
+    _ = plt.imshow(wordcloud, interpolation="bilinear")
+    _ = plt.axis("off")
+
+    return g, wordcloud_fig
+
+
+# %%
+# run the function for each topic model and visualize the topics
+for model_name in model_name_dict.keys():
+    g, wordcloud_fig = evaluate_topic_model(
+        data=model_name_dict[model_name],
+        title=f"{model_name} Topic Model Evaluation",
+    )
+    g.fig.show()
+    wordcloud_fig.show()
+
+# %%[markdown]
+# As we saw earlier, there is a large amount of 1 star
+# reviews in the dataset. Let's take the LDA gensim model and
+# compare the output of the 1 star reviews to the output of the
+# 4 - 5 star reviews.
+# %%
+low_star_text = (
+    df.loc[lambda d: d["stars"] == 1, "prepped_text"]
+    .apply(lambda x: x.split(" "))
+    .tolist()
 )
+
+high_star_text = (
+    df.loc[lambda d: d["stars"] >= 4, "prepped_text"]
+    .apply(lambda x: x.split(" "))
+    .tolist()
+)
+
+low_star_lda_gensim_topics_df = lda_pipeline(list_of_texts=low_star_text)
+high_star_lda_gensim_topics_df = lda_pipeline(list_of_texts=high_star_text)
+
+g, wordcloud_fig = evaluate_topic_model(
+    data=low_star_lda_gensim_topics_df,
+    title=f"Low Star Reviews Topic Model Evaluation",
+)
+g.fig.show()
+wordcloud_fig.show()
+g, wordcloud_fig = evaluate_topic_model(
+    data=high_star_lda_gensim_topics_df,
+    title=f"High Star Reviews Topic Model Evaluation",
+)
+g.fig.show()
+wordcloud_fig.show()
+# %% [markdown]
+# ### Discussion
+# No matter what topic model we use it seems that the main topics of interest are:
+# - the customer service
+# - the train service itself (delays, strikes, running on time etc.)
+# - the state of the trains (cleanliness, etc.)
+# - the ease of use of the website
+# - in general the ease of booking a journey
+# 
+# When looking at the low star reviews, we can see that the topics are more negative
+# highlighting the poor customer service and the train service - choosing to focus
+# more on delays and strikes. When the reviews are high stars, the main highlights
+# are the customer service and the state of the trains.
+# 
+# It is suggested for an improved perception of the company that they focus on
+# the customer service being polite and helpful, and that the trains more reliably
+# run on time.
+
+# %%[markdown]
+# ### Thoughts on the assignment
+# - I found the assignment to be very interesting and I enjoyed working on it. 
+# It was my first time really diving into topic modeling and I found it fascinating.
+# - Given more time, I would have liked to:
+#   - have extracted the different train companies from the website strings and separated them when doing
+# the topic modeling (similar to how the stars were separated)
+#   - have explored the other different available topic models more (e.g huggingface transformers)
+#   - do a more in depth review of the preprocessing steps (it can be seen that some spaces
+# are still included in the output)
+#   - explored how text summarization in the preprocessing could be used to improve the topic models
+# (i briefly tried it but it was very time consuming)
+#   - explored more interactive ways of visualizing the topic models
+
 # %%
