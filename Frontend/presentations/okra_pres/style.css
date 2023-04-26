@@ -1,0 +1,293 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    --maincolor: #322b43;
+    --secondcolor: #E9B200;
+    --backgroundcolor: #E89201;
+    --white: #ffffffff;
+    color: var(--maincolor);
+}
+
+h1 {
+    color: var(--maincolor);
+}
+
+h2 {
+    align-items: center;
+}
+
+#latex {
+    padding-top: 40px;
+    align-items: center;
+}
+
+#latex-column {
+    border-color: var(--maincolor);
+    border-style: groove;
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 100px;
+    padding-bottom: 20px;
+    margin: 5px;
+    width: 45%;
+}
+
+#study-setup {
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+#text-explanation {
+    padding-top: 40px;
+    text-align: left;
+    width: 42.5%;
+}
+
+#text-explanation li {
+    padding-top: 10px;
+    text-align: left;
+}
+
+#text-explanation-big li {
+    padding-top: 50px;
+    text-align: left;
+    width: 100%;
+}
+
+#col-img {
+    width: 48%;
+    padding-top: 100px;
+    margin: 5px;
+}
+
+#col-img-square {
+    width: 48%;
+    padding-top: 20px;
+    margin: 5px;
+}
+
+ul {
+    list-style-type: square;
+}
+
+ul li a {
+    color: var(--maincolor);
+}
+
+li {
+    color: var(--maincolor);
+    padding: 0.2%;
+}
+
+#maintext {
+    padding-top: 5%;
+    align-items: center;
+}
+
+#home {
+    padding-left: 20%;
+    align-items: center;
+    text-align: center;
+    width: 80%;
+}
+
+#confusion {
+    width: 700px;
+}
+
+#lineplots {
+    justify-content: center;
+    align-items: center;
+    width: 1250px;
+    height: 700px;
+}
+
+#matrix1 {
+    width: 500px;
+}
+
+#matrix2 {
+    height: 395px;
+    width: 600px;
+}
+
+#stages {
+    width: 1000px;
+    padding-top: 25px;
+}
+
+#footnote {
+    font-size: 14px;
+    color: rgb(179, 179, 179);
+    text-align: center;
+    width: 80%;
+    padding-left: 200px;
+}
+
+#introduction #footnote {
+    width: 30%;
+    padding-left: 20px;
+}
+
+#footer {
+    text-align: left;
+    align-items: center;
+    padding-top: 1%;
+}
+
+#footer li {
+    font-size: 10px;
+}
+
+#maintext li {
+    padding: 2%;
+    font-size: 20px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 1000px;
+    text-align: center;
+}
+
+.citation {
+    position: absolute;
+    bottom: 15px;
+    font-size: 12px;
+    width: 50%;
+}
+
+/* Everything below this point is for the navigation bar styling */
+.nav-bar {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
+
+.navbar {
+    background-color: var(--maincolor);
+}
+
+.navbar {
+    text-align: center;
+}
+
+.navbar-brand img {
+    height: 50px;
+    padding-left: 20px;
+}
+
+.fa.fa-bars {
+    font-size: 35px;
+    color: white;
+}
+
+.navbar-toggler {
+    outline: none !important;
+}
+
+.navbar-nav {
+    float: right;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.nav-link {
+    color: white !important;
+    font-size: 16px;
+    width: 170px;
+    text-align: center;
+}
+
+.btn {
+    background-color: var(--secondcolor);
+    border-color: var(--secondcolor);
+}
+
+.btn-secondary:hover {
+    background-color: var(--backgroundcolor);
+    border-color: var(--backgroundcolor);
+
+}
+
+.tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.tg td {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+}
+
+.tg th {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+}
+
+.tg .tg-8zwo {
+    font-style: italic;
+    text-align: left;
+    vertical-align: top
+}
+
+.tg .tg-0lax {
+    text-align: left;
+    vertical-align: top
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#example-text thead tr th:first-child,
+#example-text tbody tr td:first-child {
+  background-color: var(--maincolor);
+  color: var(--white);
+}
+
+thead tr th,
+tbody tr td {
+  padding: 10px;
+  border: 1px solid #7f7f7f;
+  /* width: 100%; */
+}
+
+th {
+  font-weight: normal;
+}
+
+#discussion #text-explanation {
+    width: 52%;
+}
+
+#results1 #lineplots {
+    width: 90%;
+    margin-top: -10px;
+    /* padding-top: 50px; */
+}
+
+#results2 #lineplots {
+    width: 90%;
+    margin-top: -10px;
+    /* padding-top: 50px; */
+}

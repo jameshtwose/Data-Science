@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Claim Engine Audit</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" async=""
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet" />
+    <script
+        src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- This section is the main part of the page -->
+    <section id="mainbody">
+        <section id="home">
+            <div class="flex-container">
+                <h2>Creating a claims
+                    engine for Regtech company</h2>
+                <h5>By James Twose</h5>
+            </div>
+        </section>
+
+        <section id="problem-statement">
+            <div class="flex-container">
+                <h2>Change to business process</h2>
+                <div class="row" id="text-explanation"></div>
+                <div class="row" id="text-explanation">
+                    <h4>Assumptions</h4>
+                    <ul>
+                        <li>
+                            <h6>The company has access to API's of different airlines</h6>
+                        </li>
+                        <li>
+                            <h6>The API's of the different airlines output data not in a standard format</h6>
+                        </li>
+                        <li>
+                            <h6>The company has access to a database of all flights of the different airlines</h6>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row" id="text-explanation">
+                    <h4>Approach</h4>
+                    <ul>
+                        <li>
+                            <h6>Data
+                                engineering pipeline (e.g databricks, airflow)
+                            </h6>
+                        </li>
+                        <li>
+                            <h6>Standardized data storage (e.g. postgresql, mongodb)</h6>
+                        </li>
+                        <li>
+                            <h6>Train, test, deploy monitor model (e.g. AWS sagemaker, clarify)</h6>
+                        </li>
+                        <li>
+                            <h6>User interface for users to interact with the output (e.g. PowerBI)</h6>
+                        </li>
+                        <li>
+                            <h6>Overall Idea - semi automated ML process</h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="introduction">
+            <div class="flex-container">
+                <h2>Added Value</h2>
+                <div class="row" id="text-explanation">
+                    <h4>How does this help you?</h4>
+                    <ul>
+                        <li>
+                            <h6>reduced workload for the legal team (time, money)</h6>
+                        </li>
+                        <li>
+                            <h6>increased likelihood of success of claims that are pursued (money)</h6>
+                        </li>
+                        <li>
+                            <h6>increased customer satisfaction due to speeding up the process (money, time)</h6>
+                        </li>
+                        <li>
+                            <h6>increased customer satisfaction due to increased likelihood of success based on previous
+                                claims (money)</h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="discussion">
+            <div class="flex-container">
+                <h2>Challenges</h2>
+                <div class="row" id="text-explanation">
+                    <ul>
+                        <li>
+                            <h6>missingness in the data (e.g. not all airlines have the same data)</h6>
+                        </li>
+                        <li>
+                            <h6>data quality (e.g. reliability of the data may vary per airline)</h6>
+                        </li>
+                        <li>
+                            <h6>data security (e.g. how is the data stored, is it encrypted, who has access to it)</h6>
+                        </li>
+                        <li>
+                            <h6>data privacy (e.g. GDPR compliance)</h6>
+                        </li>
+                        <li>
+                            <h6>data storage (e.g. how much data is there, how is it stored, how is it accessed, can it
+                                be scaled)</h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="nextsteps">
+            <div class="flex-container">
+                <h2>ML Architecture</h2>
+                <div class="row" id="text-explanation">
+                    <p>
+                        The exact architecture of the ML pipeline will depend on the infrastructure currently used by
+                        the company and can be ammended accordingly.</p>
+                    <ul>
+                        <li>
+                            <h6>Data Engineering Pipeline - DataBricks
+                            </h6>
+                        </li>
+                        <li>
+                            <h6>
+                                Data Storage - Postgresql
+                            </h6>
+                        </li>
+                        <li>
+                            <h6>
+                                Model Training - AWS Sagemaker
+                            </h6>
+                        </li>
+                        <li>
+                            <h6>
+                                Model Deployment/ Monitoring - AWS Sagemaker/ Clarify
+                            </h6>
+                        </li>
+                        <li>
+                            <h6>
+                                User Interface - PowerBI
+                            </h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+    <!-- This section is for the header and the dropdown parts -->
+    <section id="info-bar">
+        <div class="nav-bar">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="https://services.jms.rocks"><img
+                        src="https://services.jms.rocks/img/logo.png" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-outcome measures="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#mainbody">Home</a>
+                        </li>
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#problem-statement">Change to Business Process</a>
+                        </li>
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#introduction">Added Value</a>
+                        </li>
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#discussion">Challenges</a>
+                        </li>
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#nextsteps">ML Architecture</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <script>
+        var scroll = new SmoothScroll('a[href*="#"]', {
+            speed: 300,
+        });
+    </script>
+</body>
+
+</html>

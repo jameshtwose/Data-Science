@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Topic Extraction Presentation</title>
+
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
+            />
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+            />
+        <script type="text/javascript" async=""
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script
+            src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap"
+            rel="stylesheet" />
+        <script
+            src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+
+    <body>
+        <!-- This section is the main part of the page -->
+        <section id="mainbody">
+            <section id="home">
+                <div class="flex-container">
+                    <h2>Topic extraction of train company reviews: a model
+                        comparison</h2>
+                    <h5>By James Twose</h5>
+                </div>
+            </section>
+
+            <section id="problem-statement">
+                <div class="flex-container">
+                    <h2>Problem Statement and Innovation</h2>
+                    <div class="row" id="text-explanation"></div>
+                    <div class="row" id="text-explanation">
+                        <h4>Goal</h4>
+                        <ul>
+                            <li>
+                                <h6>Extract topics that are discussed in
+                                    reviews of train companies to inform
+                                    client strategy towards customer experience
+                                </h6>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row" id="text-explanation">
+                        <h4>Challenges</h4>
+                        <ul>
+                            <li>
+                                <h6>Imbalance in reviews per company
+                                </h6>
+                            </li>
+                            <li>
+                                <h6>Review text data requires in depth
+                                    preprocessing</h6>
+                            </li>
+                            <li>
+                                <h6>Over representation of certain parts of the
+                                    population</h6>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="introduction">
+                <div class="flex-container">
+                    <h2>Approach</h2>
+                    <div class="row" id="text-explanation">
+                        <ul>
+                            <li>
+                                <h4>Import and clean data
+                                </h4>
+                            </li>
+                            <li>
+                                <h4>Audition topic extraction methods (spacy,
+                                    BERTopic, gensim, sklearn)</h4>
+                            </li>
+                            <li>
+                                <h4>Visualize topics per method</h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="eda">
+                <div class="flex-container">
+                    <h2>What does our data look like?</h2>
+                    <div class="col-md-8" id="text-explanation">
+                        <div id="example-text">
+                            <table>
+                                <tr>
+                                    <td>date</td>
+                                    <td>2018-07-17 13:59:52</td>
+                                </tr>
+                                <tr>
+                                    <td>title</td>
+                                    <td>Awful!</td>
+                                </tr>
+                                <tr>
+                                    <td>text</td>
+                                    <td>As the previous commentator said
+                                        &quot;No stars&quot; would be more
+                                        appropriate. It is a terrible
+                                        &quot;service&quot; if you can call it
+                                        that! Cancellations, delays, over
+                                        crowding and trains terminated before
+                                        their final destination.</td>
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>https://uk.trustpilot.com/review/www.gwr.com?page=1</td>
+                                </tr>
+                                <tr>
+                                    <td>stars</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>prepped_text</td>
+                                    <td>previous commentator star appropriate
+                                        terrible service cancellation delay
+                                        crowding train terminated destination</td>
+                                </tr>
+                                <tr>
+                                    <td>adjectives_text</td>
+                                    <td>previous, appropriate, terrible</td>
+                                </tr>
+                                <tr>
+                                    <td>company</td>
+                                    <td>gwr</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="eda2">
+                <div class="flex-container">
+                    <h2>What does our data look like?</h2>
+                    <div id="lineplots">
+                        <div class="row">
+                            <div class="col-md-6" id="col-img">
+                                <img src="stars_countplot.png"
+                                    id="study-setup"
+                                    width="700px">
+                                <p id="footnote"><i>count of stars amount in all
+                                        reviews</i></p>
+                            </div>
+
+                            <div class="col-md-6" id="col-img">
+                                <img src="stars_boxplot.png"
+                                    id="study-setup"
+                                    width="1000px">
+                                <p id="footnote"><i>star distribution per
+                                        company</i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="results1">
+                <div class="flex-container">
+                    <h2>Results - model comparison</h2>
+                    <div id="lineplots">
+                        <div class="row">
+                            <div class="col-md-4" id="col-img-square">
+                                <img src="BERT Topic_topic_model_evaluation.png"
+                                    width="600px">
+                            </div>
+                            <div class="col-md-4" id="col-img-square">
+                                <img src="Latent Dirichlet Allocation (Gensim)_topic_model_evaluation.png"
+                                    width="600px">
+                            </div>
+                            <div class="col-md-4" id="col-img-square">
+                                <img src="Latent Semantic Analysis (sklearn)_topic_model_evaluation.png"
+                                    width="600px">
+                            </div>
+                            <div class="col-md-4" id="col-img-square">
+                                <img src="Non-Negative Matrix Factorization (sklearn, KL)_topic_model_evaluation.png"
+                                    width="600px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="results2">
+                <div class="flex-container">
+                    <h2>Results - low vs high star review comparison</h2>
+                    <div id="lineplots">
+                        <div class="row">
+                            <div class="col-md-6" id="col-img">
+                                <img src="LDA_low_star_topic_model_evaluation.png"
+                                    id="study-setup"
+                                    width="800px">
+                                <p id="footnote"><i>Latent Dirichlet Allocation - low star reviews</i></p>
+                            </div>
+                            <div class="col-md-6" id="col-img">
+                                <img src="LDA_high_star_topic_model_evaluation.png"
+                                    id="study-setup"
+                                    width="800px">
+                                <p id="footnote"><i>Latent Dirichlet Allocation - high star reviews</i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="discussion">
+                <div class="flex-container">
+                    <h2>What does this mean for us?</h2>
+                    <br>
+                    <div class="col-md-6" id="text-explanation">
+                        <ul>
+                            <ul>
+                                <li><h5>No matter what topic model we use it
+                                        seems
+                                        that the main topics of interest are:</h5><ul>
+                                        <li>the customer service</li>
+                                        <li>the train service itself
+                                                (delays,
+                                                strikes, running on time etc.)</li>
+                                        <li>the state of the trains
+                                                (cleanliness, etc.)</li>
+                                        <li>the ease of use of the website</li>
+                                        <li>in general the ease of booking a
+                                                journey</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <ul>
+                                <li><h5>low star reviews:</h5><ul>
+                                        <li>poor customer service </li>
+                                        <li>the train service - delays and
+                                            strikes </li>
+                                    </ul>
+                                </li>
+                                <li><h5>high star reviews:</h5><ul>
+                                        <li>kind customer service</li>
+                                        <li>state of the trains</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="nextsteps">
+                <div class="flex-container">
+                    <h2>So what's next?</h2>
+                    <div class="col-md-6" id="text-explanation-big">
+                        <ul>
+                            <li><h5>Explore other more complex text extraction models</h5></li>
+                            <li><h5>Further tune the preprocessing steps</h5></li>
+                            <li><h5>Include text summarization models in the preprocessing</h5></li>
+                            <li><h5>Create interactive visualizations</h5></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="appendix">
+                <div class="flex-container">
+                    <h2>Appendix 1</h2>
+
+                    <div id="lineplots">
+                        <iframe src="./lda_company_sankey.html">
+
+                        </iframe>
+                        <p id="footnote"><i>Sankey diagram - company to word</i></p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- This section is for the header and the dropdown parts -->
+        <section id="info-bar">
+            <div class="nav-bar">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand"
+                        href="https://services.jms.rocks"><img
+                            src="https://services.jms.rocks/img/logo.png" /></a>
+                    <button class="navbar-toggler" type="button"
+                        data-toggle="collapse" data-outcome
+                        measures="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#mainbody">Home</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link"
+                                    href="#problem-statement">Problem
+                                    Statement</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#introduction">Approach</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#eda">EDA 1</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#eda2">EDA 2</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#results1">Results
+                                    1</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#results2">Results
+                                    2</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#discussion">Discussion</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#nextsteps">Next
+                                    Steps</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#appendix">Appendix</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <script>
+            var scroll = new SmoothScroll('a[href*="#"]', {
+                speed: 300,
+            });
+        </script>
+    </body>
+
+</html>

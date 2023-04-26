@@ -34,6 +34,9 @@ from nltk.stem import WordNetLemmatizer
 import re
 import random
 from wordcloud import WordCloud
+import plotly.graph_objects as go
+import plotly.express as px
+
 
 # set the plot style
 if "jms_style_sheet" in plt.style.available:
@@ -117,6 +120,7 @@ df = (
             "adjectives_text": lambda d: d.apply(
                 lambda x: ", ".join(get_adjectives(x["prepped_text"])), axis=1
             ),
+            "company": lambda x: x["url"].str.split("/").str[-1].str.split(".").str[1],
         }
     )
     # when looking at the data initially, I noticed that there are some reviews
@@ -128,6 +132,9 @@ df = (
 )
 df.head()
 
+# %%
+df["company"].value_counts()
+
 # %%[markdown]
 # ### Initial light Exploratory Data Analysis (EDA)
 # %%
@@ -138,7 +145,26 @@ df.info()
 # extraction on the one star reviews and then the three - five star reviews.
 # %%
 _ = sns.countplot(x="stars", data=df)
+# plt.savefig("stars_countplot.png", dpi=400, bbox_inches="tight")
 
+# %%[markdown]
+# plot the stars per company
+# %%
+_ = plt.figure(figsize=(10, 5))
+_ = sns.boxplot(x="company", y="stars", data=df)
+_ = sns.stripplot(
+    x="company",
+    y="stars",
+    data=df,
+    hue="company",
+    legend=False,
+    linewidth=0.5,
+    edgecolor="lightgrey",
+    alpha=0.9,
+    zorder=1,
+)
+_ = plt.xticks(rotation=45, ha="right")
+# plt.savefig("stars_boxplot.png", dpi=400, bbox_inches="tight")
 # %%[markdown]
 # It appears that the reviews are mostly from later years. This is likely
 # to influence the topic extraction output. Consider grouping the reviews
@@ -597,7 +623,9 @@ for model_name in model_name_dict.keys():
         title=f"{model_name} Topic Model Evaluation",
     )
     g.fig.show()
+    g.fig.savefig(f"figures/{model_name}_topic_model_evaluation.png", dpi=400, bbox_inches="tight")
     wordcloud_fig.show()
+    wordcloud_fig.savefig(f"figures/{model_name}_wordcloud.png", dpi=400, bbox_inches="tight")
 
 # %%[markdown]
 # As we saw earlier, there is a large amount of 1 star
@@ -625,13 +653,59 @@ g, wordcloud_fig = evaluate_topic_model(
     title=f"Low Star Reviews Topic Model Evaluation",
 )
 g.fig.show()
+g.fig.savefig("figures/LDA_low_star_topic_model_evaluation.png", dpi=400, bbox_inches="tight")
+
 wordcloud_fig.show()
 g, wordcloud_fig = evaluate_topic_model(
     data=high_star_lda_gensim_topics_df,
     title=f"High Star Reviews Topic Model Evaluation",
 )
 g.fig.show()
+g.fig.savefig("figures/LDA_high_star_topic_model_evaluation.png", dpi=400, bbox_inches="tight")
+
 wordcloud_fig.show()
+
+# %%[markdown]
+# Create interactive sankey diagrams to visualize the topics per company
+# %%
+lda_df_list = []
+for company in df["company"].unique().tolist():
+    company_text_list = (
+        df.loc[lambda d: d["company"] == company, "prepped_text"]
+        .apply(lambda x: x.split(" "))
+        .tolist()
+    )
+    lda_output = lda_pipeline(list_of_texts=company_text_list)
+    lda_df_list.append(lda_output.assign(**{"company": company}))
+# %%
+company_lda_df = pd.concat(lda_df_list)
+company_lda_df.head()
+
+# %%
+cutoff = 7
+words_select = [
+    x
+    for x in company_lda_df.value_counts(["word"])
+    .loc[lambda d: d > cutoff]
+    .reset_index()["word"]
+    .tolist()
+    if len(x) > 2
+]
+
+# %%
+fig = px.parallel_categories(
+    company_lda_df.loc[lambda d: d["word"].isin(words_select), :].loc[
+        lambda d: ~d["company"].isin(["co"])],
+    color="weight",
+    dimensions=["company", "topic_id", "word"],
+    dimensions_max_cardinality=200,
+    color_continuous_scale=px.colors.sequential.Reds,
+)
+
+fig.show()
+# fig.to_html("lda_company_sankey.html")
+# fig.write_html("lda_company_sankey.html")
+
 # %% [markdown]
 # ### Discussion
 # No matter what topic model we use it seems that the main topics of interest are:
@@ -640,19 +714,19 @@ wordcloud_fig.show()
 # - the state of the trains (cleanliness, etc.)
 # - the ease of use of the website
 # - in general the ease of booking a journey
-# 
+#
 # When looking at the low star reviews, we can see that the topics are more negative
 # highlighting the poor customer service and the train service - choosing to focus
 # more on delays and strikes. When the reviews are high stars, the main highlights
 # are the customer service and the state of the trains.
-# 
+#
 # It is suggested for an improved perception of the company that they focus on
 # the customer service being polite and helpful, and that the trains more reliably
 # run on time.
 
 # %%[markdown]
 # ### Thoughts on the assignment
-# - I found the assignment to be very interesting and I enjoyed working on it. 
+# - I found the assignment to be very interesting and I enjoyed working on it.
 # It was my first time really diving into topic modeling and I found it fascinating.
 # - Given more time, I would have liked to:
 #   - have extracted the different train companies from the website strings and separated them when doing
