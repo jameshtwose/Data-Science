@@ -15,9 +15,10 @@ examples = [
 
 demo = gr.Interface(
     fn=generate,
-    inputs=gr.inputs.Textbox(lines=5, label="Input Text"),
+    inputs=gr.inputs.Textbox(lines=5, label="Input Text (prompt to be completed)"),
     outputs=gr.outputs.Textbox(label="Generated Text"),
-    examples=examples
+    examples=examples,
+    title="GPT-2 Text Generation Demo",
 )
 
-demo.launch(debug=True)
+demo.launch(share=True)
