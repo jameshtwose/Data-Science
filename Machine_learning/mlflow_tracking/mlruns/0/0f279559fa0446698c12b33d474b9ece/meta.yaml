@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/jamestwose/Coding/Data-Science/Machine_learning/mlflow_tracking/mlruns/0/0f279559fa0446698c12b33d474b9ece/artifacts
+end_time: 1688652229955
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0f279559fa0446698c12b33d474b9ece
+run_name: spiffy-goat-699
+run_uuid: 0f279559fa0446698c12b33d474b9ece
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688652228867
+status: 3
+tags: []
+user_id: jamestwose

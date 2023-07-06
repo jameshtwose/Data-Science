@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/jamestwose/Coding/Data-Science/Machine_learning/mlflow_tracking/mlruns/0/d0707515964b414fa519f4481edbcc81/artifacts
+end_time: 1688651782340
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: d0707515964b414fa519f4481edbcc81
+run_name: useful-kit-426
+run_uuid: d0707515964b414fa519f4481edbcc81
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688651781244
+status: 3
+tags: []
+user_id: jamestwose
