@@ -16,4 +16,3 @@ rf.fit(X_train, y_train)
 # Use the model to make predictions on the test dataset.
 predictions = rf.predict(X_test)
 
-print(predictions)
