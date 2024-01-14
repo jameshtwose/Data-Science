@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Neural Transfer Using PyTorch &#8212; Data-Science NA documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
-    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=49fa7461" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=a7b4e348" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=ad0ac74c" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/documentation_options.js?v=17071fb9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -149,18 +149,18 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="Neural-Transfer-Using-PyTorch">
-<h1>Neural Transfer Using PyTorch<a class="headerlink" href="#Neural-Transfer-Using-PyTorch" title="Permalink to this heading">¶</a></h1>
+<h1>Neural Transfer Using PyTorch<a class="headerlink" href="#Neural-Transfer-Using-PyTorch" title="Link to this heading">¶</a></h1>
 <section id="Introduction">
-<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this heading">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading">¶</a></h2>
 <p>This notebook is based on the following tutorial: <a class="reference external" href="https://pytorch.org/tutorials/advanced/neural_style_tutorial.html">https://pytorch.org/tutorials/advanced/neural_style_tutorial.html</a></p>
 <p>Neural-Style, or Neural-Transfer, allows you to take an image and reproduce it with a new artistic style. The algorithm takes three images, an input image, a content-image, and a style-image, and changes the input to resemble the content of the content-image and the artistic style of the style-image.</p>
 </section>
 <section id="Underlying-Principle">
-<h2>Underlying Principle<a class="headerlink" href="#Underlying-Principle" title="Permalink to this heading">¶</a></h2>
+<h2>Underlying Principle<a class="headerlink" href="#Underlying-Principle" title="Link to this heading">¶</a></h2>
 <p>The principle is simple: we define two distances, one for the content (<span class="math notranslate nohighlight">\(D_C\)</span>) and one for the style (<span class="math notranslate nohighlight">\(D_S\)</span>). <span class="math notranslate nohighlight">\(D_C\)</span> measures how different the content is between two images while <span class="math notranslate nohighlight">\(D_S\)</span> measures how different the style is between two images. Then, we take a third image, the input, and transform it to minimize both its content-distance with the content-image and its style-distance with the style-image. Now we can import the necessary packages and begin the neural transfer.</p>
 </section>
 <section id="Importing-Packages-and-Selecting-a-Device">
-<h2>Importing Packages and Selecting a Device<a class="headerlink" href="#Importing-Packages-and-Selecting-a-Device" title="Permalink to this heading">¶</a></h2>
+<h2>Importing Packages and Selecting a Device<a class="headerlink" href="#Importing-Packages-and-Selecting-a-Device" title="Link to this heading">¶</a></h2>
 <p>Below is a list of the packages needed to implement the neural transfer.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">torch</span></code>, <code class="docutils literal notranslate"><span class="pre">torch.nn</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> (indispensables packages for neural networks with PyTorch)</p></li>
@@ -214,7 +214,7 @@ device(type=&#39;cpu&#39;)
 </div>
 </section>
 <section id="Loading-the-Images">
-<h2>Loading the Images<a class="headerlink" href="#Loading-the-Images" title="Permalink to this heading">¶</a></h2>
+<h2>Loading the Images<a class="headerlink" href="#Loading-the-Images" title="Link to this heading">¶</a></h2>
 <p>Now we will import the style and content images. The original PIL images have values between 0 and 255, but when transformed into torch tensors, their values are converted to be between 0 and 1. The images also need to be resized to have the same dimensions. An important detail to note is that neural networks from the torch library are trained with tensor values ranging from 0 to 1. If you try to feed the networks with 0 to 255 tensor images, then the activated feature maps will be unable to
 sense the intended content and style. However, pre-trained networks from the Caffe library are trained with 0 to 255 tensor images.</p>
 <div class="nbinput docutils container">
@@ -348,7 +348,7 @@ torch.Size([1, 3, 170, 128])
 </div>
 </section>
 <section id="Loss-Functions">
-<h2>Loss Functions<a class="headerlink" href="#Loss-Functions" title="Permalink to this heading">¶</a></h2>
+<h2>Loss Functions<a class="headerlink" href="#Loss-Functions" title="Link to this heading">¶</a></h2>
 <p>Content Loss ~~~~~~~~~~~~</p>
 <p>The content loss is a function that represents a weighted version of the content distance for an individual layer. The function takes the feature maps <span class="math notranslate nohighlight">\(F_{XL}\)</span> of a layer <span class="math notranslate nohighlight">\(L\)</span> in a network processing input <span class="math notranslate nohighlight">\(X\)</span> and returns the weighted content distance <span class="math notranslate nohighlight">\(w_{CL}.D_C^L(X,C)\)</span> between the image <span class="math notranslate nohighlight">\(X\)</span> and the content image <span class="math notranslate nohighlight">\(C\)</span>. The feature maps of the content image(<span class="math notranslate nohighlight">\(F_{CL}\)</span>) must be known by the function in order to calculate the content distance. We implement
 this function as a torch module with a constructor that takes <span class="math notranslate nohighlight">\(F_{CL}\)</span> as an input. The distance <span class="math notranslate nohighlight">\(\|F_{XL} - F_{CL}\|^2\)</span> is the mean square error between the two sets of feature maps, and can be computed using <code class="docutils literal notranslate"><span class="pre">nn.MSELoss</span></code>.</p>
@@ -417,7 +417,7 @@ parameter of the module.</p>
 </div>
 </section>
 <section id="Importing-the-Model">
-<h2>Importing the Model<a class="headerlink" href="#Importing-the-Model" title="Permalink to this heading">¶</a></h2>
+<h2>Importing the Model<a class="headerlink" href="#Importing-the-Model" title="Link to this heading">¶</a></h2>
 <p>Now we need to import a pre-trained neural network. We will use a 19 layer VGG network like the one used in the paper.</p>
 <p>PyTorch’s implementation of VGG is a module divided into two child <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> modules: <code class="docutils literal notranslate"><span class="pre">features</span></code> (containing convolution and pooling layers), and <code class="docutils literal notranslate"><span class="pre">classifier</span></code> (containing fully connected layers). We will use the <code class="docutils literal notranslate"><span class="pre">features</span></code> module because we need the output of the individual convolution layers to measure content and style loss. Some layers have different behavior during training than evaluation, so we must set the network to evaluation mode using <code class="docutils literal notranslate"><span class="pre">.eval()</span></code>.</p>
 <div class="nbinput docutils container">
@@ -564,7 +564,7 @@ parameter of the module.</p>
 </div>
 </section>
 <section id="Gradient-Descent">
-<h2>Gradient Descent<a class="headerlink" href="#Gradient-Descent" title="Permalink to this heading">¶</a></h2>
+<h2>Gradient Descent<a class="headerlink" href="#Gradient-Descent" title="Link to this heading">¶</a></h2>
 <p>As Leon Gatys, the author of the algorithm, suggested <code class="docutils literal notranslate"><span class="pre">here</span> <span class="pre">&lt;https://discuss.pytorch.org/t/pytorch-tutorial-for-neural-transfert-of-artistic-style/336/20?u=alexis-jacq&gt;</span></code>__, we will use L-BFGS algorithm to run our gradient descent. Unlike training a network, we want to train the input image in order to minimise the content/style losses. We will create a PyTorch L-BFGS optimizer <code class="docutils literal notranslate"><span class="pre">optim.LBFGS</span></code> and pass our image to it as the tensor to optimize.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
@@ -759,7 +759,7 @@ Style Loss : 240.144394 Content Loss: 70.163918
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.<br/>
     </p>
   </div>
 </footer>

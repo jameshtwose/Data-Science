@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Create a bootstrapped t_test function and show it off using the iris data set &#8212; Data-Science NA documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
-    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=49fa7461" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=a7b4e348" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=ad0ac74c" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/documentation_options.js?v=17071fb9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -150,7 +150,7 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="Create-a-bootstrapped-t_test-function-and-show-it-off-using-the-iris-data-set">
-<h1>Create a bootstrapped t_test function and show it off using the iris data set<a class="headerlink" href="#Create-a-bootstrapped-t_test-function-and-show-it-off-using-the-iris-data-set" title="Permalink to this heading">¶</a></h1>
+<h1>Create a bootstrapped t_test function and show it off using the iris data set<a class="headerlink" href="#Create-a-bootstrapped-t_test-function-and-show-it-off-using-the-iris-data-set" title="Link to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -166,7 +166,7 @@
 </div>
 </div>
 <section id="Load-in-the-iris-data-set-and-plot-it-a-bit">
-<h2>Load in the iris data set and plot it a bit<a class="headerlink" href="#Load-in-the-iris-data-set-and-plot-it-a-bit" title="Permalink to this heading">¶</a></h2>
+<h2>Load in the iris data set and plot it a bit<a class="headerlink" href="#Load-in-the-iris-data-set-and-plot-it-a-bit" title="Link to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -211,7 +211,7 @@ Categories (3, object): [setosa, versicolor, virginica]
 </div>
 </section>
 <section id="Define-a-function-which-generates-many-bootstrapped-p-values-from-an-independent-t-test">
-<h2>Define a function which generates many bootstrapped p-values from an independent t-test<a class="headerlink" href="#Define-a-function-which-generates-many-bootstrapped-p-values-from-an-independent-t-test" title="Permalink to this heading">¶</a></h2>
+<h2>Define a function which generates many bootstrapped p-values from an independent t-test<a class="headerlink" href="#Define-a-function-which-generates-many-bootstrapped-p-values-from-an-independent-t-test" title="Link to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -260,7 +260,7 @@ Categories (3, object): [setosa, versicolor, virginica]
 </div>
 </section>
 <section id="Plot-all-the-p_values-from-a-single-feature">
-<h2>Plot all the p_values from a single feature<a class="headerlink" href="#Plot-all-the-p_values-from-a-single-feature" title="Permalink to this heading">¶</a></h2>
+<h2>Plot all the p_values from a single feature<a class="headerlink" href="#Plot-all-the-p_values-from-a-single-feature" title="Link to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
@@ -282,7 +282,7 @@ Categories (3, object): [setosa, versicolor, virginica]
 </div>
 </section>
 <section id="Plot-all-the-p_values-from-a-list-of-features">
-<h2>Plot all the p_values from a list of features<a class="headerlink" href="#Plot-all-the-p_values-from-a-list-of-features" title="Permalink to this heading">¶</a></h2>
+<h2>Plot all the p_values from a list of features<a class="headerlink" href="#Plot-all-the-p_values-from-a-list-of-features" title="Link to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
@@ -320,7 +320,7 @@ petal_width
 </div>
 </div>
 <section id="Using-the-p-values-from-the-bootstrapped-t_test-correct-using-Benjamini/Hochberg-(non-negative)-using-%22multipletests%22-from-statsmodels-and-compare-to-ideal-p-values">
-<h3>Using the p-values from the bootstrapped t_test correct using Benjamini/Hochberg (non-negative) using “multipletests” from statsmodels and compare to ideal p-values<a class="headerlink" href="#Using-the-p-values-from-the-bootstrapped-t_test-correct-using-Benjamini/Hochberg-(non-negative)-using-%22multipletests%22-from-statsmodels-and-compare-to-ideal-p-values" title="Permalink to this heading">¶</a></h3>
+<h3>Using the p-values from the bootstrapped t_test correct using Benjamini/Hochberg (non-negative) using “multipletests” from statsmodels and compare to ideal p-values<a class="headerlink" href="#Using-the-p-values-from-the-bootstrapped-t_test-correct-using-Benjamini/Hochberg-(non-negative)-using-%22multipletests%22-from-statsmodels-and-compare-to-ideal-p-values" title="Link to this heading">¶</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
@@ -336,7 +336,7 @@ petal_width
 </section>
 </section>
 <section id="Define-and-plot-the-comparison">
-<h2>Define and plot the comparison<a class="headerlink" href="#Define-and-plot-the-comparison" title="Permalink to this heading">¶</a></h2>
+<h2>Define and plot the comparison<a class="headerlink" href="#Define-and-plot-the-comparison" title="Link to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
@@ -388,7 +388,7 @@ petal_width
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.<br/>
     </p>
   </div>
 </footer>

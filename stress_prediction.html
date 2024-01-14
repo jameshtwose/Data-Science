@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Stress prediction based on biometrics data &#8212; Data-Science NA documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
-    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=49fa7461" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=a7b4e348" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=ad0ac74c" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/documentation_options.js?v=17071fb9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/copybutton.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -146,7 +146,7 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="Stress-prediction-based-on-biometrics-data">
-<h1>Stress prediction based on biometrics data<a class="headerlink" href="#Stress-prediction-based-on-biometrics-data" title="Permalink to this heading">¶</a></h1>
+<h1>Stress prediction based on biometrics data<a class="headerlink" href="#Stress-prediction-based-on-biometrics-data" title="Link to this heading">¶</a></h1>
 <p><strong>Author:</strong> James Twose <strong>Date:</strong> 20-03-2021</p>
 <p>This dataset comprises of heart rate variability (HRV) and Electrodermal activity (EDA) computed from the SWELL1 and the WESAD2 datasets. It comprises of the following three directories and sub-directories: 1) interim —contains the intermediate data that has been transformed directly from the raw datasets. The raw datasets are not included but they can be obtained from their respective publishers. This folder contains the following major contents: - a) Labels —the ground truth of the
 experiments. For the details of how these were obtained, please refer to the papers included in the root of this director. - b) eda —the raw eda signals - c) rri —the inter-beat (RR) interval extracted from the electrocardiogram (ECG) signal 2) processed —containes files that were computed from those in the intermidiate directory facilitate the analysis</p>
@@ -159,14 +159,14 @@ experiments. For the details of how these were obtained, please refer to the pap
 </li>
 </ol>
 <section id="Targets:">
-<h2>Targets:<a class="headerlink" href="#Targets:" title="Permalink to this heading">¶</a></h2>
+<h2>Targets:<a class="headerlink" href="#Targets:" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>NASA-TLX for the SWELL</p></li>
 <li><p>SSSQ for the WESAD</p></li>
 </ul>
 </section>
 <section id="Import-all-necessary-packages-and-functions">
-<h2>Import all necessary packages and functions<a class="headerlink" href="#Import-all-necessary-packages-and-functions" title="Permalink to this heading">¶</a></h2>
+<h2>Import all necessary packages and functions<a class="headerlink" href="#Import-all-necessary-packages-and-functions" title="Link to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
 </pre></div>
@@ -241,7 +241,7 @@ Session information updated at 2021-03-21 15:35
 </section>
 </section>
 <section id="Read-in-data">
-<h1>Read in data<a class="headerlink" href="#Read-in-data" title="Permalink to this heading">¶</a></h1>
+<h1>Read in data<a class="headerlink" href="#Read-in-data" title="Link to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[142]:
 </pre></div>
@@ -345,7 +345,7 @@ memory usage: 30.2+ MB
 </div>
 </section>
 <section id="Exploratory-Data-Analysis-(EDA)">
-<h1>Exploratory Data Analysis (EDA)<a class="headerlink" href="#Exploratory-Data-Analysis-(EDA)" title="Permalink to this heading">¶</a></h1>
+<h1>Exploratory Data Analysis (EDA)<a class="headerlink" href="#Exploratory-Data-Analysis-(EDA)" title="Link to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[157]:
 </pre></div>
@@ -1066,7 +1066,7 @@ User == 22 plotted with errors
     </p>
     <p>
         &copy; Copyright 2022, James Twose.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.<br/>
     </p>
   </div>
 </footer>
